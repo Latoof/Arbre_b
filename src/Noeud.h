@@ -12,6 +12,7 @@
 			T getElement( int i );
 			void addElement( T elt );
 			std::vector<T> getElements();
+			std::vector< Noeud<T>* > getFils() ;
 		private:
 
 			std::vector<T> liste_elements;

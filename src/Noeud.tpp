@@ -22,6 +22,11 @@ std::vector<T> Noeud<T>::getElements() {
 }
 
 template<typename T>
+std::vector< Noeud<T>* > Noeud<T>::getFils() {
+	return this->liste_fils;
+}
+
+template<typename T>
 Noeud<T>::~Noeud() {
 	
 }

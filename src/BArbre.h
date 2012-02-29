@@ -1,18 +1,27 @@
-#include "Noeud.h"
-#include "Racine.h"
-#include <vector>
+#ifndef H_BARBRE_H
+	#define H_BARBRE_H
 
-template<typename T>
-class BArbre {
-public:
-	BArbre();
-	~BArbre();
+	#include "Noeud.h"
+	#include "Racine.h"
+	#include <vector>
 
-	void ajouterElement( T element );
-	int supprimerElement( T element );
-	T chercherElement( T element );
+	template<typename T>
+	class BArbre {
+	public:
+		BArbre();
+		~BArbre();
 
-private:
-	std::vector<Noeud<T>*> noeuds; // Essai
-	Racine<T>* racine; 
-};
+		void ajouterElement( T element );
+		int supprimerElement( T element );
+		T chercherElement( T element );
+
+	private:
+		std::vector<Noeud<T>*> noeuds; // Essai
+		Racine<T>* racine; 
+
+
+	};
+
+	#include "BArbre.tpp"
+
+#endif

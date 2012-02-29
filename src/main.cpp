@@ -1,4 +1,5 @@
 #include "Noeud.h"
+#include "BArbre.h"
 
 #include <iostream>
 
@@ -19,6 +20,10 @@ int main( int argc, char** argv ) {
 	feuille2.addElement( "second" );
 
 	std::cout << feuille2.getElement(0) << std::endl;
+
+
+	BArbre<int> a;
+
 	return 0;
 
 }
