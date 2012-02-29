@@ -1,0 +1,1493 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+	<title>B-tree C++ source code</title>
+	<meta name="GENERATOR" content="OpenOffice.org 2.0  (Linux)">
+	<meta name="CREATED" content="20061203;16213000">
+	<meta name="CHANGEDBY" content="mathieu">
+	<meta name="CHANGED" content="20061203;16320300">
+	<meta name="ProgId" content="Word.Document">
+	<meta name="Originator" content="Microsoft Word 9">
+	<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>toucan</o:Author>
+  <o:LastAuthor>toucan</o:LastAuthor>
+  <o:Revision>3</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2003-05-09T20:49:00Z</o:Created>
+  <o:LastSaved>2003-08-17T15:46:00Z</o:LastSaved>
+  <o:Pages>2</o:Pages>
+  <o:Words>4028</o:Words>
+  <o:Characters>22960</o:Characters>
+  <o:Company>mutopia</o:Company>
+  <o:Lines>191</o:Lines>
+  <o:Paragraphs>45</o:Paragraphs>
+  <o:CharactersWithSpaces>28196</o:CharactersWithSpaces>
+  <o:Version>9.6926</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+	<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1027"/>
+</xml><![endif]-->
+	<!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+	<style>
+	<!--
+		P { color: #000000 }
+	-->
+	</style>
+</head>
+<body dir="LTR" bgcolor="#ffffff" lang="en-US" text="#000000">
+<p><font color="#008000"><font face="Courier New"><font size="3">/*</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">current
+version:&nbsp; may 9th, 2003&nbsp;</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">this
+file contains a class template for elements stored in a B-tree, and a
+</font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">class
+for a B-tree node, which provides all the methods needed to search, </font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">insert,
+or delete.&nbsp; a sample "main" function is also provided
+to show</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">how to
+use the B-tree.</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">to
+understand the identifiers and comments, visualize the tree as having
+</font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">its
+root node at the top of the diagram, its leaf nodes at the bottom of </font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">the
+diagram, and each node as containing an array oriented horizontally, </font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">with
+the smallest element on the left and the largest element on the
+right.</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">the
+zeroth element of a node contains only a subtree pointer, no key
+value </font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">or
+payload.</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">a
+b-tree grows "upward", by splitting the root node when the
+node's capacity </font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">is
+exceeded.&nbsp; conversely, the depth of the tree is always reduced
+by merging </font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">the
+last remaining element of the root node with the elements of its two </font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">child
+nodes, so the tree contracts "from the top".</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">this
+code may be freely copied. </font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">programmer:
+toucan@textelectric.net</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">algorithm
+and pseudo-code found in: </font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">"fundamentals
+of data structures in pascal", by Horowitz and Sahni</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">there
+is a java applet on the web that draws a b-tree diagram and allows
+the </font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">user
+to perform insertions and deletions, so you can see how it grows and
+shrinks, </font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">at:
+http://www.mars.dti.ne.jp/~torao/program/structure/btree.html</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">*/</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">#include</font></font>
+<font face="Courier New">"stdafx.h"</font></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">#include</font></font>
+<font face="Courier New">&lt;iostream&gt;</font></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">#include</font></font>
+<font face="Courier New">&lt;string&gt;</font></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">#include</font></font>
+<font face="Courier New">&lt;vector&gt;</font></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">#include</font></font>
+<font face="Courier New">&lt;strstream&gt;</font></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">using</font></font>
+<font face="Courier New"><font color="#0000ff">namespace</font> std;</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">class</font></font>
+<font face="Courier New">Node;</font></font></p>
+<p><font face="Courier New"><font size="3">Node* invalid_ptr =
+<font color="#0000ff">reinterpret_cast</font>&lt;Node*&gt; (-1);</font></font></p>
+<p><font face="Courier New"><font size="3">Node* null_ptr =
+<font color="#0000ff">reinterpret_cast</font>&lt;Node*&gt; (0);</font></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">const</font></font>
+<font face="Courier New"><font color="#0000ff">int</font>
+invalid_index = -1;</font></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">const</font></font>
+<font face="Courier New"><font color="#0000ff">int</font>
+max_elements = 200;&nbsp; <font color="#008000">// max elements in a
+node</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+size limit for the array in a vector object.&nbsp; best performance
+was</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// at
+800 bytes.</font></font></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">const</font></font>
+<font face="Courier New"><font color="#0000ff">int</font>
+max_array_bytes = 800;&nbsp; </font></font>
+</p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p><font face="Courier New"><font size="3"><font color="#0000ff">template</font>&lt;<font color="#0000ff">class</font>
+key, <font color="#0000ff">class</font> payload&gt; <font color="#0000ff">class</font>
+Element {</font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+contains a key value, a payload, and a pointer toward the subtree</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+containing key values greater than this-&gt;m_key but lower than the</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// key
+value of the next element to the right</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font face="Courier New"><font size="3"><font color="#0000ff">public</font>:</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">key
+m_key;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">payload
+m_payload;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+mp_subtree;</font></font></p>
+<p><font face="Courier New"><font size="3"><font color="#0000ff">public</font>:</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">bool</font>
+<font color="#0000ff">operator</font>&gt;&nbsp;&nbsp; (Element&amp;
+other) <font color="#0000ff">const</font> { <font color="#0000ff">return</font>
+m_key &gt;&nbsp; other.m_key; }</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">bool</font>
+<font color="#0000ff">operator</font>&lt;&nbsp;&nbsp; (Element&amp;
+other) <font color="#0000ff">const</font> { <font color="#0000ff">return</font>
+m_key &lt;&nbsp; other.m_key; }</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">bool</font>
+<font color="#0000ff">operator</font>&gt;=&nbsp; (Element&amp; other)
+<font color="#0000ff">const</font> { <font color="#0000ff">return</font>
+m_key &gt;= other.m_key; }</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">bool</font>
+<font color="#0000ff">operator</font>&lt;=&nbsp; (Element&amp; other)
+<font color="#0000ff">const</font> { <font color="#0000ff">return</font>
+m_key &lt;= other.m_key; }</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">bool</font>
+<font color="#0000ff">operator</font>==&nbsp; (Element&amp; other)
+<font color="#0000ff">const</font> { <font color="#0000ff">return</font>
+m_key == other.m_key; }</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">bool</font>
+valid () <font color="#0000ff">const</font> { <font color="#0000ff">return</font>
+mp_subtree != invalid_ptr; }</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">void</font>
+invalidate () { mp_subtree = invalid_ptr; }</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Element&amp;
+<font color="#0000ff">operator</font>= (<font color="#0000ff">const</font>
+Element&amp; other) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_key
+= other.m_key;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_payload
+= other.m_payload;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">mp_subtree
+= other.mp_subtree;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+*<font color="#0000ff">this</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Element
+() { mp_subtree = null_ptr; }</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">void</font>
+dump ();&nbsp; </font></font>
+</p>
+<p><font face="Courier New"><font size="3">};
+<font color="#008000">//______________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font face="Courier New"><font size="3"><font color="#0000ff">template</font>&lt;<font color="#0000ff">class</font>
+key, <font color="#0000ff">class</font> payload&gt; <font color="#0000ff">void</font>
+Element&lt;key, payload&gt;::dump () {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">cout &lt;&lt;
+"key=" &lt;&lt; m_key &lt;&lt; "sub=" &lt;&lt;
+mp_subtree &lt;&lt; ' '; </font></font>
+</p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//_______________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">typedef</font></font>
+<font face="Courier New">Element&lt;string, string&gt; Elem;</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">class</font></font>
+<font face="Courier New">RootTracker;</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">class</font></font>
+<font face="Courier New">Node {</font></font></p>
+<p><font face="Courier New"><font size="3"><font color="#0000ff">protected</font>:</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+locality of reference, beneficial to effective cache utilization,</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+is provided by a "vector" container rather than a "list"</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">vector&lt;Elem&gt;
+m_vector;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+number of elements currently in m_vector, including the zeroth
+element</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+which has only a subtree, no key value or payload.</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+m_count; </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+mp_parent;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">bool</font>
+is_leaf();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">bool</font>
+vector_insert (Elem&amp; element);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">bool</font>
+vector_insert_for_split (Elem&amp; element);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">bool</font>
+split_insert (Elem&amp; element);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">bool</font>
+vector_delete (Elem&amp; target);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">bool</font>
+vector_delete (<font color="#0000ff">int</font> target_pos);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">void</font>
+insert_zeroth_subtree (Node* subtree);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">void</font>
+set_debug();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+key_count () { <font color="#0000ff">return</font> m_count-1; }</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem&amp;
+largest_key () { <font color="#0000ff">return</font>
+m_vector[m_count-1]; } </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem&amp;
+smallest_key () { <font color="#0000ff">return</font> m_vector[1]; } </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem&amp;
+smallest_key_in_subtree();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+index_has_subtree ();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+right_sibling (<font color="#0000ff">int</font>&amp;
+parent_index_this);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+left_sibling (<font color="#0000ff">int</font>&amp;
+parent_index_this);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+rotate_from_left(<font color="#0000ff">int</font> parent_index_this);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+rotate_from_right(<font color="#0000ff">int</font>
+parent_index_this);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+merge_right (<font color="#0000ff">int</font> parent_index_this);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+merge_left (<font color="#0000ff">int</font> parent_index_this);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">bool</font>
+merge_into_root ();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+minimum_keys ();</font></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">#ifdef</font></font>
+<font face="Courier New">_DEBUG</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem
+debug[8];</font></font></p>
+<p><font color="#0000ff"><font face="Courier New"><font size="3">#endif</font></font></font></p>
+<p><font face="Courier New"><font size="3"><font color="#0000ff">public</font>:</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem&amp;
+search (Elem&amp; desired, Node*&amp; last_visited);&nbsp; </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">bool</font>
+tree_insert (Elem&amp; element);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">bool</font>
+delete_element (Elem&amp; target);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+delete_all_subtrees ();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+find_root();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+to return a reference when a search fails.</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">static</font>
+Elem m_failure; </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+the root of the tree may change.&nbsp; this attribute keeps it
+accessible.</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">RootTracker&amp;
+m_root;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem&amp;
+<font color="#0000ff">operator</font>[] (<font color="#0000ff">int</font>
+i) { <font color="#0000ff">return</font> m_vector[i]; }</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+node cannot be instantiated without a root tracker</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node
+(RootTracker&amp; root_track);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">void</font>
+dump ();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; 
+</p>
+<p><font face="Courier New"><font size="3">};
+<font color="#008000">//______________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">class</font></font>
+<font face="Courier New">RootTracker {</font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// all
+the node instances that belong to a given tree have a reference to
+one</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+instance of RootTracker.&nbsp; as the Node instance that is the root
+may change</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// or
+the original root may be deleted, Node instances must access the root</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// of
+the tree through this tracker, and update the root pointer when they</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+perform insertions or deletions.&nbsp; using a static attribute in
+the Node</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+class to hold the root pointer would limit a program to just one
+B-tree.</font></font></font></p>
+<p><font face="Courier New"><font size="3"><font color="#0000ff">protected</font>:</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+mp_root;</font></font></p>
+<p><font face="Courier New"><font size="3"><font color="#0000ff">public</font>:</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">RootTracker()
+{ mp_root = null_ptr; }</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">void</font>
+set_root (Node* old_root, Node* new_root) { </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+ensure that the root is only being changed by a node belonging to the</font></font></font></p>
+<p>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="3"><font face="Courier New"><font color="#008000">//
+same tree as the current root</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(old_root != mp_root)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">throw</font>
+"wrong old_root in RootTracker::set_root";</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">mp_root = new_root; </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+get_root () { <font color="#0000ff">return</font> mp_root; }</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">~RootTracker
+() { </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<font size="3"><font face="Courier New"><font color="#008000">//
+safety measure</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(mp_root) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">mp_root-&gt;delete_all_subtrees();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">delete</font>
+mp_root;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p><font face="Courier New"><font size="3">};
+<font color="#008000">//_______________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">int</font></font>
+<font face="Courier New">Node::minimum_keys () { </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+minus 1 for the empty slot left for splitting the node</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+size = m_vector.size();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+ceiling_func = (size-1)/2;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(ceiling_func*2 &lt; size-1)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">ceiling_func++;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+ceiling_func-1;&nbsp; <font color="#008000">// for clarity, may
+increment then decrement</font></font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//________________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">inline</font></font>
+<font face="Courier New"><font color="#0000ff">void</font>
+Node::set_debug() { </font></font>
+</p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">#ifdef</font></font>
+<font face="Courier New">_DEBUG</font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// the
+contents of an STL vector are not visible in the visual C++ debugger,</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// so
+this function copies up to eight elements from the STL vector into </font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// a
+simple C++ array.</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">for</font>
+(<font color="#0000ff">int</font> i=0; i&lt;m_count &amp;&amp; i&lt;8;
+i++) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">debug[i]
+= m_vector[i];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(m_vector[i].mp_subtree)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">m_vector[i].mp_subtree-&gt;set_debug();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">for</font>
+( ; i&lt;8; i++)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">debug[i]
+= m_failure;</font></font></p>
+<p><font color="#0000ff"><font face="Courier New"><font size="3">#endif</font></font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//________________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">void</font></font>
+<font face="Courier New">Node::insert_zeroth_subtree (Node* subtree)
+{</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_vector[0].mp_subtree
+= subtree;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_vector[0].m_key
+= "";</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_count =
+1;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(subtree)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">subtree-&gt;mp_parent
+= <font color="#0000ff">this</font>;</font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//_________________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">void</font></font>
+<font face="Courier New">Node::dump (){</font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+write out the keys in this node and all its subtrees, along with </font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+node adresses, for debugging purposes</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(<font color="#0000ff">this</font> == m_root.get_root())</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">cout &lt;&lt; "ROOT\n";</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">cout
+&lt;&lt; "\nthis=" &lt;&lt; <font color="#0000ff">this</font>
+&lt;&lt; endl;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">cout
+&lt;&lt; "parent=" &lt;&lt; mp_parent &lt;&lt; "
+count=" &lt;&lt; m_count &lt;&lt; endl;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">for</font>
+(<font color="#0000ff">int</font> i=0; i&lt;m_count; i++)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">m_vector[i].dump();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">for</font>
+(i=0; i&lt;m_count; i++)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(m_vector[i].mp_subtree)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">m_vector[i].mp_subtree-&gt;dump();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">cout
+&lt;&lt; endl;</font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//________________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font face="Courier New"><font size="3">Node::Node (RootTracker&amp;
+root_track)&nbsp; : m_root(root_track) { </font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+limit the size of the vector to 4 kilobytes max and 200 entries max.</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+num_elements = max_elements*<font color="#0000ff">sizeof</font>(Elem)&lt;=max_array_bytes
+? </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">max_elements :
+max_array_bytes/<font color="#0000ff">sizeof</font>(Elem);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(num_elements &lt; 6)&nbsp; <font color="#008000">// in case key or
+payload is really huge</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">num_elements = 6;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_vector.resize
+(num_elements);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_count
+= 0;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">mp_parent
+= 0;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">insert_zeroth_subtree
+(0);</font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//________________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font face="Courier New"><font size="3">Node* Node::find_root () {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+current = <font color="#0000ff">this</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">while</font>
+(current-&gt;mp_parent)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">current
+= current-&gt;mp_parent;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+current;</font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//__________________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">bool</font></font>
+<font face="Courier New">Node::is_leaf () {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+m_vector[0].mp_subtree==0;</font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//________________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">int</font></font>
+<font face="Courier New">Node::delete_all_subtrees () {</font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+return the number of nodes deleted</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+count_deleted = 0;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">for</font>
+(<font color="#0000ff">int</font> i=0; i&lt; m_count; i++) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(!m_vector[i].mp_subtree)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">continue</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+<font color="#0000ff">if</font> (m_vector[i].mp_subtree-&gt;is_leaf())
+{</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">delete</font>
+m_vector[i].mp_subtree;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">count_deleted++;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">count_deleted +=
+m_vector[i].mp_subtree-&gt;delete_all_subtrees();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+count_deleted;</font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//_______________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">bool</font></font>
+<font face="Courier New">Node::vector_insert (Elem&amp; element) {</font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+this method merely tries to insert the argument into the current
+node.</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// it
+does not concern itself with the entire tree.</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// if
+the element can fit into m_vector, slide all the elements</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+greater than the argument forward one position and copy the argument</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+into the newly vacated slot, then return true.&nbsp; otherwise return
+false.</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+note: the tree_insert method will already have verified that the key</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+value of the argument element is not present in the tree.</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; 
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(m_count &gt;= m_vector.size()-1) <font color="#008000">// leave an
+extra slot for split_insert</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+<font color="#0000ff">false</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+i = m_count;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; 
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">while</font>
+(i&gt;0 &amp;&amp; m_vector[i-1]&gt;element) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_vector[i]
+= m_vector[i-1];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">i--;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(element.mp_subtree)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">element.mp_subtree-&gt;mp_parent
+= <font color="#0000ff">this</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_vector[i]
+= element;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_count++;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+<font color="#0000ff">true</font>;</font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//__________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">bool</font></font>
+<font face="Courier New">Node::vector_delete (Elem&amp; target) {</font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+delete a single element in the vector belonging to *this node.</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// if
+the target is not found, do not look in subtrees, just return false.</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+target_pos = -1;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+first = 1;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+last = m_count-1;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+perform binary search</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">while</font>
+(last-first &gt; 1) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+mid = first+(last-first)/2;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(target&gt;=m_vector[mid])</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">first = mid;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">last = mid;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(m_vector[first]==target)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">target_pos
+= first;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+<font color="#0000ff">if</font> (m_vector[last]==target)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">target_pos
+= last;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+</font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+<font color="#0000ff">false</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+the element's subtree, if it exists, is to be deleted or re-attached</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+in a different function.&nbsp; not a concern here.&nbsp; just shift
+all the</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+elements in positions greater than target_pos.</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">for</font>
+(<font color="#0000ff">int</font> i=target_pos; i&lt;m_count; i++)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_vector[i]
+= m_vector[i+1];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; 
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_count--;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+<font color="#0000ff">true</font>;</font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//____________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">bool</font></font>
+<font face="Courier New">Node::vector_delete (<font color="#0000ff">int</font>
+target_pos) {</font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+delete a single element in the vector belonging to *this node.</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// the
+element is identified by position, not value.</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(target_pos&lt;0 || target_pos&gt;=m_count)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+<font color="#0000ff">false</font>;</font></font></p>
+<p>&nbsp;&nbsp; 
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+the element's subtree, if it exists, is to be deleted or re-attached</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+in a different function.&nbsp; not a concern here.&nbsp; just shift
+all the</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+elements in positions greater than target_pos.</font></font></font></p>
+<p>&nbsp; &nbsp;&nbsp;<font size="3"><font face="Courier New"><font color="#0000ff">for</font>
+(<font color="#0000ff">int</font> i=target_pos; i&lt;m_count; i++)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_vector[i]
+= m_vector[i+1];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; 
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_count--;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+<font color="#0000ff">true</font>;</font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//____________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">bool</font></font>
+<font face="Courier New">Node::vector_insert_for_split (Elem&amp;
+element) {</font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+this method insert an element that is in excess of the nominal
+capacity of </font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// the
+node, using the extra slot that always remains unused during normal </font></font></font>
+</p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+insertions.&nbsp; this method should only be called from
+split_insert()</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(m_count &gt;= m_vector.size()) <font color="#008000">// error</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+<font color="#0000ff">false</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+i = m_count;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; 
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">while</font>
+(i&gt;0 &amp;&amp; m_vector[i-1]&gt;element) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_vector[i]
+= m_vector[i-1];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">i--;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(element.mp_subtree)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">element.mp_subtree-&gt;mp_parent
+= <font color="#0000ff">this</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_vector[i]
+= element;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_count++;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+<font color="#0000ff">true</font>;</font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//__________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">bool</font></font>
+<font face="Courier New">Node::split_insert (Elem&amp; element) {</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+split_insert should only be called if node is full</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(m_count != m_vector.size()-1) </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">throw</font>
+"bad m_count in split_insert";</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">vector_insert_for_split
+(element);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+split_point = m_count/2;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(2*split_point &lt; m_count)&nbsp; <font color="#008000">// perform
+the "ceiling function"</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">split_point++;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+new node receives the rightmost half of elements in *this node</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+new_node = <font color="#0000ff">new</font> Node(m_root); </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem
+upward_element = m_vector[split_point]; </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">new_node-&gt;insert_zeroth_subtree
+(upward_element.mp_subtree);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">upward_element.mp_subtree
+= new_node;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+element that gets added to the parent of this node</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">for</font>
+(<font color="#0000ff">int</font> i=1; i&lt;m_count-split_point; i++)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">new_node-&gt;vector_insert(m_vector[split_point+i]);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">new_node-&gt;m_count
+= m_count-split_point;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_count =
+split_point;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">new_node-&gt;mp_parent
+= mp_parent;</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+now insert the new node into the parent, splitting it if necessary</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(mp_parent &amp;&amp; mp_parent-&gt;vector_insert(upward_element)) </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+<font color="#0000ff">true</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+<font color="#0000ff">if</font> (mp_parent &amp;&amp;
+mp_parent-&gt;split_insert(upward_element))</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+<font color="#0000ff">true</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+<font color="#0000ff">if</font> (!mp_parent) { <font color="#008000">//
+this node was the root</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+new_root = <font color="#0000ff">new</font> Node(m_root);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">new_root-&gt;insert_zeroth_subtree(<font color="#0000ff">this</font>);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">this</font>-&gt;mp_parent
+= new_root;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">new_node-&gt;mp_parent
+= new_root;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">new_root-&gt;vector_insert
+(upward_element);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">m_root.set_root
+(m_root.get_root(),&nbsp; new_root);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">new_root-&gt;mp_parent
+= 0;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+<font color="#0000ff">true</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; 
+</p>
+<p><font face="Courier New"><font size="3">}<font color="#008000">//__________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">bool</font></font>
+<font face="Courier New">Node::tree_insert (Elem&amp; element) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+last_visited_ptr = <font color="#0000ff">this</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(search(element, last_visited_ptr).valid())&nbsp; <font color="#008000">//
+element already in tree</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+<font color="#0000ff">false</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(last_visited_ptr-&gt;vector_insert(element))</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+<font color="#0000ff">true</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+last_visited_ptr-&gt;split_insert(element);</font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//__________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">bool</font></font>
+<font face="Courier New">Node::delete_element (Elem&amp; target) {</font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+target is just a package for the key value.&nbsp; the reference does
+not</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+provide the address of the Elem instance to be deleted.</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+first find the node contain the Elem instance with the given key</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+node = 0;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+parent_index_this = invalid_index;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem&amp;
+found = search (target, node);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(!found.valid())</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+<font color="#0000ff">false</font>;</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(node-&gt;is_leaf() &amp;&amp; node-&gt;key_count() &gt;
+node-&gt;minimum_keys()) </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+node-&gt;vector_delete (target);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+<font color="#0000ff">if</font> (node-&gt;is_leaf()) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">node-&gt;vector_delete
+(target);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+loop invariant: if _node_ is not null_ptr, it points to a node</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+that has lost an element and needs to import one from a sibling</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+or merge with a sibling and import one from its parent.</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+after an iteration of the loop, _node_ may become null or</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+it may point to its parent if an element was imported from the </font></font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+parent and this caused the parent to fall below the minimum </font></font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+element count.</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">while</font>
+(node) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#008000">// NOTE:
+the "this" pointer may no longer be valid after the first</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#008000">//
+iteration of this loop!!!</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(node==node-&gt;find_root() &amp;&amp; node-&gt;is_leaf()) </font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">break</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(node==node-&gt;find_root() &amp;&amp; !node-&gt;is_leaf()) <font color="#008000">//
+sanity check</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">throw</font>
+"node should not be root in delete_element loop";</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#008000">// is an
+extra element available from the right sibling (if any)</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">Node* right =
+node-&gt;right_sibling(parent_index_this);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(right &amp;&amp; right-&gt;key_count() &gt; right-&gt;minimum_keys())</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">node =
+node-&gt;rotate_from_right(parent_index_this);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+{</font></font></p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="3"><font face="Courier New"><font color="#008000">//
+is an extra element available from the left sibling (if any)</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">Node* left =
+node-&gt;left_sibling(parent_index_this);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(left &amp;&amp; left-&gt;key_count() &gt; left-&gt;minimum_keys())</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">node =
+node-&gt;rotate_from_left(parent_index_this);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+<font color="#0000ff">if</font> (right)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">node =
+node-&gt;merge_right(parent_index_this);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+<font color="#0000ff">if</font> (left)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">node =
+node-&gt;merge_left(parent_index_this);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+{</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem&amp;
+smallest_in_subtree = found.mp_subtree-&gt;smallest_key_in_subtree();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">found.m_key
+= smallest_in_subtree.m_key;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">found.m_payload
+= smallest_in_subtree.m_payload;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">found.mp_subtree-&gt;delete_element
+(smallest_in_subtree);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+<font color="#0000ff">true</font>;</font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//___________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font face="Courier New"><font size="3">Node*
+Node::rotate_from_right(<font color="#0000ff">int</font>
+parent_index_this) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+new element to be added to this node</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem
+underflow_filler = (*mp_parent)[parent_index_this+1];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+right sibling of this node</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+right_sib = (*mp_parent)[parent_index_this+1].mp_subtree;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">underflow_filler.mp_subtree
+= (*right_sib)[0].mp_subtree;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+copy the entire element</font></font></font></p>
+<p>&nbsp; &nbsp;&nbsp;<font size="3"><font face="Courier New">(*mp_parent)[parent_index_this+1]
+= (*right_sib)[1];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+now restore correct pointer</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">(*mp_parent)[parent_index_this+1].mp_subtree
+= right_sib;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">vector_insert
+(underflow_filler);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">right_sib-&gt;vector_delete(0);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">(*right_sib)[0].m_key
+= "";</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">(*right_sib)[0].m_payload
+= "";</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+null_ptr; <font color="#008000">// parent node still has same element
+count</font></font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//_______________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font face="Courier New"><font size="3">Node*
+Node::rotate_from_left(<font color="#0000ff">int</font>
+parent_index_this) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+new element to be added to this node</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem
+underflow_filler = (*mp_parent)[parent_index_this];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+left sibling of this node</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+left_sib = (*mp_parent)[parent_index_this-1].mp_subtree;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">underflow_filler.mp_subtree
+= (*<font color="#0000ff">this</font>)[0].mp_subtree;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">(*<font color="#0000ff">this</font>)[0].mp_subtree
+= (*left_sib)[left_sib-&gt;m_count-1].mp_subtree;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+((*<font color="#0000ff">this</font>)[0].mp_subtree)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">(*<font color="#0000ff">this</font>)[0].mp_subtree-&gt;mp_parent
+= <font color="#0000ff">this</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+copy the entire element</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">(*mp_parent)[parent_index_this]
+= (*left_sib)[left_sib-&gt;m_count-1];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+now restore correct pointer</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">(*mp_parent)[parent_index_this].mp_subtree
+= <font color="#0000ff">this</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">vector_insert
+(underflow_filler);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">left_sib-&gt;vector_delete(left_sib-&gt;m_count-1);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+null_ptr; <font color="#008000">// parent node still has same element
+count</font></font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//_______________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font face="Courier New"><font size="3">Node* Node::merge_right (<font color="#0000ff">int</font>
+parent_index_this) {</font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+copy elements from the right sibling into this node, along with the</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+element in the parent node vector that has the right sibling as it
+subtree.</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// the
+right sibling and that parent element are then deleted</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem
+parent_elem = (*mp_parent)[parent_index_this+1];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+right_sib = (*mp_parent)[parent_index_this+1].mp_subtree;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">parent_elem.mp_subtree
+= (*right_sib)[0].mp_subtree;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">vector_insert
+(parent_elem);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">for</font>
+(<font color="#0000ff">int</font> i=1; i&lt;right_sib-&gt;m_count;
+i++)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">vector_insert
+((*right_sib)[i]);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">mp_parent-&gt;vector_delete
+(parent_index_this+1);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">delete</font>
+right_sib;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(mp_parent==find_root() &amp;&amp; !mp_parent-&gt;key_count()) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">m_root.set_root(m_root.get_root(),
+<font color="#0000ff">this</font>);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">delete</font>
+mp_parent;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">mp_parent
+= 0;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+null_ptr;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+<font color="#0000ff">if</font> (mp_parent==find_root() &amp;&amp;
+mp_parent-&gt;key_count())</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+null_ptr;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(mp_parent&amp;&amp; mp_parent-&gt;key_count() &gt;=
+mp_parent-&gt;minimum_keys())</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+null_ptr; <font color="#008000">// no need for parent to import an
+element</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+mp_parent; <font color="#008000">// parent must import an element</font></font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//_______________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font face="Courier New"><font size="3">Node* Node::merge_left (<font color="#0000ff">int</font>
+parent_index_this) {</font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+copy all elements from this node into the left sibling, along with
+the</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+element in the parent node vector that has this node as its subtree.</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+this node and its parent element are then deleted.</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem
+parent_elem = (*mp_parent)[parent_index_this];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">parent_elem.mp_subtree
+= (*<font color="#0000ff">this</font>)[0].mp_subtree;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+left_sib = (*mp_parent)[parent_index_this-1].mp_subtree;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">left_sib-&gt;vector_insert
+(parent_elem);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">for</font>
+(<font color="#0000ff">int</font> i=1; i&lt;m_count; i++)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">left_sib-&gt;vector_insert
+(m_vector[i]);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">mp_parent-&gt;vector_delete
+(parent_index_this);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+parent_node = mp_parent;&nbsp; <font color="#008000">// copy before
+deleting this node</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(mp_parent==find_root() &amp;&amp; !mp_parent-&gt;key_count()) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">m_root.set_root(m_root.get_root(),
+left_sib);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">delete</font>
+mp_parent;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">left_sib-&gt;mp_parent
+= null_ptr;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">delete</font>
+<font color="#0000ff">this</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+null_ptr;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+<font color="#0000ff">if</font> (mp_parent==find_root() &amp;&amp;
+mp_parent-&gt;key_count()) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">delete</font>
+<font color="#0000ff">this</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+null_ptr;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">delete</font>
+<font color="#0000ff">this</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(parent_node-&gt;key_count() &gt;= parent_node-&gt;minimum_keys())</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+null_ptr; <font color="#008000">// no need for parent to import an
+element</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+parent_node; <font color="#008000">// parent must import an element</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//_______________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font face="Courier New"><font size="3">Node* Node::right_sibling
+(<font color="#0000ff">int</font>&amp; parent_index_this) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">parent_index_this
+= index_has_subtree (); <font color="#008000">// for element with
+THIS as subtree</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(parent_index_this == invalid_index)</font></font></p>
+<p>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+0;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+now mp_parent is known not to be null</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(parent_index_this &gt;= mp_parent-&gt;m_count-1)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+0;&nbsp; <font color="#008000">// no right sibling</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+mp_parent-&gt;m_vector[parent_index_this+1].mp_subtree;&nbsp; <font color="#008000">//
+might be null</font></font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//__________________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font face="Courier New"><font size="3">Node* Node::left_sibling
+(<font color="#0000ff">int</font>&amp; parent_index_this) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">parent_index_this
+= index_has_subtree (); <font color="#008000">// for element with
+THIS as subtree</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(parent_index_this == invalid_index)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+0;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+now mp_parent is known not to be null</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(parent_index_this==0)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+0;&nbsp; <font color="#008000">// no left sibling</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+mp_parent-&gt;m_vector[parent_index_this-1].mp_subtree;&nbsp; <font color="#008000">//
+might be null</font></font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//____________________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">int</font></font>
+<font face="Courier New">Node::index_has_subtree () {</font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+return the element in this node's parent that has the "this"
+pointer as its subtree</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(!mp_parent)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+invalid_index;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+first = 0;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+last = mp_parent-&gt;m_count-1;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">while</font>
+(last-first &gt; 1) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+mid = first+(last-first)/2;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem&amp;
+smallest = smallest_key();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(smallest_key()&gt;=mp_parent-&gt;m_vector[mid])</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">first = mid;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">last = mid;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(mp_parent-&gt;m_vector[first].mp_subtree == <font color="#0000ff">this</font>)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+first;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+<font color="#0000ff">if</font> (mp_parent-&gt;m_vector[last].mp_subtree
+== <font color="#0000ff">this</font>)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+last;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">throw</font>
+"error in index_has_subtree";</font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//__________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font face="Courier New"><font size="3">Elem&amp;
+Node::smallest_key_in_subtree () {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(is_leaf())</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+m_vector[1];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+m_vector[0].mp_subtree-&gt;smallest_key_in_subtree();</font></font></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//___________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font face="Courier New"><font size="3">Elem&amp; Node::search
+(Elem&amp; desired, Node*&amp; last_visited_ptr) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+the zeroth element of the vector is a special case (no key value or </font></font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+payload, just a subtree).&nbsp; the seach starts at the *this node,
+not</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+at the root of the b-tree.</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+current = <font color="#0000ff">this</font>;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(!key_count())</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">current
+= 0;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">while</font>
+(current) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">last_visited_ptr
+= current;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+if desired is less than all values in current node</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(current-&gt;m_count&gt;1 &amp;&amp; desired&lt;current-&gt;m_vector[1])</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">current =
+current-&gt;m_vector[0].mp_subtree;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+if desired is greater than all values in current node</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+<font color="#0000ff">if</font>
+(desired&gt;current-&gt;m_vector[current-&gt;m_count-1])</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">current =
+current-&gt;m_vector[current-&gt;m_count-1].mp_subtree;</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+{</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#008000">// binary
+search of the node</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+first = 1;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+last = current-&gt;m_count-1;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">while</font>
+(last-first &gt; 1) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+mid = first+(last-first)/2;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(desired&gt;=current-&gt;m_vector[mid])</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">first = mid;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">else</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">last = mid;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(current-&gt;m_vector[first]==desired)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+current-&gt;m_vector[first];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">if</font>
+(current-&gt;m_vector[last]==desired)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+current-&gt;m_vector[last];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+<font color="#0000ff">if</font> (current-&gt;m_vector[last]&gt;desired)</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">current =
+current-&gt;m_vector[first].mp_subtree;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New"><font color="#0000ff">else</font>
+</font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">current =
+current-&gt;m_vector[last].mp_subtree;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+m_failure;</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p><font face="Courier New"><font size="3">}
+<font color="#008000">//_____________________________________________________________________</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+initialize static data at file scope</font></font></font></p>
+<p><font face="Courier New"><font size="3">Elem Node::m_failure =
+Elem();</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// for
+the high-resolution timer</font></font></font></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">#include</font></font>
+<font face="Courier New">&lt;windows.h&gt; </font></font>
+</p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p><font size="3"><font face="Courier New"><font color="#0000ff">int</font></font>
+<font face="Courier New">_tmain(<font color="#0000ff">int</font>
+argc, _TCHAR* argv[])</font></font></p>
+<p><font face="Courier New"><font size="3">{</font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// the
+main function is just some code to test the b-tree.&nbsp; it inserts
+100,000 elements,</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+then searches for each of them, then deletes them in reverse order
+(also tested in</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">//
+forward order) and searches for all 100,000 elements after each
+deletion to ensure that</font></font></font></p>
+<p><font color="#008000"><font face="Courier New"><font size="3">// all
+remaining elements remain accessible.</font></font></font></p>
+<p><font color="#008000"><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">__int64</font>
+frequency, start, end, total;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">QueryPerformanceFrequency(
+(LARGE_INTEGER *)&amp;frequency );</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node::m_failure.invalidate();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node::m_failure.m_key
+= "";</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem
+elem;</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">RootTracker
+tracker;&nbsp; <font color="#008000">// maintains a pointer to the
+current root of the b-tree</font></font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node*
+root_ptr = <font color="#0000ff">new</font> Node(tracker);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">tracker.set_root
+(null_ptr, root_ptr);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; 
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">vector&lt;string&gt;
+search_vect;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#008000">//
+prepare the key strings </font></font></font>
+</p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">search_vect.resize
+(100000);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">int</font>
+search_count = 0;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">for</font>
+(<font color="#0000ff">int</font> i=0; i&lt;100000; i++) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">strstream
+stm;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">stm
+&lt;&lt; i;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">stm
+&gt;&gt; search_vect[search_count++];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">string s;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">cout &lt;&lt;
+"finished preparing key strings\n";</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">QueryPerformanceCounter
+( (LARGE_INTEGER *)&amp;start);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">for</font>
+(i=0; i&lt;100000; i++) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">elem.m_key
+= search_vect[i];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">elem.m_payload
+= search_vect[i]+" hi you";</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">tracker.get_root()-&gt;tree_insert(elem);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">cout &lt;&lt;
+"finished inserting elements\n";</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node *
+last;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">for</font>
+(i=0; i&lt;100000; i++) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem
+desired;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">desired.m_key
+= search_vect[i];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem&amp;
+result = tracker.get_root()-&gt;search (desired, last);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">cout &lt;&lt;
+"finished searching for elements\n";</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">for</font>
+(i=99999; i&gt;=0; i--) {</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Elem
+target;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">target.m_key
+= search_vect[i];</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font size="3"><font face="Courier New">tracker.get_root()-&gt;delete_element
+(target);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">Node
+* last;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">}</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">QueryPerformanceCounter
+( (LARGE_INTEGER *)&amp;end);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">total =
+(end-start)/(frequency/1000);</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">cout &lt;&lt;
+"total millisec for 100000 elements: " &lt;&lt; (<font color="#0000ff">int</font>)total
+&lt;&lt; endl;</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">cout &lt;&lt;
+"after deletion" &lt;&lt; endl;</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">tracker.get_root()-&gt;dump();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New">getchar();</font></font></p>
+<p>&nbsp;&nbsp;&nbsp; <font size="3"><font face="Courier New"><font color="#0000ff">return</font>
+0;</font></font></p>
+<p><font face="Courier New"><font size="3">}</font></font></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+<p><!--[if !supportEmptyParas]-->&nbsp;<!--[endif]--></p>
+
+</body></html>
