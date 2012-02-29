@@ -2,6 +2,7 @@
 	#define H_RACINE_H
 
 	#include "Noeud.h"
+	#include <iostream>
 	#include <vector>
 
 	template<typename T>
@@ -12,5 +13,7 @@
 
 			/* data */
 		};
+
+		#include "Racine.tpp"
 
 #endif

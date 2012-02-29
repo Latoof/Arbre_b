@@ -5,20 +5,31 @@
 	#include "Racine.h"
 	#include <vector>
 
+	/* DEBUG */
+	#include <iostream>
+	#include <ostream>
+	#include <algorithm>
+	/* //DEBUG */
+
 	template<typename T>
 	class BArbre {
 	public:
-		BArbre();
+		BArbre( int lower = 2, int upper = -1 );
 		~BArbre();
 
-		void ajouterElement( T element );
+		void ajouterElement( const T& element );
 		int supprimerElement( T element );
-		T chercherElement( T element );
+		T chercherElement( const T& element );
+		Noeud<T>* chercherElementN( const T& element );
+		void draw(std::ostream &flux) const;
+
+		void addToNode( Noeud<T>* node, const T& element );
 
 	private:
-		std::vector<Noeud<T>*> noeuds; // Essai
-		Racine<T>* racine; 
-
+		int _lower;
+		int _upper;
+		std::vector<Noeud<T>*> _noeuds; // Essai
+		Racine<T>* _racine; 
 
 	};
 
