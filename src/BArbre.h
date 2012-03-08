@@ -23,7 +23,12 @@
 		Noeud<T>* chercherElementN( const T& element );
 		void draw(std::ostream &flux) const;
 
-		void addToNode( Noeud<T>* node, const T& element );
+		std::vector< Noeud<T>* > addToNodeOld( Noeud<T>* node, const T& element );
+		std::vector< Noeud<T>* > addToNode( Noeud<T>* node, const T& element );
+
+		std::vector< Noeud<T>* > splitNode( Noeud<T>* node );
+
+		int removeFromNode( Noeud<T>* node, const T& element );
 
 	private:
 		int _lower;

@@ -14,19 +14,28 @@
 			~Noeud();
 
 			T getElement( int i );
-			void addElement( T elt );
+			int addElement( T elt );
+			int delElement( const T& element );
 
 
 			std::vector<T> getElements();
 
-			void addFils( Noeud<T>* node );
+			int addFils( Noeud<T>* node, int index = -1 );
 			void delFils( Noeud<T>* node );
 
 			std::vector< Noeud<T>* > getFils();
+
+			void setParent( Noeud<T>* parent );
 			Noeud<T>* getParent();
 
 			bool contains( const T& elt );
 			bool isFeuille();
+			bool isOverflowing( int size );
+			bool isUnderflowing( int min_size );
+
+			/* Useless */
+			int getElementPosition( const T& element );
+
 			void draw(std::ostream &flux) const;
 		private:
 

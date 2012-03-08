@@ -31,6 +31,7 @@ void BArbre<T>::ajouterElement( const T& element ) {
 
 	if ( node != NULL && !node->contains(element) ) {
 		
+		std::cout << "Choosen node : " << *node << std::endl;
 		this->addToNode( node, element );
 
 	}
@@ -42,19 +43,25 @@ void BArbre<T>::ajouterElement( const T& element ) {
 }
 
 template<typename T>
-void BArbre<T>::addToNode( Noeud<T>* node, const T& element ) {
+std::vector< Noeud<T>* > BArbre<T>::addToNodeOld( Noeud<T>* node, const T& element ) {
 
 	std::cout << "Adding/moving " << element << std::endl;
+	std::vector< Noeud<T>* > vReturn;
 	
 	if ( node->getElements().size() < _upper ) {
-			node->addElement( element );
-			std::cout << "Add Successfull" << std::endl;
+
+		node->addElement( element );
+		std::cout << "Add Successfull" << std::endl;
+
 	}
 	else {
+
+		node->addElement( element );
 		
-		std::cout << "Node full. Expanding !" << std::endl;
+		std::cout << "[SPLIT] Node full. Expanding this node : " << *node << std::endl;
 		/* HARD */
 
+		
 		Noeud<T>* parent_node = node->getParent();
 		/* If node has no parent, that's root */
 		/* So let's create a new root in order to replace this one */
@@ -62,7 +69,7 @@ void BArbre<T>::addToNode( Noeud<T>* node, const T& element ) {
 			std::cout << "Rebuilding root ..." << std::endl;
 			_racine = new Racine<T>();
 			parent_node = _racine;
-			_noeuds.push_back(parent_node);
+			_noeuds.insert(_noeuds.begin(),_racine);
 
 		}
 		else {
@@ -73,58 +80,86 @@ void BArbre<T>::addToNode( Noeud<T>* node, const T& element ) {
 		Noeud<T>* n_left_node = new Noeud<T>( parent_node );
 		Noeud<T>* n_right_node = new Noeud<T>( parent_node );
 
-		parent_node->addFils(n_left_node);
-		parent_node->addFils(n_right_node);
-
 
 		std::vector<T> elts = node->getElements();
 
 		typename
 		std::vector<T>::iterator iterElements;
 
-		int middle = ( elts.size() / 2 );
+		typename
+		std::vector< Noeud<T>* > parent_split;
 
-		int i=0;
-		bool n_element_inserted = false;
-		for ( iterElements = elts.begin(); iterElements != elts.end() ; iterElements++ ) {
+		int i;
+		/* Transfert elements from original Node to two new nodes */
+		int middle_elt;
+		int middle_index = (elts.size() - 1) / 2 ;
+		std::cout << "middle_index : " << middle_index << std::endl;
+		for ( iterElements = elts.begin(), i=0;
+			  iterElements != elts.end();
+			  iterElements++, i++		) {
 			
 			std::cout << "[Add] Element count : " << i << std::endl;
-			Noeud<T>* target_node;
 
-			if ( i < middle ) {
-				target_node = n_left_node;
+			if ( i < middle_index ) {
+				std::cout << "To left " << (*iterElements) << std::endl;
+				addToNode( n_left_node, (*iterElements) );
 			}
-			else if ( i == middle ) {
-				target_node = parent_node;
+			else if ( i == middle_index ) {
+				std::cout << "WILL PUSHING UP " << (*iterElements) << std::endl;
+				middle_elt = (*iterElements);
 			}
-			else { // i > middle
-				target_node = n_right_node;
+			else { // i > middle_index
+				std::cout << "To right " << (*iterElements) << std::endl;
+				addToNode( n_right_node, (*iterElements) );
 			}
 
-			if ( element < (*iterElements) && !n_element_inserted ) {
+		}
 
-				addToNode( target_node, element );
-				n_element_inserted = true;
+		std::cout << "PUSHING UP " << middle_elt << std::endl;
+		parent_split = addToNode( parent_node, middle_elt );
 
-				if ( iterElements != elts.begin() ) {
-					iterElements--;
-				}
+
+		std::vector< Noeud<T>* > sons = node->getFils();
+		
+		typename
+		std::vector< Noeud<T>* >::iterator iterFils;
+
+		Noeud<T>* parent_left_splitted_node;
+		Noeud<T>* parent_right_splitted_node;
+
+		if ( parent_split.size() == 2 ) {
+			parent_left_splitted_node = parent_split.at(0);
+			parent_right_splitted_node = parent_split.at(1);
+		}
+		else {
+			parent_left_splitted_node = parent_node;
+			parent_right_splitted_node = parent_node;
+		}
+
+		parent_left_splitted_node->addFils(n_left_node,0);
+		parent_right_splitted_node->addFils(n_right_node,0);
+
+		/* Transfert sons Nodes from original Node to two new nodes */
+		int middle_son = middle_index+1;
+		for ( iterFils = sons.begin(), i=0 ;
+			  iterFils != sons.end();
+			  iterFils++, i++		) {
+			
+			std::cout << "[Add] Element count : " << i << std::endl;
+
+			if ( i < middle_index ) {
+				n_left_node->addFils( (*iterFils), 0 );
 
 			}
-			else {
-
-				std::cout << "Pushing " << (*iterElements) << std::endl;
-				addToNode( target_node, (*iterElements) );
+			else { // i > middle_index
+				
+				n_right_node->addFils( (*iterFils), 0 );
 
 			}
-			i++;
 
 
 		}
 
-		if ( !n_element_inserted ) {
-			addToNode( n_right_node, element );
-		}
 
 		/* //HARD */
 
@@ -144,18 +179,300 @@ void BArbre<T>::addToNode( Noeud<T>* node, const T& element ) {
 		_noeuds.push_back(n_left_node);
 		_noeuds.push_back(n_right_node);
 
-							std::cout << "NEW Racine : " << *_racine << std::endl;
+		vReturn.push_back(n_left_node);
+		vReturn.push_back(n_right_node);
+
+		std::cout << "NEW Racine : " << *_racine << std::endl;
+
+	}
+
+	return vReturn;
+
+
+}
+
+template<typename T>
+std::vector< Noeud<T>* > BArbre<T>::splitNode( Noeud<T>* node ) {
+	
+	std::vector< Noeud<T>* > vReturn;
+	
+	std::cout << "[SPLIT] Node full. Expanding this node : " << *node << std::endl;
+	/* HARD */
+
+	
+	Noeud<T>* parent_node = node->getParent();
+	/* If node has no parent, that's root */
+	/* So let's create a new root in order to replace this one */
+	if ( parent_node == NULL ) {
+		std::cout << "Rebuilding root ..." << std::endl;
+		_racine = new Racine<T>();
+		parent_node = _racine;
+		_noeuds.insert(_noeuds.begin(),_racine);
+
+	}
+	else {
+		std::cout << "_____ Pas la racine !" << std::endl;
+		parent_node->delFils(node);
+	}
+
+	Noeud<T>* n_left_node = new Noeud<T>( parent_node );
+	Noeud<T>* n_right_node = new Noeud<T>( parent_node );
+
+
+	std::vector<T> elts = node->getElements();
+
+	typename
+	std::vector<T>::iterator iterElements;
+
+	int i;
+	/* Transfert elements from original Node to two new nodes */
+	int middle_elt;
+	int middle_index = (elts.size() - 1) / 2 ;
+	std::cout << "middle_index : " << middle_index << std::endl;
+	for ( iterElements = elts.begin(), i=0;
+		  iterElements != elts.end();
+		  iterElements++, i++		) {
+		
+		std::cout << "[Add] Element count : " << i << std::endl;
+
+		if ( i < middle_index ) {
+			std::cout << "To left " << (*iterElements) << std::endl;
+			addToNode( n_left_node, (*iterElements) );
+		}
+		else if ( i == middle_index ) {
+			middle_elt = (*iterElements);
+		}
+		else { // i > middle_index
+			std::cout << "To right " << (*iterElements) << std::endl;
+			addToNode( n_right_node, (*iterElements) );
+		}
+
+	}
+
+	std::vector< Noeud<T>* > sons = node->getFils();
+
+	std::cout << "-- Need to move " << sons.size() << " sons !" << std::endl;
+	
+	typename
+	std::vector< Noeud<T>* >::iterator iterFils;
+
+	/* Transfert sons Nodes from original Node to two new nodes */
+	int middle_son = middle_index+1;
+	for ( iterFils = sons.begin(), i=0 ;
+		  iterFils != sons.end();
+		  iterFils++, i++		) {
+		
+		std::cout << "[Add] Element count : " << i << std::endl;
+
+		if ( i <= middle_index ) {
+			n_left_node->addFils( (*iterFils), 0 );
+			std::cout << "** Adding a son to left" << std::endl;
+		}
+		else { // i > middle_index
+			n_right_node->addFils( (*iterFils), 0 );
+			std::cout << "// Adding a son to right" << std::endl;
+
+		}
+
+	}
+
+	// TODO find a solution : Use a Set ?
+	//_noeuds.remove(node);
+	typename
+	std::vector< Noeud<T>* >::iterator iterFindNode;
+	for ( iterFindNode = _noeuds.begin(); iterFindNode != _noeuds.end() ; iterFindNode++) {
+		
+		if ( (*iterFindNode) == node ) {
+			_noeuds.erase( iterFindNode );
+			break;
+		}
+
+	}
+
+	_noeuds.push_back(n_left_node);
+	_noeuds.push_back(n_right_node);
+
+	vReturn.push_back(n_left_node);
+	vReturn.push_back(n_right_node);
+
+
+
+	std::cout << "PUSHING UP " << middle_elt << std::endl;
+
+	parent_node->addElement( middle_elt );
+
+	parent_node->addFils( n_left_node );
+	parent_node->addFils( n_right_node );
+
+
+
+	/* Recursive */
+	if ( parent_node->isOverflowing(_upper)) {
+		splitNode( parent_node );
+	}
+
+	return vReturn;
+
+
+}
+
+template<typename T>
+std::vector< Noeud<T>* > BArbre<T>::addToNode( Noeud<T>* node, const T& element ) {
+
+	std::cout << "Adding/moving " << element << std::endl;
+	std::vector< Noeud<T>* > vReturn;
+
+	node->addElement( element );
+	std::cout << "Add Successfull" << std::endl;
+	
+	if ( node->isOverflowing( _upper ) ) {
+
+		this->splitNode( node );
+
+	}
+
+	return vReturn;
+}
+
+template<typename T>
+int BArbre<T>::removeFromNode( Noeud<T>* node, const T& element ) {
+	
+	/* To be or not to be a leaf. (Born, to be a leeaaf, to be a leeeaaf) */
+	if ( node != _racine && node->isFeuille() ) {
+		
+		node->delElement( element );
+
+		if ( node->isUnderflowing( _lower ) ) {
+				
+			Noeud<T>* parent_node = node->getParent();
+			
+			typename
+			std::vector<Noeud<T>*> fils_noeud_courant = parent_node->getFils();
+
+			typename
+			std::vector<Noeud<T>*>::iterator iterFils;
+			
+			int node_position = -3;
+
+			int i;
+			/* Used to know leaf position between all bros */
+			for ( iterFils = fils_noeud_courant.begin(), i=0;
+				  iterFils != fils_noeud_courant.end();
+				  iterFils++, i++ ) {
+
+				if ( *iterFils == node ) {
+					node_position = i;
+				}
+				  
+
+			}
+
+			T father_elt;
+			if ( node_position <= fils_noeud_courant.size() / 2 ) {
+				father_elt = node->getParent()->getElements().back();
+			}
+			else {
+				father_elt = node->getParent()->getElements().front();
+			}
+
+			/* SWITCH */
+			bool found = false;
+			T son_elt;
+			for ( iterFils = fils_noeud_courant.begin(), i=0;
+				  iterFils != fils_noeud_courant.end();
+				  iterFils++, i++ ) {
+
+				if ( i == node_position - 1 && !(*iterFils)->isUnderflowing( _lower - 1 )  ) {
+					
+					son_elt = (*iterFils)->getElements().back();
+
+				}
+				else if ( i == node_position + 1 && !(*iterFils)->isUnderflowing( _lower - 1 )  ) {
+					
+					son_elt = (*iterFils)->getElements().front();
+
+				}
+				  
+				if ( found ) {
+
+					std::cout << "Bro found" << std::endl;
+					
+					node->addElement( father_elt );
+					parent_node->delElement( father_elt );
+					parent_node->addElement( son_elt );
+					(*iterFils)->delElement( son_elt );
+
+					break;
+
+				}
+				
+			}
+
+			/* WELL DONE */
+
+
+		}
+
+	}
+	else {
+
+
+		typename
+		std::vector<Noeud<T>*> fils_noeud_courant = node->getFils();
+
+		typename
+		std::vector<Noeud<T>*>::iterator iterFils;
+		
+		int i;
+		int left_element_node_position = node->getElementPosition( element );
+		/* Used to know leaf position between all bros */
+		for ( iterFils = fils_noeud_courant.begin(), i=0;
+			  iterFils != fils_noeud_courant.end();
+			  iterFils++, i++ ) {
+
+			if ( i = left_element_node_position ) {
+				
+				T son_elt = (*iterFils)->getElements().back();
+
+				/* Switch element between node and his son */
+				(*iterFils)->delElement( son_elt );
+				(*iterFils)->addElement( element );
+				node->addElement( son_elt );
+
+				/* Re-execute for son */
+				this->removeFromNode( (*iterFils), element );
+				break;
+
+			}			  
+
+		}
 
 
 	}
 
 
 }
-
+	
 
 template<typename T>
 int BArbre<T>::supprimerElement( T element ) {
 	
+	std::cout << "We want to del " << element << std::endl;
+	
+	Noeud<T>* node = this->chercherElementN( element );
+	std::cout << "Search returned" << std::endl;
+
+	if ( node != NULL && node->contains(element) ) {
+		
+		std::cout << "Choosen node : " << *node << std::endl;
+		this->removeFromNode( node, element );
+
+	}
+	else {
+		std::cout << "Dbg : Elt not present : " << element << std::endl;
+		
+	}
+
 	return 0;
 }
 
@@ -246,7 +563,7 @@ Noeud<T>* BArbre<T>::chercherElementN( const T& element ) {
 			if ( (*iterElements) == element ) {
 				// Trouve
 				std::cout << "SearchN : Already exists" << std::endl;
-				return (*iterFils);
+				return noeud_courant;
 			}
 			/// Je bloque la. Mais sur le princope, on parcours a la fois les pointeurs vers les fils et les elements contenus dans le Noeud courant
 			else if ( element < (*iterElements) ) { // Si l'element a inserer est plus petit, alors il sera situe dans le noeud pointe "a gauche"
@@ -277,11 +594,15 @@ Noeud<T>* BArbre<T>::chercherElementN( const T& element ) {
 template<typename T>
 void BArbre<T>::draw(std::ostream &flux) const {
  	
+ 	/*
  	for ( int i=0; i < _noeuds.size(); i++) {
  		flux << "[" << i << "] NODE" << std::endl;
  		flux << *_noeuds.at(i);
 
  	}
+ 	*/
+ 	std::cout << *_racine;
+
 
  }
 
