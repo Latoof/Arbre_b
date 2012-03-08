@@ -23,7 +23,7 @@ int main( int argc, char** argv ) {
 	std::cout << feuille2.getElement(0) << std::endl;
 
 
-	BArbre<int> a(2);
+	BArbre<int> a(1);
 
 
 	std::cout << "Before adding 4" << std::endl << a << std::endl;
@@ -46,23 +46,37 @@ int main( int argc, char** argv ) {
 	a.ajouterElement( 12 );
 	std::cout << "[[[[[[ After adding 12" << std::endl << a << std::endl;
 
+									a.supprimerElement( 7 );
+	std::cout << "[[[[[[ After deleting 7" << std::endl << a << std::endl;
+
+
+		a.ajouterElement( 7 );
+	std::cout << "[[[[[[ After adding 7" << std::endl << a << std::endl;
+
 
 	a.ajouterElement( 8 );
 	std::cout << "[[[[[[ After adding 8" << std::endl << a << std::endl;
 
 
 
-	a.ajouterElement( 9 );
-	std::cout << "[[[[[[ After adding 9" << std::endl << a << std::endl;
-
 
 
 	a.ajouterElement( 10 );
 	std::cout << "[[[[[[ After adding 10" << std::endl << a << std::endl;
 
+										a.supprimerElement( 11 );
+	std::cout << "[[[[[[ After deleting 11" << std::endl << a << std::endl;
+
+	a.supprimerElement( 8 );
+	std::cout << "[[[[[[ After deleting 8" << std::endl << a << std::endl;
 
 
+	a.supprimerElement( 6 );
+	std::cout << "[[[[[[ After deleting 6" << std::endl << a << std::endl;
 
+		a.supprimerElement( 10 );
+	std::cout << "[[[[[[ After deleting 10" << std::endl << a << std::endl;
+/*
 	a.ajouterElement( 2 );
 	std::cout << "[[[[[[ After adding 2" << std::endl << a << std::endl;
 
@@ -148,6 +162,11 @@ int main( int argc, char** argv ) {
 
 								a.supprimerElement( 19 );
 	std::cout << "[[[[[[ After deleting 19" << std::endl << a << std::endl;
+
+									a.supprimerElement( 14 );
+	std::cout << "[[[[[[ After deleting 14" << std::endl << a << std::endl;
+
+*/
 
 	return 0;
 

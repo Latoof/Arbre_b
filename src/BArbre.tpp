@@ -335,85 +335,254 @@ std::vector< Noeud<T>* > BArbre<T>::addToNode( Noeud<T>* node, const T& element 
 }
 
 template<typename T>
-int BArbre<T>::removeFromNode( Noeud<T>* node, const T& element ) {
+std::vector< Noeud<T>* > BArbre<T>::balanceNode( Noeud<T>* node ) {
 	
-	/* To be or not to be a leaf. (Born, to be a leeaaf, to be a leeeaaf) */
-	if ( node != _racine && node->isFeuille() ) {
+	std::vector< Noeud<T>* > vReturn;
+
+	std::cout << "Balancing Node" << *node << std::endl;
+				
+	if ( node != _racine ) {
+		Noeud<T>* parent_node = node->getParent();
 		
-		node->delElement( element );
+		typename
+		std::vector<Noeud<T>*> brother_nodes = parent_node->getFils();
 
-		if ( node->isUnderflowing( _lower ) ) {
-				
-			Noeud<T>* parent_node = node->getParent();
-			
-			typename
-			std::vector<Noeud<T>*> fils_noeud_courant = parent_node->getFils();
+		typename
+		std::vector<Noeud<T>*>::iterator iterFils;
+		
+		int node_position = -3;
 
-			typename
-			std::vector<Noeud<T>*>::iterator iterFils;
-			
-			int node_position = -3;
+		int i;
+		/* Used to know leaf position between all bros */
+		for ( iterFils = brother_nodes.begin(), i=0;
+			  iterFils != brother_nodes.end();
+			  iterFils++, i++ ) {
 
-			int i;
-			/* Used to know leaf position between all bros */
-			for ( iterFils = fils_noeud_courant.begin(), i=0;
-				  iterFils != fils_noeud_courant.end();
-				  iterFils++, i++ ) {
-
-				if ( *iterFils == node ) {
-					node_position = i;
-				}
-				  
-
+			if ( *iterFils == node ) {
+				node_position = i;
 			}
-
-			T father_elt;
-			if ( node_position <= fils_noeud_courant.size() / 2 ) {
-				father_elt = node->getParent()->getElements().back();
-			}
-			else {
-				father_elt = node->getParent()->getElements().front();
-			}
-
-			/* SWITCH */
-			bool found = false;
-			T son_elt;
-			for ( iterFils = fils_noeud_courant.begin(), i=0;
-				  iterFils != fils_noeud_courant.end();
-				  iterFils++, i++ ) {
-
-				if ( i == node_position - 1 && !(*iterFils)->isUnderflowing( _lower - 1 )  ) {
-					
-					son_elt = (*iterFils)->getElements().back();
-
-				}
-				else if ( i == node_position + 1 && !(*iterFils)->isUnderflowing( _lower - 1 )  ) {
-					
-					son_elt = (*iterFils)->getElements().front();
-
-				}
-				  
-				if ( found ) {
-
-					std::cout << "Bro found" << std::endl;
-					
-					node->addElement( father_elt );
-					parent_node->delElement( father_elt );
-					parent_node->addElement( son_elt );
-					(*iterFils)->delElement( son_elt );
-
-					break;
-
-				}
-				
-			}
-
-			/* WELL DONE */
-
+			  
 
 		}
 
+
+		typename
+		std::vector<T> father_elts = parent_node->getElements();
+
+		T left_father_elt;
+		T right_father_elt;
+		if ( node_position > 0 ) {
+			left_father_elt = father_elts.at(node_position-1);
+		}
+		if ( node_position < father_elts.size() ) {
+			right_father_elt = father_elts.at(node_position);
+		}
+
+		Noeud<T>* left_brother = NULL;
+		Noeud<T>* right_brother = NULL;
+
+		/* SWITCH */
+		bool found = false;
+		T brother_elt;
+		for ( iterFils = brother_nodes.begin(), i=0;
+			  iterFils != brother_nodes.end();
+			  iterFils++, i++ ) {
+
+			std::cout << "Viewing node " << i << std::endl;
+
+			if ( i == node_position - 1 ) {
+				
+				left_brother = (*iterFils);
+
+				if ( !left_brother->isUnderflowing( _lower + 1 ) ) {
+					brother_elt = left_brother->getElements().back();
+					found = true;
+
+									std::cout << "Bro with sufficient elts found : " << **iterFils << std::endl;
+				
+				//node->delElement( element );
+				node->addElement( left_father_elt );
+				parent_node->delElement( left_father_elt );
+				std::cout << left_father_elt << " to node " << std::endl;
+
+				parent_node->addElement( brother_elt );
+				(*iterFils)->delElement( brother_elt );
+				std::cout << brother_elt << " to parent " << std::endl;
+					break;
+				}
+
+			}
+			else if ( i == node_position + 1 ) {
+				
+				right_brother = (*iterFils);
+				
+				if (  !right_brother->isUnderflowing( _lower + 1 ) ) {
+					brother_elt = right_brother->getElements().front();
+					found = true;
+
+									std::cout << "Bro with sufficient elts found : " << **iterFils << std::endl;
+				
+				//node->delElement( element );
+				node->addElement( right_father_elt );
+				parent_node->delElement( right_father_elt );
+				std::cout << right_father_elt << " to node " << std::endl;
+
+				parent_node->addElement( brother_elt );
+				(*iterFils)->delElement( brother_elt );
+				std::cout << brother_elt << " to parent " << std::endl;
+					break;
+				}
+
+			}
+			  
+
+		
+			
+		}
+
+		/* WELL DONE */
+		if ( !found ) {
+
+			Noeud<T>* choosen_bro;
+			
+			if ( left_brother != NULL ) {
+				std::cout << "No good node. But I will push my left bro" << std::endl;
+				choosen_bro = left_brother;
+
+
+			std::cout << " Bro = " << *choosen_bro << std::endl;
+
+			choosen_bro->addElement( left_father_elt );
+
+			std::cout << "Here" << std::endl;
+
+			/* Will contain all elements of each node */
+			typename
+			std::vector<T> node_elements = node->getElements();
+
+			typename
+			std::vector< Noeud<T>* > node_sons = node->getFils();
+
+			for ( i=0; i<node_elements.size(); i++ ) {
+				choosen_bro->addElement( node_elements.at(i) );
+			}
+
+			for ( i=0; i<node_sons.size(); i++ ) {
+				choosen_bro->addFils( node_sons.at(i) );
+			}
+
+			parent_node->delFils( node );
+						parent_node->delElement( left_father_elt );
+
+
+			}
+			else if ( right_brother != NULL ) {
+				std::cout << "No good node. But I will push my right bro" << std::endl;
+				choosen_bro = right_brother;
+
+
+			std::cout << " Bro = " << *choosen_bro << std::endl;
+
+			choosen_bro->addElement( right_father_elt );
+
+
+			std::cout << "Here" << std::endl;
+
+			/* Will contain all elements of each node */
+			typename
+			std::vector<T> node_elements = node->getElements();
+
+			typename
+			std::vector< Noeud<T>* > node_sons = node->getFils();
+
+			for ( i=0; i<node_elements.size(); i++ ) {
+				choosen_bro->addElement( node_elements.at(i) );
+			}
+
+			for ( i=0; i<node_sons.size(); i++ ) {
+				choosen_bro->addFils( node_sons.at(i) );
+			}
+
+			parent_node->delFils( node );
+						parent_node->delElement( right_father_elt );
+
+			}
+			else {
+				std::cout << "Sorry, I failed" << std::endl;
+				return vReturn;
+			}
+
+
+			/* RECURSIVE (we know that's not a leaf*/
+
+			if ( parent_node->isUnderflowing( _lower)  ) {
+				this->balanceNode( parent_node );
+			}
+			//this->removeFromNode( parent_node, father_elt );
+			/*****************/
+
+		}
 	}
+	else {
+		std::cout << "ROOOOOT (" << node->getFils().size() << " sons)" << std::endl;
+					/* Will contain all elements of each node */
+
+		typename
+		std::vector< Noeud<T>* > node_sons = node->getFils();
+
+		for ( int i=0; i<node_sons.size(); i++ ) {
+			
+			Noeud<T>* current_son = node_sons.at(i);
+			node->delFils( current_son );
+
+			typename
+			std::vector<T> node_elements = current_son->getElements();
+
+			typename
+			std::vector< Noeud<T>* > node_sons = current_son->getFils();
+
+			int j;
+			for ( j=0; j<node_elements.size(); j++ ) {
+				node->addElement( node_elements.at(j) );
+			}
+
+			for ( j=0; j<node_sons.size(); j++ ) {
+				node->addFils( node_sons.at(j) );
+			}
+
+		
+		}
+
+		_racine = static_cast<Racine<T>*>(node);
+
+
+	}
+
+	return vReturn;
+}
+
+template<typename T>
+int BArbre<T>::removeFromNode( Noeud<T>* node, const T& element ) {
+	
+	std::cout << std::endl << "--- Removing " << element << " from " << *node << std::endl;
+
+	/* Underflowing leaf */
+	if ( node != _racine && node->isFeuille() ) {
+
+	/* To be or not to be a leaf. (Born, to be a leeaaf, to be a leeeaaf) */
+		std::cout << "Leaf node, ";
+		node->delElement( element );
+		if ( node->isUnderflowing( _lower ) ) {
+						std::cout << "underflow, balancing ..." << std::endl;
+
+			this->balanceNode( node );
+		}
+		else {
+			std::cout << "enought elts." << std::endl;
+		}
+
+	} 
+	/* Underflowing intern node */
 	else {
 
 
@@ -422,6 +591,9 @@ int BArbre<T>::removeFromNode( Noeud<T>* node, const T& element ) {
 
 		typename
 		std::vector<Noeud<T>*>::iterator iterFils;
+
+		std::cout << "Intern node : Switching with son : " << std::endl;
+
 		
 		int i;
 		int left_element_node_position = node->getElementPosition( element );
@@ -430,17 +602,22 @@ int BArbre<T>::removeFromNode( Noeud<T>* node, const T& element ) {
 			  iterFils != fils_noeud_courant.end();
 			  iterFils++, i++ ) {
 
-			if ( i = left_element_node_position ) {
+			if ( i == left_element_node_position ) {
 				
 				T son_elt = (*iterFils)->getElements().back();
 
+				Noeud<T>* son_node = (*iterFils);
+				std::cout << "Choosen son : " << *son_node << std::endl;
 				/* Switch element between node and his son */
-				(*iterFils)->delElement( son_elt );
-				(*iterFils)->addElement( element );
+				son_node->delElement( son_elt );
+				son_node->addElement( element );
+
+				node->delElement( element );
 				node->addElement( son_elt );
 
-				/* Re-execute for son */
-				this->removeFromNode( (*iterFils), element );
+				/* RECURSIVE */
+				this->removeFromNode( son_node, element );
+				/*********/
 				break;
 
 			}			  

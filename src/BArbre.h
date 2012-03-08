@@ -27,6 +27,7 @@
 		std::vector< Noeud<T>* > addToNode( Noeud<T>* node, const T& element );
 
 		std::vector< Noeud<T>* > splitNode( Noeud<T>* node );
+		std::vector< Noeud<T>* > balanceNode( Noeud<T>* node );
 
 		int removeFromNode( Noeud<T>* node, const T& element );
 

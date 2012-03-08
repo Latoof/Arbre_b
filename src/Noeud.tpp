@@ -215,6 +215,7 @@ int Noeud<T>::delElement( const T& element ) {
  	if ( pos != -1 ) {
  		_liste_elements.erase( _liste_elements.begin()+pos );
  	}
+
  	
 	return pos;
 }
