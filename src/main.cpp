@@ -184,7 +184,7 @@ int main( int argc, char** argv ) {
 	iterArbre = a.begin();
 
 	int elt = *iterArbre;
-	std::cout << "Size : " << a.size() << std::endl;
+	std::cout << "\33[34m " << a._dbg << " Size : " << a.size() << "\33[0m" << std::endl;
 	std::cout << "Elt : " << elt << "  " << *iterArbre << std::endl;
 
 

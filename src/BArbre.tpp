@@ -1,7 +1,7 @@
 #include "BArbre.h"
 
 template<typename T>
-BArbre<T>::BArbre( int lower, int upper ) : _size(0), _lower(lower) {
+BArbre<T>::BArbre( int lower, int upper ) : _dbg(0), _size(0), _lower(lower) {
 	
 	if ( upper == -1 ) {
 		_upper = 2 * _lower;
@@ -313,77 +313,38 @@ std::vector< Noeud<T>* > BArbre<T>::balanceNode( Noeud<T>* node ) {
 
 		}
 
+
 		/* If no bro with enough elts */
 		if ( !found ) {
 
 			Noeud<T>* choosen_bro;
-			
+
 			/* Transfert to left bro */
 			if ( left_brother != NULL ) {
-				std::cout << "No good node. But I will push my left bro" << std::endl;
+
 				choosen_bro = left_brother;
-
-
-				std::cout << " Bro = " << *choosen_bro << std::endl;
+				std::cout << " Push Left Bro = " << *choosen_bro << std::endl;
 
 				choosen_bro->addElement( left_father_elt );
 
-				std::cout << "Here" << std::endl;
-
-				/* Will contain all elements of each node */
-				typename
-				std::vector<T> node_elements = node->getElements();
-
-				typename
-				std::vector< Noeud<T>* > node_sons = node->getFils();
-
-				for ( i=0; i<node_elements.size(); i++ ) {
-					choosen_bro->addElement( node_elements.at(i) );
-				}
-
-				for ( i=0; i<node_sons.size(); i++ ) {
-					choosen_bro->addFils( node_sons.at(i) );
-				}
+				this->mergeNodes( choosen_bro, node );
 
 				parent_node->delFils( node );
 				parent_node->delElement( left_father_elt );
-
-				_noeuds.erase(node);
 
 			}
 			/* Transfert to right bro */
 			else if ( right_brother != NULL ) {
 
-				std::cout << "No good node. But I will push my right bro" << std::endl;
 				choosen_bro = right_brother;
-
-
-				std::cout << " Bro = " << *choosen_bro << std::endl;
+				std::cout << " Push Right Bro = " << *choosen_bro << std::endl;
 
 				choosen_bro->addElement( right_father_elt );
 
-
-				std::cout << "Here" << std::endl;
-
-				/* Will contain all elements of each node */
-				typename
-				std::vector<T> node_elements = node->getElements();
-
-				typename
-				std::vector< Noeud<T>* > node_sons = node->getFils();
-
-				for ( i=0; i<node_elements.size(); i++ ) {
-					choosen_bro->addElement( node_elements.at(i) );
-				}
-
-				for ( i=0; i<node_sons.size(); i++ ) {
-					choosen_bro->addFils( node_sons.at(i) );
-				}
+				this->mergeNodes( choosen_bro, node );
 
 				parent_node->delFils( node );
 				parent_node->delElement( right_father_elt );
-
-				_noeuds.erase(node);
 
 			}
 			else {
@@ -391,7 +352,7 @@ std::vector< Noeud<T>* > BArbre<T>::balanceNode( Noeud<T>* node ) {
 				return vReturn;
 			}
 
-
+			_noeuds.erase(node);
 			/* RECURSIVE (we know that's not a leaf*/
 
 			if ( parent_node->isUnderflowing( _lower)  ) {
@@ -407,7 +368,6 @@ std::vector< Noeud<T>* > BArbre<T>::balanceNode( Noeud<T>* node ) {
 	else {
 		std::cout << "ROOOOOT (" << node->getFils().size() << " sons)" << std::endl;
 					/* Will contain all elements of each node */
-
 		typename
 		std::vector< Noeud<T>* > node_sons = node->getFils();
 
@@ -416,32 +376,37 @@ std::vector< Noeud<T>* > BArbre<T>::balanceNode( Noeud<T>* node ) {
 			Noeud<T>* current_son = node_sons.at(i);
 			node->delFils( current_son );
 
-			typename
-			std::vector<T> node_elements = current_son->getElements();
-
-			typename
-			std::vector< Noeud<T>* > node_subsons = current_son->getFils();
-
-			int j;
-			for ( j=0; j<node_elements.size(); j++ ) {
-				node->addElement( node_elements.at(j) );
-			}
-
-			for ( j=0; j<node_subsons.size(); j++ ) {
-				node->addFils( node_subsons.at(j) );
-			}
+			this->mergeNodes( node, current_son );
 
 			_noeuds.erase( current_son );
 
-		
 		}
 
 		_racine = node;
 
-
 	}
 
 	return vReturn;
+}
+
+template<typename T>
+void BArbre<T>::mergeNodes( Noeud<T>* targetNode, Noeud<T>* sourceNode ) {
+	
+	typename
+	std::vector<T> node_elements = sourceNode->getElements();
+
+	typename
+	std::vector< Noeud<T>* > node_sons = sourceNode->getFils();
+
+	int i;
+	for ( i=0; i<node_elements.size(); i++ ) {
+		targetNode->addElement( node_elements.at(i) );
+	}
+
+	for ( i=0; i<node_sons.size(); i++ ) {
+		targetNode->addFils( node_sons.at(i) );
+	}
+
 }
 
 template<typename T>

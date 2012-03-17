@@ -28,6 +28,7 @@
 
 		std::vector< Noeud<T>* > splitNode( Noeud<T>* node );
 		std::vector< Noeud<T>* > balanceNode( Noeud<T>* node );
+		void mergeNodes( Noeud<T>* targetNode, Noeud<T>* sourceNode );
 
 		int removeFromNode( Noeud<T>* node, const T& element );
 		int size() { return _size; }
@@ -36,6 +37,9 @@
 
 		iterator begin() { return iterator(this,_racine); }
 		iterator root() { return iterator(this,_racine); }
+
+
+		int _dbg;
 
 	private:
 		int _lower;
