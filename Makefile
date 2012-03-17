@@ -4,7 +4,7 @@ SOURCES = main.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 
 CXX = g++
-CXXFLAGS = 
+CXXFLAGS =  -g
 CXX_LDFLAGS =
 
 all: appAA

@@ -4,6 +4,7 @@
 	#include "Noeud.h"
 	#include "Racine.h"
 	#include <vector>
+	#include <set>
 
 	/* DEBUG */
 	#include <iostream>
@@ -23,22 +24,32 @@
 		Noeud<T>* chercherElementN( const T& element );
 		void draw(std::ostream &flux) const;
 
-		std::vector< Noeud<T>* > addToNodeOld( Noeud<T>* node, const T& element );
 		std::vector< Noeud<T>* > addToNode( Noeud<T>* node, const T& element );
 
 		std::vector< Noeud<T>* > splitNode( Noeud<T>* node );
 		std::vector< Noeud<T>* > balanceNode( Noeud<T>* node );
 
 		int removeFromNode( Noeud<T>* node, const T& element );
+		int size() { return _size; }
+
+		class iterator;
+
+		iterator begin() { return iterator(this,_racine); }
+		iterator root() { return iterator(this,_racine); }
 
 	private:
 		int _lower;
 		int _upper;
-		std::vector<Noeud<T>*> _noeuds; // Essai
-		Racine<T>* _racine; 
+		int _size;
+		std::set<Noeud<T>*> _noeuds; // Essai
+		Noeud<T>* _racine; 
 
 	};
 
 	#include "BArbre.tpp"
+
+	#include "TestIter.h"
+
+
 
 #endif

@@ -91,6 +91,29 @@ bool Noeud<T>::contains( const T& elt ) {
 	}
 }
 
+template<typename T>
+Noeud<T>* Noeud<T>::leftmostLeaf() {
+	
+	if ( this->isFeuille() ) {
+		return this;
+	}
+	else {
+		return _liste_fils.front()->leftmostLeaf();
+	}
+
+}
+
+template<typename T>
+Noeud<T>* Noeud<T>::rightmostLeaf() {
+	
+	if ( this->isFeuille() ) {
+		return this;
+	}
+	else {
+		return _liste_fils.back()->rightmostLeaf();
+	}
+
+}
 /*
 template<typename T>
 void Noeud<T>::addFils( Noeud<T>* node, int index ) {
@@ -151,6 +174,7 @@ void Noeud<T>::delFils( Noeud<T>* node ) {
 	for ( iterFindNode = _liste_fils.begin(); iterFindNode != _liste_fils.end() ; iterFindNode++) {
 		
 		if ( (*iterFindNode) == node ) {
+			std::cout << "Node found " << std::endl;
 			_liste_fils.erase( iterFindNode );
 			break;
 		}

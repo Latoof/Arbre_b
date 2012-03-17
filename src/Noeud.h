@@ -36,12 +36,15 @@
 			/* Useless */
 			int getElementPosition( const T& element );
 
+			Noeud<T>* leftmostLeaf();
+			Noeud<T>* rightmostLeaf();
+
 			void draw(std::ostream &flux) const;
 		private:
 
 			std::vector<T> _liste_elements;
 			std::vector<Noeud<T>*> _liste_fils;
-			Noeud<T>* _parent; // A debattre
+			Noeud<T>* _parent;
 
 			/* data */
 		};
