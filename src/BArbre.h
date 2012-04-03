@@ -2,7 +2,6 @@
 	#define H_BARBRE_H
 
 	#include "Noeud.h"
-	#include "Racine.h"
 	#include <vector>
 	#include <set>
 
@@ -33,13 +32,25 @@
 		int removeFromNode( Noeud<T>* node, const T& element );
 		int size() { return _size; }
 
-		class iterator;
+		Noeud<T>* getRootNode();
 
-		iterator begin() { return iterator(this,_racine); }
+		class generic_iterator;
+		class iterator;
+		class reverse_iterator;
+
+		iterator begin() { return iterator( this ); }
+		reverse_iterator rbegin() { return reverse_iterator( this ); }
+
+		iterator end() { return iterator( this, true); }
+		reverse_iterator rend() { return reverse_iterator( this, true); }
+
 		iterator root() { return iterator(this,_racine); }
 
 
 		int _dbg;
+
+	protected:
+
 
 	private:
 		int _lower;
@@ -52,7 +63,12 @@
 
 	#include "BArbre.tpp"
 
-	#include "TestIter.h"
+	//#include "BArbre_generic_iterator.h"
+
+/*
+	#include "BArbre_iterator.h"
+	#include "BArbre_reverse_iterator.h"
+*/
 
 
 

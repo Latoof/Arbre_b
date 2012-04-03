@@ -72,7 +72,7 @@ std::vector< Noeud<T>* > BArbre<T>::splitNode( Noeud<T>* node ) {
 
 		parent_node = node->getParent();
 		std::cout << "Pas la racine !!! Pere : " << *parent_node << std::endl;
-		parent_node->delFils(node);
+		parent_node->unlinkSon(node);
 		std::cout << "Son unlinked" << std::endl;
 	}
 
@@ -112,7 +112,7 @@ std::vector< Noeud<T>* > BArbre<T>::splitNode( Noeud<T>* node ) {
 
 	}
 
-	std::vector< Noeud<T>* > sons = node->getFils();
+	std::vector< Noeud<T>* > sons = node->getSons();
 
 	std::cout << "-- Need to move " << sons.size() << " sons !" << std::endl;
 	
@@ -128,11 +128,11 @@ std::vector< Noeud<T>* > BArbre<T>::splitNode( Noeud<T>* node ) {
 		std::cout << "[Add] Element count : " << i << std::endl;
 
 		if ( i <= middle_index ) {
-			n_left_node->addFils( (*iterFils), 0 );
+			n_left_node->linkSon( (*iterFils), 0 );
 			std::cout << "** Adding a son to left" << std::endl;
 		}
 		else { // i > middle_index
-			n_right_node->addFils( (*iterFils), 0 );
+			n_right_node->linkSon( (*iterFils), 0 );
 			std::cout << "// Adding a son to right" << std::endl;
 
 		}
@@ -154,8 +154,8 @@ std::vector< Noeud<T>* > BArbre<T>::splitNode( Noeud<T>* node ) {
 
 	parent_node->addElement( middle_elt );
 
-	parent_node->addFils( n_left_node );
-	parent_node->addFils( n_right_node );
+	parent_node->linkSon( n_left_node );
+	parent_node->linkSon( n_right_node );
 
 
 
@@ -200,7 +200,7 @@ std::vector< Noeud<T>* > BArbre<T>::balanceNode( Noeud<T>* node ) {
 		Noeud<T>* parent_node = node->getParent();
 		
 		typename
-		std::vector<Noeud<T>*> brother_nodes = parent_node->getFils();
+		std::vector<Noeud<T>*> brother_nodes = parent_node->getSons();
 
 		typename
 		std::vector<Noeud<T>*>::iterator iterFils;
@@ -267,10 +267,10 @@ std::vector< Noeud<T>* > BArbre<T>::balanceNode( Noeud<T>* node ) {
 					std::cout << brother_elt << " to parent " << std::endl;
 
 					/**/
-					if ( !left_brother->isFeuille() ) {
-						Noeud<T>* subson = left_brother->getFils().back();
-						left_brother->delFils( subson );
-						node->addFils( subson );		
+					if ( !left_brother->isLeaf() ) {
+						Noeud<T>* subson = left_brother->getSons().back();
+						left_brother->unlinkSon( subson );
+						node->linkSon( subson );		
 					}			
 					/**/
 					break;
@@ -299,10 +299,10 @@ std::vector< Noeud<T>* > BArbre<T>::balanceNode( Noeud<T>* node ) {
 					std::cout << brother_elt << " to parent " << std::endl;
 
 					/**/
-					if ( !right_brother->isFeuille() ) {
-						Noeud<T>* subson = right_brother->getFils().front();
-						right_brother->delFils( subson );
-						node->addFils( subson );			
+					if ( !right_brother->isLeaf() ) {
+						Noeud<T>* subson = right_brother->getSons().front();
+						right_brother->unlinkSon( subson );
+						node->linkSon( subson );			
 					}		
 					/**/
 					break;
@@ -329,7 +329,7 @@ std::vector< Noeud<T>* > BArbre<T>::balanceNode( Noeud<T>* node ) {
 
 				this->mergeNodes( choosen_bro, node );
 
-				parent_node->delFils( node );
+				parent_node->unlinkSon( node );
 				parent_node->delElement( left_father_elt );
 
 			}
@@ -343,7 +343,7 @@ std::vector< Noeud<T>* > BArbre<T>::balanceNode( Noeud<T>* node ) {
 
 				this->mergeNodes( choosen_bro, node );
 
-				parent_node->delFils( node );
+				parent_node->unlinkSon( node );
 				parent_node->delElement( right_father_elt );
 
 			}
@@ -366,15 +366,15 @@ std::vector< Noeud<T>* > BArbre<T>::balanceNode( Noeud<T>* node ) {
 	/* If node == _racine; */
 	/* We will merge the subnodes in the root */
 	else {
-		std::cout << "ROOOOOT (" << node->getFils().size() << " sons)" << std::endl;
+		std::cout << "ROOOOOT (" << node->getSons().size() << " sons)" << std::endl;
 					/* Will contain all elements of each node */
 		typename
-		std::vector< Noeud<T>* > node_sons = node->getFils();
+		std::vector< Noeud<T>* > node_sons = node->getSons();
 
 		for ( int i=0; i<node_sons.size(); i++ ) {
 			
 			Noeud<T>* current_son = node_sons.at(i);
-			node->delFils( current_son );
+			node->unlinkSon( current_son );
 
 			this->mergeNodes( node, current_son );
 
@@ -396,7 +396,7 @@ void BArbre<T>::mergeNodes( Noeud<T>* targetNode, Noeud<T>* sourceNode ) {
 	std::vector<T> node_elements = sourceNode->getElements();
 
 	typename
-	std::vector< Noeud<T>* > node_sons = sourceNode->getFils();
+	std::vector< Noeud<T>* > node_sons = sourceNode->getSons();
 
 	int i;
 	for ( i=0; i<node_elements.size(); i++ ) {
@@ -404,7 +404,7 @@ void BArbre<T>::mergeNodes( Noeud<T>* targetNode, Noeud<T>* sourceNode ) {
 	}
 
 	for ( i=0; i<node_sons.size(); i++ ) {
-		targetNode->addFils( node_sons.at(i) );
+		targetNode->linkSon( node_sons.at(i) );
 	}
 
 }
@@ -415,7 +415,7 @@ int BArbre<T>::removeFromNode( Noeud<T>* node, const T& element ) {
 	std::cout << std::endl << "--- Removing " << element << " from " << *node << std::endl;
 
 	/* Underflowing leaf */
-	if ( node != _racine && node->isFeuille() ) {
+	if ( node != _racine && node->isLeaf() ) {
 
 	/* To be or not to be a leaf. (Born, to be a leeaaf, to be a leeeaaf) */
 		std::cout << "Leaf node, ";
@@ -435,7 +435,7 @@ int BArbre<T>::removeFromNode( Noeud<T>* node, const T& element ) {
 
 
 		typename
-		std::vector<Noeud<T>*> fils_noeud_courant = node->getFils();
+		std::vector<Noeud<T>*> fils_noeud_courant = node->getSons();
 
 		typename
 		std::vector<Noeud<T>*>::iterator iterFils;
@@ -534,7 +534,7 @@ T BArbre<T>::chercherElement( const T& element ) {
 
 	Noeud<T>* noeud_courant = _racine;
 
-	while ( !noeud_courant->isFeuille() ) {
+	while ( !noeud_courant->isLeaf() ) {
 
 		/* Will contain all elements of each node */
 		typename
@@ -542,7 +542,7 @@ T BArbre<T>::chercherElement( const T& element ) {
 
 		/* Will contain all subNodes of current node */
 		typename
-		std::vector<Noeud<T>*>::iterator iterFils = noeud_courant->getFils().begin();
+		std::vector<Noeud<T>*>::iterator iterFils = noeud_courant->getSons().begin();
 
 		/* All elements */
 		for ( iterElements = noeud_courant->getElements().begin(); iterElements != noeud_courant->getElements().end() ; iterElements++ ) {
@@ -585,7 +585,7 @@ Noeud<T>* BArbre<T>::chercherElementN( const T& element ) {
 	/* Will contain all subNodes of current node */
 
 
-	while ( !noeud_courant->isFeuille() ) {
+	while ( !noeud_courant->isLeaf() ) {
 
 		std::cout << "Loop" << std::endl;
 
@@ -600,7 +600,7 @@ Noeud<T>* BArbre<T>::chercherElementN( const T& element ) {
 
 
 		typename
-		std::vector<Noeud<T>*> fils_noeud_courant = noeud_courant->getFils();
+		std::vector<Noeud<T>*> fils_noeud_courant = noeud_courant->getSons();
 
 		typename
 		std::vector<Noeud<T>*>::iterator iterFils;
@@ -642,6 +642,13 @@ Noeud<T>* BArbre<T>::chercherElementN( const T& element ) {
 	std::cout << "SearchN : Sending current node" << std::endl;
 	return noeud_courant;
 }
+
+template<typename T>
+Noeud<T>* BArbre<T>::getRootNode() {
+	return _racine;
+}
+
+
 
 template<typename T>
 void BArbre<T>::draw(std::ostream &flux) const {

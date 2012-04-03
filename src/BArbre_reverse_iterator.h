@@ -6,6 +6,8 @@
 	template<typename T>
 	class BArbre<T>::reverse_iterator : public BArbre<T>::generic_iterator {
 
+		typedef BArbre<T>::generic_iterator GIterator;
+
 		public:
 			reverse_iterator() : generic_iterator() {}
 			reverse_iterator( BArbre<T>* a , bool ended = false ) 
@@ -13,8 +15,8 @@
 					
 					//this->toRightIndex();
 					//_current_index = _current_node.size() - 1;
+					this->toFirstElement();
 				}
-
 
 			virtual ~reverse_iterator() {};
 
@@ -28,10 +30,13 @@
 				}
 			}
 
-			inline virtual void toFirstElement() {
-				_current_node = _a->getRoot()->rightmostLeaf();
-				_current_index = _current_node->size() - 1;
+			virtual void toFirstElement() {
+				GIterator::_current_node = GIterator::_a->getRootNode()->rightmostLeaf();
+				GIterator::_current_index = GIterator::_current_node->size() - 1;
 			}
+
+
 	};
+
 
 #endif

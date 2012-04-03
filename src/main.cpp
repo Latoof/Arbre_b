@@ -1,6 +1,10 @@
 #include "Noeud.h"
-#include "Racine.h"
 #include "BArbre.h"
+
+//#include "BArbre_generic_iterator.h"
+#include "BArbre_iterator.h"
+#include "BArbre_reverse_iterator.h"
+
 
 #include <iostream>
 
@@ -23,7 +27,7 @@ int main( int argc, char** argv ) {
 	std::cout << feuille2.getElement(0) << std::endl;
 
 
-	BArbre<int> a(1);
+	BArbre<int> a(2);
 
 
 	std::cout << "Before adding 4" << std::endl << a << std::endl;
@@ -183,12 +187,64 @@ int main( int argc, char** argv ) {
 	BArbre<int>::iterator iterArbre;
 	iterArbre = a.begin();
 
+	std::cout << "Iterator initialized\n";
+
 	int elt = *iterArbre;
+
+	std::cout << "Dbg noob\n";
 	std::cout << "\33[34m " << a._dbg << " Size : " << a.size() << "\33[0m" << std::endl;
 	std::cout << "Elt : " << elt << "  " << *iterArbre << std::endl;
 
+	
+	for (int i=0; i<22; i++) {
+		iterArbre++;
+		std::cout << "--> ELT : " << *iterArbre << std::endl;
+
+	}
+
+	for (int i=0; i<22; i++) {
+		iterArbre--;
+		std::cout << "--> ELT : " << *iterArbre << std::endl;
+
+	}
+
+	std::cout << "REVERSE\n";
+
+	BArbre<int>::reverse_iterator riterArbre;
+	riterArbre = a.rbegin();
+
+	for (int i=0; i<22; i++) {
+		riterArbre++;
+		std::cout << "--> ELT : " << *riterArbre << std::endl;
+
+	}
+
+	std::cout << "------ EEND\n";
+	BArbre<int>::iterator it;
+	BArbre<int>::iterator itEnd = a.end();
+
+/** **/
+	for ( it = a.begin(); it != itEnd; it++) {
+		std::cout << "Will print element " << std::endl;
+		std::cout << "--> ELT : " << *it << std::endl;
+
+	}
 
 
+	/** **/
+
+		BArbre<int>::reverse_iterator itR;
+	BArbre<int>::reverse_iterator itREnd = a.rend();
+
+/** **/
+	for ( itR = a.rbegin(); itR != a.rend(); itR++) {
+		std::cout << "Will print R element " << std::endl;
+		std::cout << "--> ELT : " << *itR << std::endl;
+
+	}
+
+
+	/** **/
 
 	return 0;
 

@@ -8,7 +8,7 @@ Noeud<T>::Noeud() {
 template<typename T>
 Noeud<T>::Noeud( Noeud<T>* parent ) : _parent(parent) {
 	std::cout << "ADD SON" << std::endl;
-	//parent->addFils(this);
+	//parent->linkSon(this);
 }
 
 template<typename T>
@@ -46,12 +46,34 @@ template<typename T>
 }
 
 template<typename T>
-std::vector<T> Noeud<T>::getElements() {
+std::vector<T>& Noeud<T>::getElements() {
 	return _liste_elements;
 }
 
 template<typename T>
-std::vector< Noeud<T>* > Noeud<T>::getFils() {
+int Noeud<T>::size() {
+	return _liste_elements.size();
+}
+
+
+template<typename T>
+int Noeud<T>::getSonPosition( Noeud<T>* son ) {
+	
+  	//std::vector< Noeud<T>* >::iterator iter_sons;
+
+  	nodes_ptr_iterator iter_sons = std::find(_liste_fils.begin(), _liste_fils.end(), son);
+
+    if ( iter_sons != _liste_fils.end() ) {
+    	return std::distance( _liste_fils.begin(), iter_sons );
+    } 
+    else {
+    	return -1;
+    }
+
+}
+
+template<typename T>
+std::vector< Noeud<T>* >& Noeud<T>::getSons() {
 	return _liste_fils;
 }
 
@@ -66,7 +88,7 @@ void Noeud<T>::setParent( Noeud<T>* parent ) {
 }
 
 template<typename T>
-bool Noeud<T>::isFeuille() {
+bool Noeud<T>::isLeaf() {
 	return ( _liste_fils.empty() );
 }
 
@@ -94,7 +116,7 @@ bool Noeud<T>::contains( const T& elt ) {
 template<typename T>
 Noeud<T>* Noeud<T>::leftmostLeaf() {
 	
-	if ( this->isFeuille() ) {
+	if ( this->isLeaf() ) {
 		return this;
 	}
 	else {
@@ -106,7 +128,7 @@ Noeud<T>* Noeud<T>::leftmostLeaf() {
 template<typename T>
 Noeud<T>* Noeud<T>::rightmostLeaf() {
 	
-	if ( this->isFeuille() ) {
+	if ( this->isLeaf() ) {
 		return this;
 	}
 	else {
@@ -114,9 +136,16 @@ Noeud<T>* Noeud<T>::rightmostLeaf() {
 	}
 
 }
+
+
+template<typename T>
+int Noeud<T>::element_count() {
+	return _liste_elements.size();
+}
+
 /*
 template<typename T>
-void Noeud<T>::addFils( Noeud<T>* node, int index ) {
+void Noeud<T>::linkSon( Noeud<T>* node, int index ) {
 
 	if ( index == -1 )
 		_liste_fils.push_back(node);
@@ -131,7 +160,7 @@ void Noeud<T>::addFils( Noeud<T>* node, int index ) {
 */
 
 template<typename T>
-int Noeud<T>::addFils( Noeud<T>* node, int index ) {
+int Noeud<T>::linkSon( Noeud<T>* node, int index ) {
 
 	std::cout << "Adding son ..." << std::endl;
 
@@ -167,7 +196,7 @@ int Noeud<T>::addFils( Noeud<T>* node, int index ) {
 }
 
 template<typename T>
-void Noeud<T>::delFils( Noeud<T>* node ) {
+void Noeud<T>::unlinkSon( Noeud<T>* node ) {
 
 	typename
 	std::vector< Noeud<T>* >::iterator iterFindNode;
