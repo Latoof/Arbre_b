@@ -1,0 +1,119 @@
+\hypertarget{classNoeud}{
+\section{Noeud$<$ T $>$ Class Template Reference}
+\label{classNoeud}\index{Noeud@{Noeud}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classNoeud_a7a68d0e206df13194413328fa431812e}{
+{\bfseries Noeud} (\hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$parent)}
+\label{classNoeud_a7a68d0e206df13194413328fa431812e}
+
+\item 
+\hypertarget{classNoeud_a35239304a73f207562c18518dbf1e099}{
+T {\bfseries getElement} (int i)}
+\label{classNoeud_a35239304a73f207562c18518dbf1e099}
+
+\item 
+\hypertarget{classNoeud_accd8d04f9486008c19e632fe7e7ab092}{
+int {\bfseries addElement} (T elt)}
+\label{classNoeud_accd8d04f9486008c19e632fe7e7ab092}
+
+\item 
+\hypertarget{classNoeud_a3dd8653eacafccb54af61b7e10c696b8}{
+int {\bfseries delElement} (const T \&element)}
+\label{classNoeud_a3dd8653eacafccb54af61b7e10c696b8}
+
+\item 
+\hypertarget{classNoeud_a1a212caae417e8c986c7747263781519}{
+std::vector$<$ T $>$ \& {\bfseries getElements} ()}
+\label{classNoeud_a1a212caae417e8c986c7747263781519}
+
+\item 
+\hypertarget{classNoeud_a17b8932e392231d3b8064e53f96f11ee}{
+int {\bfseries linkSon} (\hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$node, int index=-\/1)}
+\label{classNoeud_a17b8932e392231d3b8064e53f96f11ee}
+
+\item 
+\hypertarget{classNoeud_a83aecc420674abe5e7eb87be5de777bc}{
+void {\bfseries unlinkSon} (\hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$node)}
+\label{classNoeud_a83aecc420674abe5e7eb87be5de777bc}
+
+\item 
+\hypertarget{classNoeud_aa530f295f3e72312e40a97571d40be61}{
+std::vector$<$ \hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$ $>$ \& {\bfseries getSons} ()}
+\label{classNoeud_aa530f295f3e72312e40a97571d40be61}
+
+\item 
+\hypertarget{classNoeud_a7f0b92d936783852dd8f6005c0af46c1}{
+void {\bfseries setParent} (\hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$parent)}
+\label{classNoeud_a7f0b92d936783852dd8f6005c0af46c1}
+
+\item 
+\hypertarget{classNoeud_a45b167fcea2f17f982c78700dfefe200}{
+\hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$ {\bfseries getParent} ()}
+\label{classNoeud_a45b167fcea2f17f982c78700dfefe200}
+
+\item 
+\hypertarget{classNoeud_ad0d9bb9321ec052b84bc2b0ad0d3cd2f}{
+bool {\bfseries contains} (const T \&elt)}
+\label{classNoeud_ad0d9bb9321ec052b84bc2b0ad0d3cd2f}
+
+\item 
+\hypertarget{classNoeud_a2027d0f848391fb0b7aa0e599568aa95}{
+bool {\bfseries isLeaf} ()}
+\label{classNoeud_a2027d0f848391fb0b7aa0e599568aa95}
+
+\item 
+\hypertarget{classNoeud_abe2105490466f57d202308123fae8726}{
+bool {\bfseries isOverflowing} (int size)}
+\label{classNoeud_abe2105490466f57d202308123fae8726}
+
+\item 
+\hypertarget{classNoeud_aec41238cb00861543f2d819a706d82b0}{
+bool {\bfseries isUnderflowing} (int min\_\-size)}
+\label{classNoeud_aec41238cb00861543f2d819a706d82b0}
+
+\item 
+\hypertarget{classNoeud_a458ef7ea7113a03e3cdf562ca75a3a0f}{
+int {\bfseries getElementPosition} (const T \&element)}
+\label{classNoeud_a458ef7ea7113a03e3cdf562ca75a3a0f}
+
+\item 
+\hypertarget{classNoeud_a34ec8dfd905946d3a55e7ddc0a3fd07d}{
+\hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$ {\bfseries leftmostLeaf} ()}
+\label{classNoeud_a34ec8dfd905946d3a55e7ddc0a3fd07d}
+
+\item 
+\hypertarget{classNoeud_acb5eef9cce35d271078628be447e7bd7}{
+\hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$ {\bfseries rightmostLeaf} ()}
+\label{classNoeud_acb5eef9cce35d271078628be447e7bd7}
+
+\item 
+\hypertarget{classNoeud_a976a7fcb72e63237c9f3c8f85ddb820d}{
+int {\bfseries element\_\-count} ()}
+\label{classNoeud_a976a7fcb72e63237c9f3c8f85ddb820d}
+
+\item 
+\hypertarget{classNoeud_a8f9a238c0455368945aeaa531bed9228}{
+int {\bfseries getSonPosition} (\hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$son)}
+\label{classNoeud_a8f9a238c0455368945aeaa531bed9228}
+
+\item 
+\hypertarget{classNoeud_aa4d7f22c303c08ce8848087e3594aaa6}{
+int {\bfseries size} ()}
+\label{classNoeud_aa4d7f22c303c08ce8848087e3594aaa6}
+
+\item 
+\hypertarget{classNoeud_a14192544a21e81363cbf3ed6a58aa28b}{
+void {\bfseries draw} (std::ostream \&flux) const }
+\label{classNoeud_a14192544a21e81363cbf3ed6a58aa28b}
+
+\end{DoxyCompactItemize}
+\subsubsection*{template$<$typename T$>$ class Noeud$<$ T $>$}
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+/media/Programmes/Dropbox/Univ nantes -\/ Master 1 ALMA/ProgGenerative/projet\_\-tp/Arbre\_\-b/src/Noeud.h\end{DoxyCompactItemize}

@@ -1,0 +1,121 @@
+\hypertarget{classBArbre}{
+\section{BArbre$<$ T $>$ Class Template Reference}
+\label{classBArbre}\index{BArbre@{BArbre}}
+}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classBArbre_1_1generic__iterator}{generic\_\-iterator}
+\item 
+class \hyperlink{classBArbre_1_1iterator}{iterator}
+\item 
+class \hyperlink{classBArbre_1_1reverse__iterator}{reverse\_\-iterator}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classBArbre_abf97ee99962ab0fd16080db5c3b1f02f}{
+{\bfseries BArbre} (int lower=2, int upper=-\/1)}
+\label{classBArbre_abf97ee99962ab0fd16080db5c3b1f02f}
+
+\item 
+\hypertarget{classBArbre_a0612c34605cbe9236e447910a96d9f94}{
+void {\bfseries ajouterElement} (const T \&element)}
+\label{classBArbre_a0612c34605cbe9236e447910a96d9f94}
+
+\item 
+\hypertarget{classBArbre_afb35c6904f78d12510b7e763d31ef1f7}{
+int {\bfseries supprimerElement} (T element)}
+\label{classBArbre_afb35c6904f78d12510b7e763d31ef1f7}
+
+\item 
+\hypertarget{classBArbre_a54d1be427a621ce93d74eef55e8b1fae}{
+T {\bfseries chercherElement} (const T \&element)}
+\label{classBArbre_a54d1be427a621ce93d74eef55e8b1fae}
+
+\item 
+\hypertarget{classBArbre_a1b6e56dfd6fdb8af661c208ae9d645be}{
+\hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$ {\bfseries chercherElementN} (const T \&element)}
+\label{classBArbre_a1b6e56dfd6fdb8af661c208ae9d645be}
+
+\item 
+\hypertarget{classBArbre_a3a8ad2d9d5a3fd60c678d79db29e4298}{
+void {\bfseries draw} (std::ostream \&flux) const }
+\label{classBArbre_a3a8ad2d9d5a3fd60c678d79db29e4298}
+
+\item 
+\hypertarget{classBArbre_ad22b69148af1ece9b1a1d47773862771}{
+std::vector$<$ \hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$ $>$ {\bfseries addToNode} (\hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$node, const T \&element)}
+\label{classBArbre_ad22b69148af1ece9b1a1d47773862771}
+
+\item 
+\hypertarget{classBArbre_a38bee8f1d2656cfe95c72fbc5b2c7e01}{
+std::vector$<$ \hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$ $>$ {\bfseries splitNode} (\hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$node)}
+\label{classBArbre_a38bee8f1d2656cfe95c72fbc5b2c7e01}
+
+\item 
+\hypertarget{classBArbre_ad6c3166fd15b5ee9ff3b82ab36c9c5f2}{
+std::vector$<$ \hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$ $>$ {\bfseries balanceNode} (\hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$node)}
+\label{classBArbre_ad6c3166fd15b5ee9ff3b82ab36c9c5f2}
+
+\item 
+\hypertarget{classBArbre_ade188700cafaaba30bafa917ce5673e2}{
+void {\bfseries mergeNodes} (\hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$targetNode, \hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$sourceNode)}
+\label{classBArbre_ade188700cafaaba30bafa917ce5673e2}
+
+\item 
+\hypertarget{classBArbre_a19f8e4a34c3548815e12238aa8bbc452}{
+int {\bfseries removeFromNode} (\hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$node, const T \&element)}
+\label{classBArbre_a19f8e4a34c3548815e12238aa8bbc452}
+
+\item 
+\hypertarget{classBArbre_a9238a234e0fe293016cff6357854bfd5}{
+int {\bfseries size} ()}
+\label{classBArbre_a9238a234e0fe293016cff6357854bfd5}
+
+\item 
+\hypertarget{classBArbre_a6602cf7c0f6a7f3a7e8c27917e4f54c8}{
+\hyperlink{classNoeud}{Noeud}$<$ T $>$ $\ast$ {\bfseries getRootNode} ()}
+\label{classBArbre_a6602cf7c0f6a7f3a7e8c27917e4f54c8}
+
+\item 
+\hypertarget{classBArbre_abc6be6012c8d0ff48cdf6e67337de03e}{
+\hyperlink{classBArbre_1_1iterator}{iterator} {\bfseries begin} ()}
+\label{classBArbre_abc6be6012c8d0ff48cdf6e67337de03e}
+
+\item 
+\hypertarget{classBArbre_ad0de78fea4611cc9a6f4d2992a6fc899}{
+\hyperlink{classBArbre_1_1reverse__iterator}{reverse\_\-iterator} {\bfseries rbegin} ()}
+\label{classBArbre_ad0de78fea4611cc9a6f4d2992a6fc899}
+
+\item 
+\hypertarget{classBArbre_a09d28b28bf01b215b8dbe7f9a0a5a55b}{
+\hyperlink{classBArbre_1_1iterator}{iterator} {\bfseries end} ()}
+\label{classBArbre_a09d28b28bf01b215b8dbe7f9a0a5a55b}
+
+\item 
+\hypertarget{classBArbre_a0190a3b190f9dac6bfeda51f69732f20}{
+\hyperlink{classBArbre_1_1reverse__iterator}{reverse\_\-iterator} {\bfseries rend} ()}
+\label{classBArbre_a0190a3b190f9dac6bfeda51f69732f20}
+
+\item 
+\hypertarget{classBArbre_a572ecf896ce181b96ec235a559a50017}{
+\hyperlink{classBArbre_1_1iterator}{iterator} {\bfseries root} ()}
+\label{classBArbre_a572ecf896ce181b96ec235a559a50017}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classBArbre_a3d3ca78a7094e8f5c32cd870b1b43d32}{
+int {\bfseries \_\-dbg}}
+\label{classBArbre_a3d3ca78a7094e8f5c32cd870b1b43d32}
+
+\end{DoxyCompactItemize}
+\subsubsection*{template$<$typename T$>$ class BArbre$<$ T $>$}
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+/media/Programmes/Dropbox/Univ nantes -\/ Master 1 ALMA/ProgGenerative/projet\_\-tp/Arbre\_\-b/src/BArbre.h\end{DoxyCompactItemize}
