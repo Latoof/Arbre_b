@@ -1,68 +1,68 @@
 #include "Node.h"
 
-template<typename T>
-Node<T>::Node() {
+template<typename T, class Cmp>
+Node<T,Cmp>::Node() {
 	
 }
 
-template<typename T>
-Node<T>::Node( Node<T>* parent ) : _parent(parent) {
-	std::cout << "ADD SON" << std::endl;
-	//parent->linkSon(this);
-}
+template<typename T, class Cmp>
+int Node<T,Cmp>::addElement( T element ) {
 
-template<typename T>
-int Node<T>::addElement( T elt ) {
-
-	//template<typename T>
+	//template<typename T, class Cmp>
 	typename
 	std::vector<T>::iterator iterElements;
 
 	int i;
-	for ( iterElements = _liste_elements.begin(); iterElements != _liste_elements.end() ; iterElements++ ) {
+	for ( iterElements = _elements_list.begin(); iterElements != _elements_list.end() ; iterElements++ ) {
 
- 		if ( elt < (*iterElements) ) {
- 			_liste_elements.insert( iterElements, elt );
+ 		if ( element < (*iterElements) ) {
+ 			_elements_list.insert( iterElements, element );
  			
  			return i+1;
  		}
 
  		i++;
-
  		
  	}
- 	 //_liste_elements.insert( _liste_elements.end(), elt );
- 	 _liste_elements.push_back( elt );
+ 	 _elements_list.push_back( element );
 
  	 return i;
-
-	//_liste_elements.push_back( elt );
 }
 
 
-template<typename T>
- T Node<T>::getElement( int i ) {
-	return _liste_elements.at(i);
+template<typename T, class Cmp>
+int Node<T,Cmp>::delElement( const T& element ) {
+
+ 	int pos = this->getElementPosition( element );
+
+ 	if ( pos != -1 ) {
+ 		_elements_list.erase( _elements_list.begin()+pos );
+ 	}
+
+ 	
+	return pos;
 }
 
-template<typename T>
-std::vector<T>& Node<T>::getElements() {
-	return _liste_elements;
-}
 
-template<typename T>
-int Node<T>::size() const {
-	return _liste_elements.size();
+template<typename T, class Cmp>
+std::vector<T>& Node<T,Cmp>::getElements() {
+	return _elements_list;
 }
 
 
-template<typename T>
-int Node<T>::getSonPosition( const Node<T>* son ) {
+template<typename T, class Cmp>
+int Node<T,Cmp>::size() const {
+	return _elements_list.size();
+}
+
+
+template<typename T, class Cmp>
+int Node<T,Cmp>::getSonPosition( const Node<T,Cmp>* son ) {
 	
-  	nodes_ptr_iterator iter_sons = std::find(_liste_fils.begin(), _liste_fils.end(), son);
+  	nodes_ptr_iterator iter_sons = std::find(_sons_list.begin(), _sons_list.end(), son);
 
-    if ( iter_sons != _liste_fils.end() ) {
-    	return std::distance( _liste_fils.begin(), iter_sons );
+    if ( iter_sons != _sons_list.end() ) {
+    	return std::distance( _sons_list.begin(), iter_sons );
     } 
     else {
     	return -1;
@@ -70,40 +70,40 @@ int Node<T>::getSonPosition( const Node<T>* son ) {
 
 }
 
-template<typename T>
-std::vector< Node<T>* >& Node<T>::getSons() {
-	return _liste_fils;
+template<typename T, class Cmp>
+std::vector< Node<T,Cmp>* >& Node<T,Cmp>::getSons() {
+	return _sons_list;
 }
 
-template<typename T>
-Node<T>* Node<T>::getParent() {
+template<typename T, class Cmp>
+Node<T,Cmp>* Node<T,Cmp>::getParent() {
 	return _parent;
 }
 
-template<typename T>
-void Node<T>::setParent( Node<T>* parent ) {
+template<typename T, class Cmp>
+void Node<T,Cmp>::setParent( Node<T,Cmp>* parent ) {
 	_parent = parent;
 }
 
-template<typename T>
-bool Node<T>::isLeaf() const {
-	return ( _liste_fils.empty() );
+template<typename T, class Cmp>
+bool Node<T,Cmp>::isLeaf() const {
+	return ( _sons_list.empty() );
 }
 
-template<typename T>
-bool Node<T>::isOverflowing( int max_size ) const {
-	return _liste_elements.size() > max_size;
+template<typename T, class Cmp>
+bool Node<T,Cmp>::isOverflowing( int max_size ) const {
+	return _elements_list.size() > max_size;
 }
 
-template<typename T>
-bool Node<T>::isUnderflowing( int min_size ) const {
-	return _liste_elements.size() < min_size;
+template<typename T, class Cmp>
+bool Node<T,Cmp>::isUnderflowing( int min_size ) const {
+	return _elements_list.size() < min_size;
 }
 
-template<typename T>
-bool Node<T>::contains( const T& elt ) const {
-	if ( !_liste_elements.empty() 
-		&& std::find(_liste_elements.begin(), _liste_elements.end(), elt) != _liste_elements.end()) {
+template<typename T, class Cmp>
+bool Node<T,Cmp>::contains( const T& element ) const {
+	if ( !_elements_list.empty() 
+		&& std::find(_elements_list.begin(), _elements_list.end(), element) != _elements_list.end()) {
 		return true;
 	} 
 	else {
@@ -111,98 +111,72 @@ bool Node<T>::contains( const T& elt ) const {
 	}
 }
 
-template<typename T>
-Node<T>* Node<T>::leftmostLeaf() {
+template<typename T, class Cmp>
+Node<T,Cmp>* Node<T,Cmp>::leftmostLeaf() {
 	
 	if ( this->isLeaf() ) {
 		return this;
 	}
 	else {
-		return _liste_fils.front()->leftmostLeaf();
+		return _sons_list.front()->leftmostLeaf();
 	}
 
 }
 
-template<typename T>
-Node<T>* Node<T>::rightmostLeaf() {
+template<typename T, class Cmp>
+Node<T,Cmp>* Node<T,Cmp>::rightmostLeaf() {
 	
 	if ( this->isLeaf() ) {
 		return this;
 	}
 	else {
-		return _liste_fils.back()->rightmostLeaf();
+		return _sons_list.back()->rightmostLeaf();
 	}
 
 }
 
-/*
-template<typename T>
-int Node<T>::element_count() {
-	return _liste_elements.size();
-}
 
-/*
-template<typename T>
-void Node<T>::linkSon( Node<T>* node, int index ) {
+template<typename T, class Cmp>
+int Node<T,Cmp>::linkSon( Node<T,Cmp>* node ) {
 
-	if ( index == -1 )
-		_liste_fils.push_back(node);
-	else {
-		if ( _liste_fils.begin()+index <= _liste_fils.end() )
-			_liste_fils.insert(_liste_fils.begin()+index,node);
-		else
-			_liste_fils.push_back(node);
-
-	}
-}
-*/
-
-template<typename T>
-int Node<T>::linkSon( Node<T>* node, int index ) {
-
-	std::cout << "Adding son ..." << std::endl;
-
-	//typename
 	T lastEltFils = node->getElements().back();
 
 	typename
 	std::vector<T>::iterator iterElements;
 	typename
-	std::vector< Node<T>* >::iterator iterFils;
+	std::vector< Node<T,Cmp>* >::iterator iterFils;
 
 	int i;
-	for ( iterElements = _liste_elements.begin(), iterFils = _liste_fils.begin(); 
-		iterElements != _liste_elements.end(), iterFils != _liste_fils.end() ; 
+	for ( iterElements = _elements_list.begin(), iterFils = _sons_list.begin(); 
+		iterElements != _elements_list.end(), iterFils != _sons_list.end() ; 
 		iterElements++, iterFils++ ) {
 
  		if ( lastEltFils < (*iterElements) ) {
- 			_liste_fils.insert( iterFils, node );
+ 			_sons_list.insert( iterFils, node );
  			node->setParent( this );
  			
  			return i+1;
  		}
 
  		i++;
-
  		
  	}
- 	 //_liste_fils.insert( _liste_fils.end(), node );
- 	_liste_fils.push_back( node );
+ 	 //_sons_list.insert( _sons_list.end(), node );
+ 	_sons_list.push_back( node );
  	node->setParent( this );
 
  	 return i;
 }
 
-template<typename T>
-void Node<T>::unlinkSon( Node<T>* node ) {
+template<typename T, class Cmp>
+void Node<T,Cmp>::unlinkSon( Node<T,Cmp>* node ) {
 
 	typename
-	std::vector< Node<T>* >::iterator iterFindNode;
-	for ( iterFindNode = _liste_fils.begin(); iterFindNode != _liste_fils.end() ; iterFindNode++) {
+	std::vector< Node<T,Cmp>* >::iterator iterFindNode;
+	for ( iterFindNode = _sons_list.begin(); iterFindNode != _sons_list.end() ; iterFindNode++) {
 		
 		if ( (*iterFindNode) == node ) {
-			std::cout << "Node found " << std::endl;
-			_liste_fils.erase( iterFindNode );
+			_sons_list.erase( iterFindNode );
 			break;
 		}
 
@@ -211,17 +185,14 @@ void Node<T>::unlinkSon( Node<T>* node ) {
 }
 
 
-
-
-
 /* May be useless or non pertinent. Used for node deletion */
-template<typename T>
-int Node<T>::getElementPosition( const T& element ) const {
+template<typename T, class Cmp>
+int Node<T,Cmp>::getElementPosition( const T& element ) const {
 
  	int pos = -1;
- 	for ( int i=0; i<_liste_elements.size(); i++ ) {
+ 	for ( int i=0; i<_elements_list.size(); i++ ) {
  		
- 		if ( _liste_elements.at(i) == element ) {
+ 		if ( _elements_list.at(i) == element ) {
  			pos = i;
  		}
 
@@ -230,49 +201,37 @@ int Node<T>::getElementPosition( const T& element ) const {
 	return pos;
 }
 
-template<typename T>
-int Node<T>::delElement( const T& element ) {
 
- 	int pos = this->getElementPosition( element );
+template<typename T, class Cmp>
+void Node<T,Cmp>::draw(std::ostream &flux) {
 
- 	if ( pos != -1 ) {
- 		_liste_elements.erase( _liste_elements.begin()+pos );
- 	}
-
- 	
-	return pos;
-}
-
-template<typename T>
-void Node<T>::draw(std::ostream &flux) {
-
-	for ( int j=0; j < _liste_elements.size(); j++) {
-		flux << _liste_elements.at(j) << " ";
+	for ( int j=0; j < _elements_list.size(); j++) {
+		flux << _elements_list.at(j) << " ";
 	}
 
 	flux << std::endl;
 
-	flux << "Nb sons : " << _liste_fils.size() << std::endl;
+	flux << "Nb sons : " << _sons_list.size() << std::endl;
 
 	flux << std::endl;
 
 
 	//
-	for ( int j=0; j < _liste_fils.size(); j++) {
-		flux << *_liste_fils.at(j);
+	for ( int j=0; j < _sons_list.size(); j++) {
+		flux << *_sons_list.at(j);
 	}
 	//
  	
 
  }
 
-template<typename T>
-std::ostream& operator<<( std::ostream& flux, Node<T>& n) {
+template<typename T, class Cmp>
+std::ostream& operator<<( std::ostream& flux, Node<T,Cmp>& n) {
     n.draw(flux) ;
     return flux;
 }
 
-template<typename T>
-Node<T>::~Node() {
+template<typename T, class Cmp>
+Node<T,Cmp>::~Node() {
 	
 }

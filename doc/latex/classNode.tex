@@ -1,107 +1,371 @@
 \hypertarget{classNode}{
-\section{Node$<$ T $>$ Class Template Reference}
+\section{Node$<$ T, Cmp $>$ Class Template Reference}
 \label{classNode}\index{Node@{Node}}
 }
+
+
+\hyperlink{classBTree}{BTree} \hyperlink{classNode}{Node}. Contains Elements/Keys.  
+
+
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classNode_a2503c255b891bffa72de5bf8d588fc0e}{
-{\bfseries Node} (\hyperlink{classNode}{Node}$<$ T $>$ $\ast$parent)}
-\label{classNode_a2503c255b891bffa72de5bf8d588fc0e}
+\hypertarget{classNode_ae2154f7c64506d0d7656aaa7bb728403}{
+\hyperlink{classNode_ae2154f7c64506d0d7656aaa7bb728403}{Node} ()}
+\label{classNode_ae2154f7c64506d0d7656aaa7bb728403}
 
-\item 
-\hypertarget{classNode_adbddcb0e025a2d63bd5c5b7384b208bb}{
-T {\bfseries getElement} (int i)}
-\label{classNode_adbddcb0e025a2d63bd5c5b7384b208bb}
-
-\item 
-\hypertarget{classNode_ab1c287487ed356d528fc238060285411}{
-int {\bfseries addElement} (T elt)}
-\label{classNode_ab1c287487ed356d528fc238060285411}
-
-\item 
-\hypertarget{classNode_a7a34d5a62bb07d206d0ebe1076c102a6}{
-int {\bfseries delElement} (const T \&element)}
-\label{classNode_a7a34d5a62bb07d206d0ebe1076c102a6}
-
-\item 
-\hypertarget{classNode_a1ce62ee002d51b8605cf1639e9781943}{
-int {\bfseries linkSon} (\hyperlink{classNode}{Node}$<$ T $>$ $\ast$node, int index=-\/1)}
-\label{classNode_a1ce62ee002d51b8605cf1639e9781943}
-
-\item 
-\hypertarget{classNode_afdae887bde082e5648f8b2986e8c240f}{
-void {\bfseries unlinkSon} (\hyperlink{classNode}{Node}$<$ T $>$ $\ast$node)}
-\label{classNode_afdae887bde082e5648f8b2986e8c240f}
-
-\item 
-\hypertarget{classNode_a984dbf53bc2ffa4eb3ead39b91b038b0}{
-std::vector$<$ \hyperlink{classNode}{Node}$<$ T $>$ $\ast$ $>$ \& {\bfseries getSons} ()}
-\label{classNode_a984dbf53bc2ffa4eb3ead39b91b038b0}
-
-\item 
-\hypertarget{classNode_a95fd498cb7e705440eec1fc39e851aba}{
-std::vector$<$ T $>$ \& {\bfseries getElements} ()}
-\label{classNode_a95fd498cb7e705440eec1fc39e851aba}
-
-\item 
-\hypertarget{classNode_a1fe843bd1fa3267bcb2e587e36b55bbc}{
-\hyperlink{classNode}{Node}$<$ T $>$ $\ast$ {\bfseries getParent} ()}
-\label{classNode_a1fe843bd1fa3267bcb2e587e36b55bbc}
-
-\item 
-\hypertarget{classNode_ac39aa6ff487cb0f139834bac50a0d0cb}{
-\hyperlink{classNode}{Node}$<$ T $>$ $\ast$ {\bfseries leftmostLeaf} ()}
-\label{classNode_ac39aa6ff487cb0f139834bac50a0d0cb}
-
-\item 
-\hypertarget{classNode_a310cbefb63ef13f45e8e49b91c2fb7b0}{
-\hyperlink{classNode}{Node}$<$ T $>$ $\ast$ {\bfseries rightmostLeaf} ()}
-\label{classNode_a310cbefb63ef13f45e8e49b91c2fb7b0}
-
-\item 
-\hypertarget{classNode_a560dac7cb6b58cc237ded9d13a889d09}{
-int {\bfseries getElementPosition} (const T \&element) const }
-\label{classNode_a560dac7cb6b58cc237ded9d13a889d09}
-
-\item 
-\hypertarget{classNode_ada6ce86027688673e1ff669f0b979034}{
-int {\bfseries getSonPosition} (const \hyperlink{classNode}{Node}$<$ T $>$ $\ast$son)}
-\label{classNode_ada6ce86027688673e1ff669f0b979034}
-
-\item 
-\hypertarget{classNode_aca843b36a3ce0d055fd2c45d57dfdcea}{
-bool {\bfseries contains} (const T \&elt) const }
-\label{classNode_aca843b36a3ce0d055fd2c45d57dfdcea}
-
-\item 
-\hypertarget{classNode_a99cc5c833e35ab3038ffe6dc7c965bef}{
-bool {\bfseries isLeaf} () const }
-\label{classNode_a99cc5c833e35ab3038ffe6dc7c965bef}
-
-\item 
-\hypertarget{classNode_a1c3f344149070bb433bbde0edd36593d}{
-bool {\bfseries isOverflowing} (int size) const }
-\label{classNode_a1c3f344149070bb433bbde0edd36593d}
-
-\item 
-\hypertarget{classNode_a63144db49899831be0f33c117b395209}{
-bool {\bfseries isUnderflowing} (int min\_\-size) const }
-\label{classNode_a63144db49899831be0f33c117b395209}
-
-\item 
-\hypertarget{classNode_a4e37f80b186c56a4f90dc2e0be1419dc}{
+\begin{DoxyCompactList}\small\item\em Make an new empty \hyperlink{classNode}{Node}. \item\end{DoxyCompactList}\item 
+int \hyperlink{classNode_a00faa075c69d0e2015f7250d4e9c67c4}{addElement} (T element)
+\begin{DoxyCompactList}\small\item\em Add an element to the \hyperlink{classNode}{Node} (not safe) \item\end{DoxyCompactList}\item 
+int \hyperlink{classNode_aefc64b63487b63594388d386e5514ed0}{delElement} (const T \&element)
+\begin{DoxyCompactList}\small\item\em Remove an element from the \hyperlink{classNode}{Node} (not safe) \item\end{DoxyCompactList}\item 
+int \hyperlink{classNode_aebfe08afe47dc5a203d29c397378917c}{linkSon} (\hyperlink{classNode}{Node}$<$ T, Cmp $>$ $\ast$node)
+\begin{DoxyCompactList}\small\item\em Add a \hyperlink{classNode}{Node} as son. \item\end{DoxyCompactList}\item 
+void \hyperlink{classNode_a18a9441d84db7fc437c6105fcbeb7377}{unlinkSon} (\hyperlink{classNode}{Node}$<$ T, Cmp $>$ $\ast$node)
+\begin{DoxyCompactList}\small\item\em Unlink a son \hyperlink{classNode}{Node} from this one. \item\end{DoxyCompactList}\item 
+std::vector$<$ \hyperlink{classNode}{Node}$<$ T, Cmp $>$ $\ast$ $>$ \& \hyperlink{classNode_abe2b4ea866dac2c097420f41d0dc5b71}{getSons} ()
+\begin{DoxyCompactList}\small\item\em Get a list of sons Nodes. \item\end{DoxyCompactList}\item 
+std::vector$<$ T $>$ \& \hyperlink{classNode_ac9c04e56245dd777bfe3f677ac185beb}{getElements} ()
+\begin{DoxyCompactList}\small\item\em Get a list of elements. \item\end{DoxyCompactList}\item 
+\hyperlink{classNode}{Node}$<$ T, Cmp $>$ $\ast$ \hyperlink{classNode_a553d92ca84d985c43b12441cc45f923f}{getParent} ()
+\begin{DoxyCompactList}\small\item\em Get parent node. \item\end{DoxyCompactList}\item 
+\hyperlink{classNode}{Node}$<$ T, Cmp $>$ $\ast$ \hyperlink{classNode_acf4013394930061e49269798379096a5}{leftmostLeaf} ()
+\begin{DoxyCompactList}\small\item\em Get the leftmost leaf from this node. \item\end{DoxyCompactList}\item 
+\hyperlink{classNode}{Node}$<$ T, Cmp $>$ $\ast$ \hyperlink{classNode_ae690ca45669e86b221d98a6c26b3eee4}{rightmostLeaf} ()
+\begin{DoxyCompactList}\small\item\em Get the rightmost leaf from this node. \item\end{DoxyCompactList}\item 
+int \hyperlink{classNode_a7c7b4c56f7674dd028270a1bb8f880c6}{getElementPosition} (const T \&element) const 
+\begin{DoxyCompactList}\small\item\em Get an element position in the element list. \item\end{DoxyCompactList}\item 
+int \hyperlink{classNode_accd225fa793ba391ae96f2d77306bf49}{getSonPosition} (const \hyperlink{classNode}{Node}$<$ T, Cmp $>$ $\ast$son)
+\begin{DoxyCompactList}\small\item\em Get an son node position in the son node list. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classNode_af734f4709cebbb317cd213ef0678149d}{isOverflowing} (int max\_\-size) const 
+\begin{DoxyCompactList}\small\item\em Detect if node size exceeds the limit. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classNode_ac34f1b0085e87487b771848d059f9e28}{isUnderflowing} (int min\_\-size) const 
+\begin{DoxyCompactList}\small\item\em Detect if node size deceeds the limit. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classNode_abcea6531f0a58ee2efeef2aa19dcd406}{contains} (const T \&element) const 
+\begin{DoxyCompactList}\small\item\em Search for an element. \item\end{DoxyCompactList}\item 
+bool \hyperlink{classNode_a0b4b829c1d9dd6818e9ec4e6d0b4d8c9}{isLeaf} () const 
+\begin{DoxyCompactList}\small\item\em Detect if node is a leaf. \item\end{DoxyCompactList}\item 
+\hypertarget{classNode_a78d6feccbe20a22af148b69c60bdec9e}{
 void {\bfseries draw} (std::ostream \&flux)}
-\label{classNode_a4e37f80b186c56a4f90dc2e0be1419dc}
+\label{classNode_a78d6feccbe20a22af148b69c60bdec9e}
 
 \item 
-\hypertarget{classNode_a8a5e65d6fb045a094506570976f10e3c}{
-int {\bfseries size} () const }
-\label{classNode_a8a5e65d6fb045a094506570976f10e3c}
+int \hyperlink{classNode_ac87f195ec96daa6d1a52767467c4c9fb}{size} () const 
+\begin{DoxyCompactList}\small\item\em Get number of elements in the \hyperlink{classNode}{Node}. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
-\end{DoxyCompactItemize}
-\subsubsection*{template$<$typename T$>$ class Node$<$ T $>$}
 
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename T, class Cmp = std::less$<$T$>$$>$ class Node$<$ T, Cmp $>$}
+
+\hyperlink{classBTree}{BTree} \hyperlink{classNode}{Node}. Contains Elements/Keys. \begin{DoxyAuthor}{Author}
+Maxime OUAIRY 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classNode_a00faa075c69d0e2015f7250d4e9c67c4}{
+\index{Node@{Node}!addElement@{addElement}}
+\index{addElement@{addElement}!Node@{Node}}
+\subsubsection[{addElement}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ int {\bf Node}$<$ T, Cmp $>$::addElement (
+\begin{DoxyParamCaption}
+\item[{T}]{element}
+\end{DoxyParamCaption}
+)}}
+\label{classNode_a00faa075c69d0e2015f7250d4e9c67c4}
+
+
+Add an element to the \hyperlink{classNode}{Node} (not safe) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em element} & Element to insert in the \hyperlink{classNode}{Node} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Index of inserted element 
+\end{DoxyReturn}
+\hypertarget{classNode_abcea6531f0a58ee2efeef2aa19dcd406}{
+\index{Node@{Node}!contains@{contains}}
+\index{contains@{contains}!Node@{Node}}
+\subsubsection[{contains}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ bool {\bf Node}$<$ T, Cmp $>$::contains (
+\begin{DoxyParamCaption}
+\item[{const T \&}]{element}
+\end{DoxyParamCaption}
+) const}}
+\label{classNode_abcea6531f0a58ee2efeef2aa19dcd406}
+
+
+Search for an element. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em element} & Reference to searched element \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if element is in this node, false otherwise 
+\end{DoxyReturn}
+\hypertarget{classNode_aefc64b63487b63594388d386e5514ed0}{
+\index{Node@{Node}!delElement@{delElement}}
+\index{delElement@{delElement}!Node@{Node}}
+\subsubsection[{delElement}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ int {\bf Node}$<$ T, Cmp $>$::delElement (
+\begin{DoxyParamCaption}
+\item[{const T \&}]{element}
+\end{DoxyParamCaption}
+)}}
+\label{classNode_aefc64b63487b63594388d386e5514ed0}
+
+
+Remove an element from the \hyperlink{classNode}{Node} (not safe) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em element} & Element to delete from the \hyperlink{classNode}{Node} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Old index of deleted element, if found. -\/1 otherwise 
+\end{DoxyReturn}
+\hypertarget{classNode_a7c7b4c56f7674dd028270a1bb8f880c6}{
+\index{Node@{Node}!getElementPosition@{getElementPosition}}
+\index{getElementPosition@{getElementPosition}!Node@{Node}}
+\subsubsection[{getElementPosition}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ int {\bf Node}$<$ T, Cmp $>$::getElementPosition (
+\begin{DoxyParamCaption}
+\item[{const T \&}]{element}
+\end{DoxyParamCaption}
+) const}}
+\label{classNode_a7c7b4c56f7674dd028270a1bb8f880c6}
+
+
+Get an element position in the element list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em element} & Reference to the element to locate \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Index of element in list. -\/1 otherwise 
+\end{DoxyReturn}
+\hypertarget{classNode_ac9c04e56245dd777bfe3f677ac185beb}{
+\index{Node@{Node}!getElements@{getElements}}
+\index{getElements@{getElements}!Node@{Node}}
+\subsubsection[{getElements}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ std::vector$<$T$>$\& {\bf Node}$<$ T, Cmp $>$::getElements (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classNode_ac9c04e56245dd777bfe3f677ac185beb}
+
+
+Get a list of elements. 
+
+\begin{DoxyReturn}{Returns}
+A vector reference of elements list 
+\end{DoxyReturn}
+\hypertarget{classNode_a553d92ca84d985c43b12441cc45f923f}{
+\index{Node@{Node}!getParent@{getParent}}
+\index{getParent@{getParent}!Node@{Node}}
+\subsubsection[{getParent}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ {\bf Node}$<$T,Cmp$>$$\ast$ {\bf Node}$<$ T, Cmp $>$::getParent (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classNode_a553d92ca84d985c43b12441cc45f923f}
+
+
+Get parent node. 
+
+\begin{DoxyReturn}{Returns}
+A pointer to parent \hyperlink{classNode}{Node}. NULL if Root. 
+\end{DoxyReturn}
+\hypertarget{classNode_accd225fa793ba391ae96f2d77306bf49}{
+\index{Node@{Node}!getSonPosition@{getSonPosition}}
+\index{getSonPosition@{getSonPosition}!Node@{Node}}
+\subsubsection[{getSonPosition}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ int {\bf Node}$<$ T, Cmp $>$::getSonPosition (
+\begin{DoxyParamCaption}
+\item[{const {\bf Node}$<$ T, Cmp $>$ $\ast$}]{son}
+\end{DoxyParamCaption}
+)}}
+\label{classNode_accd225fa793ba391ae96f2d77306bf49}
+
+
+Get an son node position in the son node list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em son} & Reference to the element to son node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Index of son node in list. -\/1 otherwise 
+\end{DoxyReturn}
+\hypertarget{classNode_abe2b4ea866dac2c097420f41d0dc5b71}{
+\index{Node@{Node}!getSons@{getSons}}
+\index{getSons@{getSons}!Node@{Node}}
+\subsubsection[{getSons}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ std::vector$<$ {\bf Node}$<$T,Cmp$>$$\ast$ $>$\& {\bf Node}$<$ T, Cmp $>$::getSons (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classNode_abe2b4ea866dac2c097420f41d0dc5b71}
+
+
+Get a list of sons Nodes. 
+
+\begin{DoxyReturn}{Returns}
+A vector reference of sons list 
+\end{DoxyReturn}
+\hypertarget{classNode_a0b4b829c1d9dd6818e9ec4e6d0b4d8c9}{
+\index{Node@{Node}!isLeaf@{isLeaf}}
+\index{isLeaf@{isLeaf}!Node@{Node}}
+\subsubsection[{isLeaf}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ bool {\bf Node}$<$ T, Cmp $>$::isLeaf (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classNode_a0b4b829c1d9dd6818e9ec4e6d0b4d8c9}
+
+
+Detect if node is a leaf. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em element} & Reference to searched element \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if element is in this node, false otherwise 
+\end{DoxyReturn}
+\hypertarget{classNode_af734f4709cebbb317cd213ef0678149d}{
+\index{Node@{Node}!isOverflowing@{isOverflowing}}
+\index{isOverflowing@{isOverflowing}!Node@{Node}}
+\subsubsection[{isOverflowing}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ bool {\bf Node}$<$ T, Cmp $>$::isOverflowing (
+\begin{DoxyParamCaption}
+\item[{int}]{max\_\-size}
+\end{DoxyParamCaption}
+) const}}
+\label{classNode_af734f4709cebbb317cd213ef0678149d}
+
+
+Detect if node size exceeds the limit. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em max\_\-size} & Maximum node size \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if node size exceeds max\_\-size. false otherwise 
+\end{DoxyReturn}
+\hypertarget{classNode_ac34f1b0085e87487b771848d059f9e28}{
+\index{Node@{Node}!isUnderflowing@{isUnderflowing}}
+\index{isUnderflowing@{isUnderflowing}!Node@{Node}}
+\subsubsection[{isUnderflowing}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ bool {\bf Node}$<$ T, Cmp $>$::isUnderflowing (
+\begin{DoxyParamCaption}
+\item[{int}]{min\_\-size}
+\end{DoxyParamCaption}
+) const}}
+\label{classNode_ac34f1b0085e87487b771848d059f9e28}
+
+
+Detect if node size deceeds the limit. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em min\_\-size} & Minimum node size \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if node size deceeds max\_\-size. false otherwise 
+\end{DoxyReturn}
+\hypertarget{classNode_acf4013394930061e49269798379096a5}{
+\index{Node@{Node}!leftmostLeaf@{leftmostLeaf}}
+\index{leftmostLeaf@{leftmostLeaf}!Node@{Node}}
+\subsubsection[{leftmostLeaf}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ {\bf Node}$<$T,Cmp$>$$\ast$ {\bf Node}$<$ T, Cmp $>$::leftmostLeaf (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classNode_acf4013394930061e49269798379096a5}
+
+
+Get the leftmost leaf from this node. 
+
+\begin{DoxyReturn}{Returns}
+A pointer to leftmost leaf node 
+\end{DoxyReturn}
+\hypertarget{classNode_aebfe08afe47dc5a203d29c397378917c}{
+\index{Node@{Node}!linkSon@{linkSon}}
+\index{linkSon@{linkSon}!Node@{Node}}
+\subsubsection[{linkSon}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ int {\bf Node}$<$ T, Cmp $>$::linkSon (
+\begin{DoxyParamCaption}
+\item[{{\bf Node}$<$ T, Cmp $>$ $\ast$}]{node}
+\end{DoxyParamCaption}
+)}}
+\label{classNode_aebfe08afe47dc5a203d29c397378917c}
+
+
+Add a \hyperlink{classNode}{Node} as son. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & Future son \hyperlink{classNode}{Node} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Index of inserted son 
+\end{DoxyReturn}
+\hypertarget{classNode_ae690ca45669e86b221d98a6c26b3eee4}{
+\index{Node@{Node}!rightmostLeaf@{rightmostLeaf}}
+\index{rightmostLeaf@{rightmostLeaf}!Node@{Node}}
+\subsubsection[{rightmostLeaf}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ {\bf Node}$<$T,Cmp$>$$\ast$ {\bf Node}$<$ T, Cmp $>$::rightmostLeaf (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classNode_ae690ca45669e86b221d98a6c26b3eee4}
+
+
+Get the rightmost leaf from this node. 
+
+\begin{DoxyReturn}{Returns}
+A pointer to rightmost leaf node 
+\end{DoxyReturn}
+\hypertarget{classNode_ac87f195ec96daa6d1a52767467c4c9fb}{
+\index{Node@{Node}!size@{size}}
+\index{size@{size}!Node@{Node}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ int {\bf Node}$<$ T, Cmp $>$::size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classNode_ac87f195ec96daa6d1a52767467c4c9fb}
+
+
+Get number of elements in the \hyperlink{classNode}{Node}. 
+
+\begin{DoxyReturn}{Returns}
+Current number of elements inserted 
+\end{DoxyReturn}
+\hypertarget{classNode_a18a9441d84db7fc437c6105fcbeb7377}{
+\index{Node@{Node}!unlinkSon@{unlinkSon}}
+\index{unlinkSon@{unlinkSon}!Node@{Node}}
+\subsubsection[{unlinkSon}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ void {\bf Node}$<$ T, Cmp $>$::unlinkSon (
+\begin{DoxyParamCaption}
+\item[{{\bf Node}$<$ T, Cmp $>$ $\ast$}]{node}
+\end{DoxyParamCaption}
+)}}
+\label{classNode_a18a9441d84db7fc437c6105fcbeb7377}
+
+
+Unlink a son \hyperlink{classNode}{Node} from this one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & Son \hyperlink{classNode}{Node} to unlink \\
+\hline
+\end{DoxyParams}
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}

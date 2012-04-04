@@ -63,68 +63,73 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">        #define H_Node_H</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span>
 <a name="l00004"></a>00004 <span class="preprocessor">        #include &lt;vector&gt;</span>
-<a name="l00005"></a>00005 <span class="preprocessor">                #include &lt;iostream&gt;</span>
-<a name="l00006"></a>00006 
-<a name="l00007"></a>00007 <span class="preprocessor">        #include &lt;algorithm&gt;</span>
-<a name="l00008"></a>00008 
-<a name="l00009"></a>00009         <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;
-<a name="l00010"></a><a class="code" href="classNode.html">00010</a>         <span class="keyword">class </span><a class="code" href="classNode.html">Node</a> {
-<a name="l00011"></a>00011 
-<a name="l00012"></a>00012                 
-<a name="l00013"></a>00013                 <span class="keyword">typedef</span> <span class="keyword">typename</span> std::vector&lt; Node&lt;T&gt;* &gt; nodes_ptr_vector ;
-<a name="l00014"></a>00014 
-<a name="l00015"></a>00015                 
-<a name="l00016"></a>00016                 <span class="keyword">typedef</span> <span class="keyword">typename</span> nodes_ptr_vector::iterator nodes_ptr_iterator ;
+<a name="l00005"></a>00005 <span class="preprocessor">        #include &lt;iostream&gt;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">        #include &lt;algorithm&gt;</span>
+<a name="l00007"></a>00007 
+<a name="l00015"></a>00015         <span class="keyword">template</span>&lt; <span class="keyword">typename</span> T, <span class="keyword">class</span> Cmp = std::less&lt;T&gt; &gt;
+<a name="l00016"></a><a class="code" href="classNode.html">00016</a>         <span class="keyword">class </span><a class="code" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> {
 <a name="l00017"></a>00017 
-<a name="l00018"></a>00018 
-<a name="l00019"></a>00019                 <span class="keyword">public</span>:
-<a name="l00020"></a>00020                         <a class="code" href="classNode.html">Node</a>();
-<a name="l00021"></a>00021                         <a class="code" href="classNode.html">Node</a>( <a class="code" href="classNode.html">Node&lt;T&gt;</a>* parent );
-<a name="l00022"></a>00022                         ~<a class="code" href="classNode.html">Node</a>();
+<a name="l00018"></a>00018                 
+<a name="l00019"></a>00019                 <span class="keyword">typedef</span> <span class="keyword">typename</span> std::vector&lt; Node&lt;T,Cmp&gt;* &gt; nodes_ptr_vector ;
+<a name="l00020"></a>00020 
+<a name="l00021"></a>00021                 
+<a name="l00022"></a>00022                 <span class="keyword">typedef</span> <span class="keyword">typename</span> nodes_ptr_vector::iterator nodes_ptr_iterator ;
 <a name="l00023"></a>00023 
-<a name="l00024"></a>00024                         T getElement( <span class="keywordtype">int</span> i );
-<a name="l00025"></a>00025                         <span class="keywordtype">int</span> addElement( T elt );
-<a name="l00026"></a>00026                         <span class="keywordtype">int</span> delElement( <span class="keyword">const</span> T&amp; element );
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029                         <span class="keywordtype">int</span> linkSon( <a class="code" href="classNode.html">Node&lt;T&gt;</a>* node, <span class="keywordtype">int</span> index = -1 );
-<a name="l00030"></a>00030                         <span class="keywordtype">void</span> unlinkSon( <a class="code" href="classNode.html">Node&lt;T&gt;</a>* node );
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032                         std::vector&lt; Node&lt;T&gt;* &gt;&amp; getSons();
-<a name="l00033"></a>00033                         std::vector&lt;T&gt;&amp; getElements();
-<a name="l00034"></a>00034 
-<a name="l00035"></a>00035                         <a class="code" href="classNode.html">Node&lt;T&gt;</a>* getParent();
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037                         <a class="code" href="classNode.html">Node&lt;T&gt;</a>* leftmostLeaf();
-<a name="l00038"></a>00038                         <a class="code" href="classNode.html">Node&lt;T&gt;</a>* rightmostLeaf();
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040                         <span class="keywordtype">int</span> getElementPosition( <span class="keyword">const</span> T&amp; element ) <span class="keyword">const</span>;
-<a name="l00041"></a>00041                         <span class="keywordtype">int</span> getSonPosition( <span class="keyword">const</span> <a class="code" href="classNode.html">Node&lt;T&gt;</a>* son );
+<a name="l00024"></a>00024 
+<a name="l00025"></a>00025                 <span class="keyword">public</span>:
+<a name="l00031"></a>00031                         <a class="code" href="classNode.html#ae2154f7c64506d0d7656aaa7bb728403" title="Make an new empty Node.">Node</a>();
+<a name="l00032"></a>00032                         ~<a class="code" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a>();
+<a name="l00033"></a>00033 
+<a name="l00041"></a>00041                         <span class="keywordtype">int</span> <a class="code" href="classNode.html#a00faa075c69d0e2015f7250d4e9c67c4" title="Add an element to the Node (not safe)">addElement</a>( T element );
 <a name="l00042"></a>00042 
-<a name="l00043"></a>00043                         <span class="keywordtype">bool</span> contains( <span class="keyword">const</span> T&amp; elt ) <span class="keyword">const</span>;
-<a name="l00044"></a>00044                         <span class="keywordtype">bool</span> isLeaf() <span class="keyword">const</span>;
-<a name="l00045"></a>00045                         <span class="keywordtype">bool</span> isOverflowing( <span class="keywordtype">int</span> size ) <span class="keyword">const</span>;
-<a name="l00046"></a>00046                         <span class="keywordtype">bool</span> isUnderflowing( <span class="keywordtype">int</span> min_size ) <span class="keyword">const</span>;
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048                         <span class="keywordtype">void</span> draw(std::ostream &amp;flux);
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050                         <span class="keywordtype">int</span> size() <span class="keyword">const</span>;
+<a name="l00050"></a>00050                         <span class="keywordtype">int</span> <a class="code" href="classNode.html#aefc64b63487b63594388d386e5514ed0" title="Remove an element from the Node (not safe)">delElement</a>( <span class="keyword">const</span> T&amp; element );
 <a name="l00051"></a>00051 
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053                 <span class="keyword">private</span>:
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055                         <span class="keywordtype">void</span> setParent( <a class="code" href="classNode.html">Node&lt;T&gt;</a>* parent );
-<a name="l00056"></a>00056 
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058                         std::vector&lt;T&gt; _liste_elements;
-<a name="l00059"></a>00059                         std::vector&lt;Node&lt;T&gt;*&gt; _liste_fils;
-<a name="l00060"></a>00060                         <a class="code" href="classNode.html">Node&lt;T&gt;</a>* _parent;
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062                         <span class="comment">/* data */</span>
-<a name="l00063"></a>00063                 };
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065 <span class="preprocessor">        #include &quot;Node.tpp&quot;</span>
-<a name="l00066"></a>00066 <span class="preprocessor">#endif</span>
+<a name="l00059"></a>00059                         <span class="keywordtype">int</span> <a class="code" href="classNode.html#aebfe08afe47dc5a203d29c397378917c" title="Add a Node as son.">linkSon</a>( <a class="code" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node&lt;T,Cmp&gt;</a>* node );
+<a name="l00060"></a>00060 
+<a name="l00067"></a>00067                         <span class="keywordtype">void</span> <a class="code" href="classNode.html#a18a9441d84db7fc437c6105fcbeb7377" title="Unlink a son Node from this one.">unlinkSon</a>( <a class="code" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node&lt;T,Cmp&gt;</a>* node );
+<a name="l00068"></a>00068 
+<a name="l00075"></a>00075                         std::vector&lt; Node&lt;T,Cmp&gt;* &gt;&amp; <a class="code" href="classNode.html#abe2b4ea866dac2c097420f41d0dc5b71" title="Get a list of sons Nodes.">getSons</a>();
+<a name="l00076"></a>00076 
+<a name="l00083"></a>00083                         std::vector&lt;T&gt;&amp; <a class="code" href="classNode.html#ac9c04e56245dd777bfe3f677ac185beb" title="Get a list of elements.">getElements</a>();
+<a name="l00084"></a>00084 
+<a name="l00091"></a>00091                         <a class="code" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node&lt;T,Cmp&gt;</a>* <a class="code" href="classNode.html#a553d92ca84d985c43b12441cc45f923f" title="Get parent node.">getParent</a>();
+<a name="l00092"></a>00092 
+<a name="l00099"></a>00099                         <a class="code" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node&lt;T,Cmp&gt;</a>* <a class="code" href="classNode.html#acf4013394930061e49269798379096a5" title="Get the leftmost leaf from this node.">leftmostLeaf</a>();
+<a name="l00100"></a>00100 
+<a name="l00107"></a>00107                         <a class="code" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node&lt;T,Cmp&gt;</a>* <a class="code" href="classNode.html#ae690ca45669e86b221d98a6c26b3eee4" title="Get the rightmost leaf from this node.">rightmostLeaf</a>();
+<a name="l00108"></a>00108 
+<a name="l00116"></a>00116                         <span class="keywordtype">int</span> <a class="code" href="classNode.html#a7c7b4c56f7674dd028270a1bb8f880c6" title="Get an element position in the element list.">getElementPosition</a>( <span class="keyword">const</span> T&amp; element ) <span class="keyword">const</span>;
+<a name="l00117"></a>00117 
+<a name="l00125"></a>00125                         <span class="keywordtype">int</span> <a class="code" href="classNode.html#accd225fa793ba391ae96f2d77306bf49" title="Get an son node position in the son node list.">getSonPosition</a>( <span class="keyword">const</span> <a class="code" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node&lt;T,Cmp&gt;</a>* son );
+<a name="l00126"></a>00126 
+<a name="l00134"></a>00134                         <span class="keywordtype">bool</span> <a class="code" href="classNode.html#af734f4709cebbb317cd213ef0678149d" title="Detect if node size exceeds the limit.">isOverflowing</a>( <span class="keywordtype">int</span> max_size ) <span class="keyword">const</span>;
+<a name="l00135"></a>00135 
+<a name="l00143"></a>00143                         <span class="keywordtype">bool</span> <a class="code" href="classNode.html#ac34f1b0085e87487b771848d059f9e28" title="Detect if node size deceeds the limit.">isUnderflowing</a>( <span class="keywordtype">int</span> min_size ) <span class="keyword">const</span>;
+<a name="l00144"></a>00144 
+<a name="l00152"></a>00152                         <span class="keywordtype">bool</span> <a class="code" href="classNode.html#abcea6531f0a58ee2efeef2aa19dcd406" title="Search for an element.">contains</a>( <span class="keyword">const</span> T&amp; element ) <span class="keyword">const</span>;
+<a name="l00153"></a>00153 
+<a name="l00161"></a>00161                         <span class="keywordtype">bool</span> <a class="code" href="classNode.html#a0b4b829c1d9dd6818e9ec4e6d0b4d8c9" title="Detect if node is a leaf.">isLeaf</a>() <span class="keyword">const</span>;
+<a name="l00162"></a>00162 
+<a name="l00163"></a>00163 
+<a name="l00164"></a>00164                         <span class="keywordtype">void</span> draw(std::ostream &amp;flux);
+<a name="l00165"></a>00165 
+<a name="l00172"></a>00172                         <span class="keywordtype">int</span> <a class="code" href="classNode.html#ac87f195ec96daa6d1a52767467c4c9fb" title="Get number of elements in the Node.">size</a>() <span class="keyword">const</span>;
+<a name="l00173"></a>00173 
+<a name="l00174"></a>00174 
+<a name="l00175"></a>00175                 <span class="keyword">private</span>:
+<a name="l00176"></a>00176 
+<a name="l00183"></a>00183                         <span class="keywordtype">void</span> setParent( <a class="code" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node&lt;T,Cmp&gt;</a>* parent );
+<a name="l00184"></a>00184 
+<a name="l00188"></a>00188                         std::vector&lt;T&gt; _elements_list;
+<a name="l00189"></a>00189 
+<a name="l00193"></a>00193                         std::vector&lt;Node&lt;T,Cmp&gt;*&gt; _sons_list;
+<a name="l00194"></a>00194 
+<a name="l00198"></a>00198                         <a class="code" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node&lt;T,Cmp&gt;</a>* _parent;
+<a name="l00199"></a>00199 
+<a name="l00200"></a>00200                 };
+<a name="l00201"></a>00201 
+<a name="l00202"></a>00202 <span class="preprocessor">        #include &quot;Node.tpp&quot;</span>
+<a name="l00203"></a>00203 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
 <!--- window showing the filter options -->
@@ -141,7 +146,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Apr 4 2012 13:33:30 for PG_Btree by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Apr 4 2012 17:58:22 for PG_Btree by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

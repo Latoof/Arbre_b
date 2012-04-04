@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>PG_Btree: Node&lt; T &gt; Class Template Reference</title>
+<title>PG_Btree: Node&lt; T, Cmp &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
@@ -62,56 +62,466 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>Node&lt; T &gt; Class Template Reference</h1>  </div>
+<h1>Node&lt; T, Cmp &gt; Class Template Reference</h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Node" -->
+<p><a class="el" href="classBTree.html" title="Conainter class. Store Nodes in a Tree.">BTree</a> <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a>. Contains Elements/Keys.  
+<a href="#_details">More...</a></p>
+
 <p><a href="classNode-members.html">List of all members.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2503c255b891bffa72de5bf8d588fc0e"></a><!-- doxytag: member="Node::Node" ref="a2503c255b891bffa72de5bf8d588fc0e" args="(Node&lt; T &gt; *parent)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>Node</b> (<a class="el" href="classNode.html">Node</a>&lt; T &gt; *parent)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adbddcb0e025a2d63bd5c5b7384b208bb"></a><!-- doxytag: member="Node::getElement" ref="adbddcb0e025a2d63bd5c5b7384b208bb" args="(int i)" -->
-T&#160;</td><td class="memItemRight" valign="bottom"><b>getElement</b> (int i)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab1c287487ed356d528fc238060285411"></a><!-- doxytag: member="Node::addElement" ref="ab1c287487ed356d528fc238060285411" args="(T elt)" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>addElement</b> (T elt)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7a34d5a62bb07d206d0ebe1076c102a6"></a><!-- doxytag: member="Node::delElement" ref="a7a34d5a62bb07d206d0ebe1076c102a6" args="(const T &amp;element)" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>delElement</b> (const T &amp;element)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ce62ee002d51b8605cf1639e9781943"></a><!-- doxytag: member="Node::linkSon" ref="a1ce62ee002d51b8605cf1639e9781943" args="(Node&lt; T &gt; *node, int index=&#45;1)" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>linkSon</b> (<a class="el" href="classNode.html">Node</a>&lt; T &gt; *node, int index=-1)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afdae887bde082e5648f8b2986e8c240f"></a><!-- doxytag: member="Node::unlinkSon" ref="afdae887bde082e5648f8b2986e8c240f" args="(Node&lt; T &gt; *node)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>unlinkSon</b> (<a class="el" href="classNode.html">Node</a>&lt; T &gt; *node)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a984dbf53bc2ffa4eb3ead39b91b038b0"></a><!-- doxytag: member="Node::getSons" ref="a984dbf53bc2ffa4eb3ead39b91b038b0" args="()" -->
-std::vector&lt; <a class="el" href="classNode.html">Node</a>&lt; T &gt; * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getSons</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95fd498cb7e705440eec1fc39e851aba"></a><!-- doxytag: member="Node::getElements" ref="a95fd498cb7e705440eec1fc39e851aba" args="()" -->
-std::vector&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getElements</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1fe843bd1fa3267bcb2e587e36b55bbc"></a><!-- doxytag: member="Node::getParent" ref="a1fe843bd1fa3267bcb2e587e36b55bbc" args="()" -->
-<a class="el" href="classNode.html">Node</a>&lt; T &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>getParent</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac39aa6ff487cb0f139834bac50a0d0cb"></a><!-- doxytag: member="Node::leftmostLeaf" ref="ac39aa6ff487cb0f139834bac50a0d0cb" args="()" -->
-<a class="el" href="classNode.html">Node</a>&lt; T &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>leftmostLeaf</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a310cbefb63ef13f45e8e49b91c2fb7b0"></a><!-- doxytag: member="Node::rightmostLeaf" ref="a310cbefb63ef13f45e8e49b91c2fb7b0" args="()" -->
-<a class="el" href="classNode.html">Node</a>&lt; T &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>rightmostLeaf</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a560dac7cb6b58cc237ded9d13a889d09"></a><!-- doxytag: member="Node::getElementPosition" ref="a560dac7cb6b58cc237ded9d13a889d09" args="(const T &amp;element) const " -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getElementPosition</b> (const T &amp;element) const </td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada6ce86027688673e1ff669f0b979034"></a><!-- doxytag: member="Node::getSonPosition" ref="ada6ce86027688673e1ff669f0b979034" args="(const Node&lt; T &gt; *son)" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getSonPosition</b> (const <a class="el" href="classNode.html">Node</a>&lt; T &gt; *son)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca843b36a3ce0d055fd2c45d57dfdcea"></a><!-- doxytag: member="Node::contains" ref="aca843b36a3ce0d055fd2c45d57dfdcea" args="(const T &amp;elt) const " -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>contains</b> (const T &amp;elt) const </td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99cc5c833e35ab3038ffe6dc7c965bef"></a><!-- doxytag: member="Node::isLeaf" ref="a99cc5c833e35ab3038ffe6dc7c965bef" args="() const " -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isLeaf</b> () const </td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1c3f344149070bb433bbde0edd36593d"></a><!-- doxytag: member="Node::isOverflowing" ref="a1c3f344149070bb433bbde0edd36593d" args="(int size) const " -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isOverflowing</b> (int size) const </td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63144db49899831be0f33c117b395209"></a><!-- doxytag: member="Node::isUnderflowing" ref="a63144db49899831be0f33c117b395209" args="(int min_size) const " -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isUnderflowing</b> (int min_size) const </td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4e37f80b186c56a4f90dc2e0be1419dc"></a><!-- doxytag: member="Node::draw" ref="a4e37f80b186c56a4f90dc2e0be1419dc" args="(std::ostream &amp;flux)" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae2154f7c64506d0d7656aaa7bb728403"></a><!-- doxytag: member="Node::Node" ref="ae2154f7c64506d0d7656aaa7bb728403" args="()" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ae2154f7c64506d0d7656aaa7bb728403">Node</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an new empty <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a>. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a00faa075c69d0e2015f7250d4e9c67c4">addElement</a> (T element)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an element to the <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> (not safe)  <a href="#a00faa075c69d0e2015f7250d4e9c67c4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#aefc64b63487b63594388d386e5514ed0">delElement</a> (const T &amp;element)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove an element from the <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> (not safe)  <a href="#aefc64b63487b63594388d386e5514ed0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#aebfe08afe47dc5a203d29c397378917c">linkSon</a> (<a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *node)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> as son.  <a href="#aebfe08afe47dc5a203d29c397378917c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a18a9441d84db7fc437c6105fcbeb7377">unlinkSon</a> (<a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *node)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlink a son <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> from this one.  <a href="#a18a9441d84db7fc437c6105fcbeb7377"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#abe2b4ea866dac2c097420f41d0dc5b71">getSons</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of sons Nodes.  <a href="#abe2b4ea866dac2c097420f41d0dc5b71"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::vector&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ac9c04e56245dd777bfe3f677ac185beb">getElements</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of elements.  <a href="#ac9c04e56245dd777bfe3f677ac185beb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a553d92ca84d985c43b12441cc45f923f">getParent</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get parent node.  <a href="#a553d92ca84d985c43b12441cc45f923f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#acf4013394930061e49269798379096a5">leftmostLeaf</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the leftmost leaf from this node.  <a href="#acf4013394930061e49269798379096a5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ae690ca45669e86b221d98a6c26b3eee4">rightmostLeaf</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the rightmost leaf from this node.  <a href="#ae690ca45669e86b221d98a6c26b3eee4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a7c7b4c56f7674dd028270a1bb8f880c6">getElementPosition</a> (const T &amp;element) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an element position in the element list.  <a href="#a7c7b4c56f7674dd028270a1bb8f880c6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#accd225fa793ba391ae96f2d77306bf49">getSonPosition</a> (const <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *son)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an son node position in the son node list.  <a href="#accd225fa793ba391ae96f2d77306bf49"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#af734f4709cebbb317cd213ef0678149d">isOverflowing</a> (int max_size) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Detect if node size exceeds the limit.  <a href="#af734f4709cebbb317cd213ef0678149d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ac34f1b0085e87487b771848d059f9e28">isUnderflowing</a> (int min_size) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Detect if node size deceeds the limit.  <a href="#ac34f1b0085e87487b771848d059f9e28"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#abcea6531f0a58ee2efeef2aa19dcd406">contains</a> (const T &amp;element) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search for an element.  <a href="#abcea6531f0a58ee2efeef2aa19dcd406"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#a0b4b829c1d9dd6818e9ec4e6d0b4d8c9">isLeaf</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Detect if node is a leaf.  <a href="#a0b4b829c1d9dd6818e9ec4e6d0b4d8c9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78d6feccbe20a22af148b69c60bdec9e"></a><!-- doxytag: member="Node::draw" ref="a78d6feccbe20a22af148b69c60bdec9e" args="(std::ostream &amp;flux)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>draw</b> (std::ostream &amp;flux)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a5e65d6fb045a094506570976f10e3c"></a><!-- doxytag: member="Node::size" ref="a8a5e65d6fb045a094506570976f10e3c" args="() const " -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNode.html#ac87f195ec96daa6d1a52767467c4c9fb">size</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of elements in the <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a>.  <a href="#ac87f195ec96daa6d1a52767467c4c9fb"></a><br/></td></tr>
 </table>
-<h3>template&lt;typename T&gt;<br/>
- class Node&lt; T &gt;</h3>
+<hr/><a name="_details"></a><h2>Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt;<br/>
+ class Node&lt; T, Cmp &gt;</h3>
 
+<p><a class="el" href="classBTree.html" title="Conainter class. Store Nodes in a Tree.">BTree</a> <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a>. Contains Elements/Keys. </p>
+<dl class="author"><dt><b>Author:</b></dt><dd>Maxime OUAIRY </dd></dl>
+</div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a00faa075c69d0e2015f7250d4e9c67c4"></a><!-- doxytag: member="Node::addElement" ref="a00faa075c69d0e2015f7250d4e9c67c4" args="(T element)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::addElement </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>element</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Add an element to the <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> (not safe) </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">element</td><td>Element to insert in the <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Index of inserted element </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="abcea6531f0a58ee2efeef2aa19dcd406"></a><!-- doxytag: member="Node::contains" ref="abcea6531f0a58ee2efeef2aa19dcd406" args="(const T &amp;element) const " -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::contains </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>element</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Search for an element. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">element</td><td>Reference to searched element </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if element is in this node, false otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aefc64b63487b63594388d386e5514ed0"></a><!-- doxytag: member="Node::delElement" ref="aefc64b63487b63594388d386e5514ed0" args="(const T &amp;element)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::delElement </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>element</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Remove an element from the <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> (not safe) </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">element</td><td>Element to delete from the <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Old index of deleted element, if found. -1 otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7c7b4c56f7674dd028270a1bb8f880c6"></a><!-- doxytag: member="Node::getElementPosition" ref="a7c7b4c56f7674dd028270a1bb8f880c6" args="(const T &amp;element) const " -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::getElementPosition </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>element</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get an element position in the element list. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">element</td><td>Reference to the element to locate </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Index of element in list. -1 otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac9c04e56245dd777bfe3f677ac185beb"></a><!-- doxytag: member="Node::getElements" ref="ac9c04e56245dd777bfe3f677ac185beb" args="()" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;T&gt;&amp; <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::getElements </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a list of elements. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A vector reference of elements list </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a553d92ca84d985c43b12441cc45f923f"></a><!-- doxytag: member="Node::getParent" ref="a553d92ca84d985c43b12441cc45f923f" args="()" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classNode.html">Node</a>&lt;T,Cmp&gt;* <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::getParent </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get parent node. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A pointer to parent <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a>. NULL if Root. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="accd225fa793ba391ae96f2d77306bf49"></a><!-- doxytag: member="Node::getSonPosition" ref="accd225fa793ba391ae96f2d77306bf49" args="(const Node&lt; T, Cmp &gt; *son)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::getSonPosition </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *&#160;</td>
+          <td class="paramname"><em>son</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get an son node position in the son node list. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">son</td><td>Reference to the element to son node </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Index of son node in list. -1 otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="abe2b4ea866dac2c097420f41d0dc5b71"></a><!-- doxytag: member="Node::getSons" ref="abe2b4ea866dac2c097420f41d0dc5b71" args="()" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="classNode.html">Node</a>&lt;T,Cmp&gt;* &gt;&amp; <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::getSons </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a list of sons Nodes. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A vector reference of sons list </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a0b4b829c1d9dd6818e9ec4e6d0b4d8c9"></a><!-- doxytag: member="Node::isLeaf" ref="a0b4b829c1d9dd6818e9ec4e6d0b4d8c9" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::isLeaf </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Detect if node is a leaf. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">element</td><td>Reference to searched element </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if element is in this node, false otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af734f4709cebbb317cd213ef0678149d"></a><!-- doxytag: member="Node::isOverflowing" ref="af734f4709cebbb317cd213ef0678149d" args="(int max_size) const " -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::isOverflowing </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>max_size</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Detect if node size exceeds the limit. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">max_size</td><td>Maximum node size </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if node size exceeds max_size. false otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac34f1b0085e87487b771848d059f9e28"></a><!-- doxytag: member="Node::isUnderflowing" ref="ac34f1b0085e87487b771848d059f9e28" args="(int min_size) const " -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::isUnderflowing </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>min_size</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Detect if node size deceeds the limit. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">min_size</td><td>Minimum node size </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if node size deceeds max_size. false otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="acf4013394930061e49269798379096a5"></a><!-- doxytag: member="Node::leftmostLeaf" ref="acf4013394930061e49269798379096a5" args="()" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classNode.html">Node</a>&lt;T,Cmp&gt;* <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::leftmostLeaf </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the leftmost leaf from this node. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A pointer to leftmost leaf node </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aebfe08afe47dc5a203d29c397378917c"></a><!-- doxytag: member="Node::linkSon" ref="aebfe08afe47dc5a203d29c397378917c" args="(Node&lt; T, Cmp &gt; *node)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::linkSon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Add a <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> as son. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>Future son <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Index of inserted son </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae690ca45669e86b221d98a6c26b3eee4"></a><!-- doxytag: member="Node::rightmostLeaf" ref="ae690ca45669e86b221d98a6c26b3eee4" args="()" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classNode.html">Node</a>&lt;T,Cmp&gt;* <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::rightmostLeaf </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the rightmost leaf from this node. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A pointer to rightmost leaf node </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac87f195ec96daa6d1a52767467c4c9fb"></a><!-- doxytag: member="Node::size" ref="ac87f195ec96daa6d1a52767467c4c9fb" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::size </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get number of elements in the <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a>. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Current number of elements inserted </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a18a9441d84db7fc437c6105fcbeb7377"></a><!-- doxytag: member="Node::unlinkSon" ref="a18a9441d84db7fc437c6105fcbeb7377" args="(Node&lt; T, Cmp &gt; *node)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt;::unlinkSon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Unlink a son <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> from this one. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>Son <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> to unlink </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/media/Programmes/Dropbox/Univ nantes - Master 1 ALMA/ProgGenerative/projet_tp/Arbre_b/src/<a class="el" href="Node_8h_source.html">Node.h</a></li>
 </ul>
@@ -130,7 +540,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> () const </td
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Apr 4 2012 13:33:31 for PG_Btree by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Apr 4 2012 17:58:23 for PG_Btree by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

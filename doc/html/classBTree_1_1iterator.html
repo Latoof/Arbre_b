@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>PG_Btree: BTree&lt; T &gt;::iterator Class Reference</title>
+<title>PG_Btree: BTree&lt; T, Cmp &gt;::iterator Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
@@ -68,16 +68,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>BTree&lt; T &gt;::iterator Class Reference</h1>  </div>
+<h1>BTree&lt; T, Cmp &gt;::iterator Class Reference</h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="BTree::iterator" --><!-- doxytag: inherits="BTree::generic_iterator" --><div class="dynheader">
-Inheritance diagram for BTree&lt; T &gt;::iterator:</div>
+Inheritance diagram for BTree&lt; T, Cmp &gt;::iterator:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classBTree_1_1iterator.png" usemap="#BTree&lt; T &gt;::iterator_map" alt=""/>
-  <map id="BTree&lt; T &gt;::iterator_map" name="BTree&lt; T &gt;::iterator_map">
-<area href="classBTree_1_1generic__iterator.html" alt="BTree&lt; T &gt;::generic_iterator" shape="rect" coords="0,0,173,24"/>
+  <img src="classBTree_1_1iterator.png" usemap="#BTree&lt; T, Cmp &gt;::iterator_map" alt=""/>
+  <map id="BTree&lt; T, Cmp &gt;::iterator_map" name="BTree&lt; T, Cmp &gt;::iterator_map">
+<area href="classBTree_1_1generic__iterator.html" alt="BTree&lt; T, Cmp &gt;::generic_iterator" shape="rect" coords="0,0,207,24"/>
 </map>
  </div></div>
 
@@ -85,17 +85,17 @@ Inheritance diagram for BTree&lt; T &gt;::iterator:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d7daebb91dc750f1403c66a1632e1ae"></a><!-- doxytag: member="BTree::iterator::iterator" ref="a0d7daebb91dc750f1403c66a1632e1ae" args="(BTree&lt; T &gt; *a, bool ended=false)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>iterator</b> (<a class="el" href="classBTree.html">BTree</a>&lt; T &gt; *a, bool ended=false)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abfda500a8a20422b6a191b199d2eb9d5"></a><!-- doxytag: member="BTree::iterator::previous" ref="abfda500a8a20422b6a191b199d2eb9d5" args="()" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad34e487a9baf267daabe0dda42315553"></a><!-- doxytag: member="BTree::iterator::iterator" ref="ad34e487a9baf267daabe0dda42315553" args="(BTree&lt; T, Cmp &gt; *a, bool ended=false)" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>iterator</b> (<a class="el" href="classBTree.html">BTree</a>&lt; T, Cmp &gt; *a, bool ended=false)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a539a8aec03bc81a5bbaf975ba56e5244"></a><!-- doxytag: member="BTree::iterator::previous" ref="a539a8aec03bc81a5bbaf975ba56e5244" args="()" -->
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>previous</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a44d8ed859bc18eed5a9a70e11df4fb0a"></a><!-- doxytag: member="BTree::iterator::next" ref="a44d8ed859bc18eed5a9a70e11df4fb0a" args="()" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a993861d40f5da583f3c5af5db925c194"></a><!-- doxytag: member="BTree::iterator::next" ref="a993861d40f5da583f3c5af5db925c194" args="()" -->
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>next</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5fa225385afdfa78d230cbb8e6abeee5"></a><!-- doxytag: member="BTree::iterator::toFirstElement" ref="a5fa225385afdfa78d230cbb8e6abeee5" args="()" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01fd8287c1734bdf5f16bdf03a593587"></a><!-- doxytag: member="BTree::iterator::toFirstElement" ref="a01fd8287c1734bdf5f16bdf03a593587" args="()" -->
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>toFirstElement</b> ()</td></tr>
 </table>
-<h3>template&lt;typename T&gt;<br/>
- class BTree&lt; T &gt;::iterator</h3>
+<h3>template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt;<br/>
+ class BTree&lt; T, Cmp &gt;::iterator</h3>
 
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/media/Programmes/Dropbox/Univ nantes - Master 1 ALMA/ProgGenerative/projet_tp/Arbre_b/src/<a class="el" href="BTree__iterator_8h_source.html">BTree_iterator.h</a></li>
@@ -115,7 +115,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>toFirstElemen
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Apr 4 2012 13:33:31 for PG_Btree by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Apr 4 2012 17:58:23 for PG_Btree by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>PG_Btree: BTree&lt; T &gt; Class Template Reference</title>
+<title>PG_Btree: BTree&lt; T, Cmp &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
@@ -65,7 +65,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<h1>BTree&lt; T &gt; Class Template Reference</h1>  </div>
+<h1>BTree&lt; T, Cmp &gt; Class Template Reference</h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="BTree" -->
@@ -81,65 +81,67 @@ Classes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree_1_1reverse__iterator.html">reverse_iterator</a></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a42fcaa07896d558b3f2e32af0a746eef">BTree</a> (int lower=2, int upper=-1)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an new empty Tree.  <a href="#a42fcaa07896d558b3f2e32af0a746eef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a69a20ba2dab56eeb42689731dc9f8db6"></a><!-- doxytag: member="BTree::~BTree" ref="a69a20ba2dab56eeb42689731dc9f8db6" args="()" -->
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a69a20ba2dab56eeb42689731dc9f8db6">~BTree</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a83e51e388096d95b5521e8058bad44ed">BTree</a> (int lower=2, int upper=-1)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an new empty Tree.  <a href="#a83e51e388096d95b5521e8058bad44ed"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2de4cbb350239a4af75aa7013a6a4d81"></a><!-- doxytag: member="BTree::~BTree" ref="a2de4cbb350239a4af75aa7013a6a4d81" args="()" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a2de4cbb350239a4af75aa7013a6a4d81">~BTree</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the entire Tree, and its Nodes. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a1ed46066240cf460b3464300334c3ef4">insertElement</a> (const T &amp;element)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert and sort a new element in the Tree.  <a href="#a1ed46066240cf460b3464300334c3ef4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a4db1d4b0380577d46eef1be1186aaf3f">removeElement</a> (T element)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Find and remove an element from the Tree.  <a href="#a4db1d4b0380577d46eef1be1186aaf3f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classNode.html">Node</a>&lt; T &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a34bace4a05a8220358f06d1f4a001eb1">findElementNode</a> (const T &amp;element)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Find an element in the Tree.  <a href="#a34bace4a05a8220358f06d1f4a001eb1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classNode.html">Node</a>&lt; T &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a5f3aa12bc8ad8b1e5da1604afab8c8bd">getRootNode</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Access to root <a class="el" href="classNode.html">Node</a>.  <a href="#a5f3aa12bc8ad8b1e5da1604afab8c8bd"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a80d9f55937c820a6652760a1500413c0"></a><!-- doxytag: member="BTree::draw" ref="a80d9f55937c820a6652760a1500413c0" args="(std::ostream &amp;flux) const " -->
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#aad8382a0461d68609f4a7ac6ff129b13">insertElement</a> (const T &amp;element)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert and sort a new element in the Tree.  <a href="#aad8382a0461d68609f4a7ac6ff129b13"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a4a16f1104c087b066c112fb3d9bd9d67">removeElement</a> (T element)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Find and remove an element from the Tree.  <a href="#a4a16f1104c087b066c112fb3d9bd9d67"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#af33992c6615d26590eec8c9c4f3a84de">findElementNode</a> (const T &amp;element)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Find an element in the Tree.  <a href="#af33992c6615d26590eec8c9c4f3a84de"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a3d649eb521392e1a6172e08ddd965a1b">getRootNode</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Access to root <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a>.  <a href="#a3d649eb521392e1a6172e08ddd965a1b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd84bd36b0ac7b91c578b08cb5bf364c"></a><!-- doxytag: member="BTree::draw" ref="afd84bd36b0ac7b91c578b08cb5bf364c" args="(std::ostream &amp;flux) const " -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>draw</b> (std::ostream &amp;flux) const </td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a3040e0a49ee348cae331deaf184bc5f2">size</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of elements in the Tree.  <a href="#a3040e0a49ee348cae331deaf184bc5f2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBTree_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a5c6fa5221f301f0e565ccc936150d397">begin</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new iterator refering to the first element.  <a href="#a5c6fa5221f301f0e565ccc936150d397"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBTree_1_1reverse__iterator.html">reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a33f3a4f328058f83894661d56c381df2">rbegin</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new <a class="el" href="classBTree_1_1reverse__iterator.html">reverse_iterator</a> refering to the last element.  <a href="#a33f3a4f328058f83894661d56c381df2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBTree_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a62b3be0c47a00d87522a0d513518674d">end</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new iterator refering to end.  <a href="#a62b3be0c47a00d87522a0d513518674d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBTree_1_1reverse__iterator.html">reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#adc0e82885f8ea8a14b5e9526ce85855c">rend</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new <a class="el" href="classBTree_1_1reverse__iterator.html">reverse_iterator</a> refering to end.  <a href="#adc0e82885f8ea8a14b5e9526ce85855c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d096d7af01fff2e3855acda2a44bd09"></a><!-- doxytag: member="BTree::root" ref="a3d096d7af01fff2e3855acda2a44bd09" args="()" -->
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a3bb7a75716764713beb317b80ff32238">size</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of elements in the Tree.  <a href="#a3bb7a75716764713beb317b80ff32238"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBTree_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#aeb805dd429fe16186845e66e67a7e498">begin</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new iterator refering to the first element.  <a href="#aeb805dd429fe16186845e66e67a7e498"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBTree_1_1reverse__iterator.html">reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a0fd7a5d6f77b6d55d1a6f12a6015159b">rbegin</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new <a class="el" href="classBTree_1_1reverse__iterator.html">reverse_iterator</a> refering to the last element.  <a href="#a0fd7a5d6f77b6d55d1a6f12a6015159b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBTree_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a84ac54a58e8fa886e6d3a61cef1ab8ad">end</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new iterator refering to end.  <a href="#a84ac54a58e8fa886e6d3a61cef1ab8ad"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBTree_1_1reverse__iterator.html">reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#ad2d647f5b6335d9ea5b9d34f5cb707d4">rend</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new <a class="el" href="classBTree_1_1reverse__iterator.html">reverse_iterator</a> refering to end.  <a href="#ad2d647f5b6335d9ea5b9d34f5cb707d4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74c65eb308a4351ada51582cec3ae7ea"></a><!-- doxytag: member="BTree::root" ref="a74c65eb308a4351ada51582cec3ae7ea" args="()" -->
 <a class="el" href="classBTree_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>root</b> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a499f5a2d32a678f7b1401176f14bbcdb"></a><!-- doxytag: member="BTree::_dbg" ref="a499f5a2d32a678f7b1401176f14bbcdb" args="" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01ae7e4c943cf39a84c01e738cf54e30"></a><!-- doxytag: member="BTree::_dbg" ref="a01ae7e4c943cf39a84c01e738cf54e30" args="" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>_dbg</b></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae00c15f7c2e8ce15b96b638ca11d229b"></a><!-- doxytag: member="BTree::addToNode" ref="ae00c15f7c2e8ce15b96b638ca11d229b" args="(Node&lt; T &gt; *node, const T &amp;element)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addToNode</b> (<a class="el" href="classNode.html">Node</a>&lt; T &gt; *node, const T &amp;element)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15c88754591a5b67dcf26c6227a73b0e"></a><!-- doxytag: member="BTree::removeFromNode" ref="a15c88754591a5b67dcf26c6227a73b0e" args="(Node&lt; T &gt; *node, const T &amp;element)" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>removeFromNode</b> (<a class="el" href="classNode.html">Node</a>&lt; T &gt; *node, const T &amp;element)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa3b3ba970b4cda4b1b34295355ca4ab6"></a><!-- doxytag: member="BTree::mergeNodes" ref="aa3b3ba970b4cda4b1b34295355ca4ab6" args="(Node&lt; T &gt; *targetNode, Node&lt; T &gt; *sourceNode)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>mergeNodes</b> (<a class="el" href="classNode.html">Node</a>&lt; T &gt; *targetNode, <a class="el" href="classNode.html">Node</a>&lt; T &gt; *sourceNode)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d02f5d149755d05c432f76feda25413"></a><!-- doxytag: member="BTree::splitNode" ref="a7d02f5d149755d05c432f76feda25413" args="(Node&lt; T &gt; *node)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>splitNode</b> (<a class="el" href="classNode.html">Node</a>&lt; T &gt; *node)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02675346b02d3510ac44922067e9bbf9"></a><!-- doxytag: member="BTree::balanceNode" ref="a02675346b02d3510ac44922067e9bbf9" args="(Node&lt; T &gt; *node)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>balanceNode</b> (<a class="el" href="classNode.html">Node</a>&lt; T &gt; *node)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abfec9fc638844e35afc65644ac18efc4"></a><!-- doxytag: member="BTree::addToNode" ref="abfec9fc638844e35afc65644ac18efc4" args="(Node&lt; T, Cmp &gt; *node, const T &amp;element)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#abfec9fc638844e35afc65644ac18efc4">addToNode</a> (<a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *node, const T &amp;element)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Safe element insertion in a <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a>. Call automatically splitNode when necessary. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a987f244ae4a949d2a8bfc37fbb3f6bd1"></a><!-- doxytag: member="BTree::removeFromNode" ref="a987f244ae4a949d2a8bfc37fbb3f6bd1" args="(Node&lt; T, Cmp &gt; *node, const T &amp;element)" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a987f244ae4a949d2a8bfc37fbb3f6bd1">removeFromNode</a> (<a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *node, const T &amp;element)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Safe element deletion in a <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a>. Call automatically balanceNode when necessary. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#a17124d656659761322bf2a5d175225e0">mergeNodes</a> (<a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *targetNode, <a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *sourceNode)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Merge a source <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> in a target <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a>. SubNodes are also transferred.  <a href="#a17124d656659761322bf2a5d175225e0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#aa4d84b1d728a3d4b170821c14cb82d0d">splitNode</a> (<a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *node)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Split a node in two Nodes. Can be recursive.  <a href="#aa4d84b1d728a3d4b170821c14cb82d0d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBTree.html#ae570a4fc2d1bae09283bbe185a8269c6">balanceNode</a> (<a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *node)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Do a local rotation, in order to balance the entire Tree. Recursive.  <a href="#ae570a4fc2d1bae09283bbe185a8269c6"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename T&gt;<br/>
- class BTree&lt; T &gt;</h3>
+<div class="textblock"><h3>template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt;<br/>
+ class BTree&lt; T, Cmp &gt;</h3>
 
 <p>Conainter class. Store Nodes in a Tree. </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>Maxime OUAIRY </dd></dl>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a42fcaa07896d558b3f2e32af0a746eef"></a><!-- doxytag: member="BTree::BTree" ref="a42fcaa07896d558b3f2e32af0a746eef" args="(int lower=2, int upper=&#45;1)" -->
+<a class="anchor" id="a83e51e388096d95b5521e8058bad44ed"></a><!-- doxytag: member="BTree::BTree" ref="a83e51e388096d95b5521e8058bad44ed" args="(int lower=2, int upper=&#45;1)" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classBTree.html">BTree</a>&lt; T &gt;::<a class="el" href="classBTree.html">BTree</a> </td>
+          <td class="memname"><a class="el" href="classBTree.html">BTree</a>&lt; T, Cmp &gt;::<a class="el" href="classBTree.html">BTree</a> </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>lower</em> = <code>2</code>, </td>
@@ -162,8 +164,8 @@ template&lt;typename T&gt; </div>
 <p>Make an new empty Tree. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">lower</td><td>Minimum number of Elements per <a class="el" href="classNode.html">Node</a> </td></tr>
-    <tr><td class="paramname">upper</td><td>Maximum number of Elements per <a class="el" href="classNode.html">Node</a>. By default 2 * lower. </td></tr>
+    <tr><td class="paramname">lower</td><td>Minimum number of Elements per <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> </td></tr>
+    <tr><td class="paramname">upper</td><td>Maximum number of Elements per <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a>. By default 2 * lower. </td></tr>
   </table>
   </dd>
 </dl>
@@ -171,14 +173,41 @@ template&lt;typename T&gt; </div>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a5c6fa5221f301f0e565ccc936150d397"></a><!-- doxytag: member="BTree::begin" ref="a5c6fa5221f301f0e565ccc936150d397" args="()" -->
+<a class="anchor" id="ae570a4fc2d1bae09283bbe185a8269c6"></a><!-- doxytag: member="BTree::balanceNode" ref="ae570a4fc2d1bae09283bbe185a8269c6" args="(Node&lt; T, Cmp &gt; *node)" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classBTree_1_1iterator.html">iterator</a> <a class="el" href="classBTree.html">BTree</a>&lt; T &gt;::begin </td>
+          <td class="memname">void <a class="el" href="classBTree.html">BTree</a>&lt; T, Cmp &gt;::balanceNode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Do a local rotation, in order to balance the entire Tree. Recursive. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td><a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> to balance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aeb805dd429fe16186845e66e67a7e498"></a><!-- doxytag: member="BTree::begin" ref="aeb805dd429fe16186845e66e67a7e498" args="()" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classBTree_1_1iterator.html">iterator</a> <a class="el" href="classBTree.html">BTree</a>&lt; T, Cmp &gt;::begin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -192,14 +221,14 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a62b3be0c47a00d87522a0d513518674d"></a><!-- doxytag: member="BTree::end" ref="a62b3be0c47a00d87522a0d513518674d" args="()" -->
+<a class="anchor" id="a84ac54a58e8fa886e6d3a61cef1ab8ad"></a><!-- doxytag: member="BTree::end" ref="a84ac54a58e8fa886e6d3a61cef1ab8ad" args="()" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classBTree_1_1iterator.html">iterator</a> <a class="el" href="classBTree.html">BTree</a>&lt; T &gt;::end </td>
+          <td class="memname"><a class="el" href="classBTree_1_1iterator.html">iterator</a> <a class="el" href="classBTree.html">BTree</a>&lt; T, Cmp &gt;::end </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -213,14 +242,14 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a34bace4a05a8220358f06d1f4a001eb1"></a><!-- doxytag: member="BTree::findElementNode" ref="a34bace4a05a8220358f06d1f4a001eb1" args="(const T &amp;element)" -->
+<a class="anchor" id="af33992c6615d26590eec8c9c4f3a84de"></a><!-- doxytag: member="BTree::findElementNode" ref="af33992c6615d26590eec8c9c4f3a84de" args="(const T &amp;element)" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classNode.html">Node</a>&lt;T&gt;* <a class="el" href="classBTree.html">BTree</a>&lt; T &gt;::findElementNode </td>
+          <td class="memname"><a class="el" href="classNode.html">Node</a>&lt;T,Cmp&gt;* <a class="el" href="classBTree.html">BTree</a>&lt; T, Cmp &gt;::findElementNode </td>
           <td>(</td>
           <td class="paramtype">const T &amp;&#160;</td>
           <td class="paramname"><em>element</em></td><td>)</td>
@@ -237,18 +266,18 @@ template&lt;typename T&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The <a class="el" href="classNode.html">Node</a> containing element if found. NULL pointer otherwise </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> containing element if found. NULL pointer otherwise </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a5f3aa12bc8ad8b1e5da1604afab8c8bd"></a><!-- doxytag: member="BTree::getRootNode" ref="a5f3aa12bc8ad8b1e5da1604afab8c8bd" args="()" -->
+<a class="anchor" id="a3d649eb521392e1a6172e08ddd965a1b"></a><!-- doxytag: member="BTree::getRootNode" ref="a3d649eb521392e1a6172e08ddd965a1b" args="()" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classNode.html">Node</a>&lt;T&gt;* <a class="el" href="classBTree.html">BTree</a>&lt; T &gt;::getRootNode </td>
+          <td class="memname"><a class="el" href="classNode.html">Node</a>&lt;T,Cmp&gt;* <a class="el" href="classBTree.html">BTree</a>&lt; T, Cmp &gt;::getRootNode </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -257,25 +286,25 @@ template&lt;typename T&gt; </div>
 </div>
 <div class="memdoc">
 
-<p>Access to root <a class="el" href="classNode.html">Node</a>. </p>
+<p>Access to root <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a>. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">element</td><td>Element to be removed </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>The root <a class="el" href="classNode.html">Node</a> in the Tree </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The root <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> in the Tree </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a1ed46066240cf460b3464300334c3ef4"></a><!-- doxytag: member="BTree::insertElement" ref="a1ed46066240cf460b3464300334c3ef4" args="(const T &amp;element)" -->
+<a class="anchor" id="aad8382a0461d68609f4a7ac6ff129b13"></a><!-- doxytag: member="BTree::insertElement" ref="aad8382a0461d68609f4a7ac6ff129b13" args="(const T &amp;element)" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classBTree.html">BTree</a>&lt; T &gt;::insertElement </td>
+          <td class="memname">void <a class="el" href="classBTree.html">BTree</a>&lt; T, Cmp &gt;::insertElement </td>
           <td>(</td>
           <td class="paramtype">const T &amp;&#160;</td>
           <td class="paramname"><em>element</em></td><td>)</td>
@@ -295,14 +324,52 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a33f3a4f328058f83894661d56c381df2"></a><!-- doxytag: member="BTree::rbegin" ref="a33f3a4f328058f83894661d56c381df2" args="()" -->
+<a class="anchor" id="a17124d656659761322bf2a5d175225e0"></a><!-- doxytag: member="BTree::mergeNodes" ref="a17124d656659761322bf2a5d175225e0" args="(Node&lt; T, Cmp &gt; *targetNode, Node&lt; T, Cmp &gt; *sourceNode)" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classBTree_1_1reverse__iterator.html">reverse_iterator</a> <a class="el" href="classBTree.html">BTree</a>&lt; T &gt;::rbegin </td>
+          <td class="memname">void <a class="el" href="classBTree.html">BTree</a>&lt; T, Cmp &gt;::mergeNodes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *&#160;</td>
+          <td class="paramname"><em>targetNode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *&#160;</td>
+          <td class="paramname"><em>sourceNode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Merge a source <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> in a target <a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a>. SubNodes are also transferred. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">targetNode</td><td><a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> which will contains all elements and son of sourceNode </td></tr>
+    <tr><td class="paramname">sourceNode</td><td><a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> which will transfert all sons/elements to bros-node or parent node </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a0fd7a5d6f77b6d55d1a6f12a6015159b"></a><!-- doxytag: member="BTree::rbegin" ref="a0fd7a5d6f77b6d55d1a6f12a6015159b" args="()" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classBTree_1_1reverse__iterator.html">reverse_iterator</a> <a class="el" href="classBTree.html">BTree</a>&lt; T, Cmp &gt;::rbegin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -316,14 +383,14 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a4db1d4b0380577d46eef1be1186aaf3f"></a><!-- doxytag: member="BTree::removeElement" ref="a4db1d4b0380577d46eef1be1186aaf3f" args="(T element)" -->
+<a class="anchor" id="a4a16f1104c087b066c112fb3d9bd9d67"></a><!-- doxytag: member="BTree::removeElement" ref="a4a16f1104c087b066c112fb3d9bd9d67" args="(T element)" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classBTree.html">BTree</a>&lt; T &gt;::removeElement </td>
+          <td class="memname">int <a class="el" href="classBTree.html">BTree</a>&lt; T, Cmp &gt;::removeElement </td>
           <td>(</td>
           <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>element</em></td><td>)</td>
@@ -344,14 +411,14 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="adc0e82885f8ea8a14b5e9526ce85855c"></a><!-- doxytag: member="BTree::rend" ref="adc0e82885f8ea8a14b5e9526ce85855c" args="()" -->
+<a class="anchor" id="ad2d647f5b6335d9ea5b9d34f5cb707d4"></a><!-- doxytag: member="BTree::rend" ref="ad2d647f5b6335d9ea5b9d34f5cb707d4" args="()" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classBTree_1_1reverse__iterator.html">reverse_iterator</a> <a class="el" href="classBTree.html">BTree</a>&lt; T &gt;::rend </td>
+          <td class="memname"><a class="el" href="classBTree_1_1reverse__iterator.html">reverse_iterator</a> <a class="el" href="classBTree.html">BTree</a>&lt; T, Cmp &gt;::rend </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -365,14 +432,14 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a3040e0a49ee348cae331deaf184bc5f2"></a><!-- doxytag: member="BTree::size" ref="a3040e0a49ee348cae331deaf184bc5f2" args="()" -->
+<a class="anchor" id="a3bb7a75716764713beb317b80ff32238"></a><!-- doxytag: member="BTree::size" ref="a3bb7a75716764713beb317b80ff32238" args="()" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classBTree.html">BTree</a>&lt; T &gt;::size </td>
+          <td class="memname">int <a class="el" href="classBTree.html">BTree</a>&lt; T, Cmp &gt;::size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -383,6 +450,33 @@ template&lt;typename T&gt; </div>
 
 <p>Get number of elements in the Tree. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Current number of elements inserted </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aa4d84b1d728a3d4b170821c14cb82d0d"></a><!-- doxytag: member="BTree::splitNode" ref="aa4d84b1d728a3d4b170821c14cb82d0d" args="(Node&lt; T, Cmp &gt; *node)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, class Cmp = std::less&lt;T&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classBTree.html">BTree</a>&lt; T, Cmp &gt;::splitNode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classNode.html">Node</a>&lt; T, Cmp &gt; *&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Split a node in two Nodes. Can be recursive. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td><a class="el" href="classNode.html" title="BTree Node. Contains Elements/Keys.">Node</a> to split. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -404,7 +498,7 @@ template&lt;typename T&gt; </div>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Apr 4 2012 13:33:30 for PG_Btree by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Apr 4 2012 17:58:22 for PG_Btree by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

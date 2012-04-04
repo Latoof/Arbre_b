@@ -5,20 +5,18 @@
 	#include <vector>
 	#include <set>
 
-	/* DEBUG */
 	#include <iostream>
 	#include <ostream>
 	#include <algorithm>
-	/* //DEBUG */
 
 	/**
 	*
-	* \class BTree<T>
+	* \class BTree<T,Cmp>
 	* \author Maxime OUAIRY
 	* \brief Conainter class. Store Nodes in a Tree.
 	*
 	*/
-	template<typename T>
+	template< typename T, class Cmp = std::less<T> >
 	class BTree {
 	public:
 		/**
@@ -61,7 +59,7 @@
 		* \return The Node containing element if found. NULL pointer otherwise
 		*
 		*/
-		Node<T>* findElementNode( const T& element );
+		Node<T,Cmp>* findElementNode( const T& element );
 
 		/**
 		*
@@ -70,7 +68,7 @@
 		* \return The root Node in the Tree
 		*
 		*/
-		Node<T>* getRootNode();
+		Node<T,Cmp>* getRootNode();
 
 		void draw(std::ostream &flux) const;
 
@@ -121,28 +119,79 @@
 		*/
 		reverse_iterator rend() { return reverse_iterator( this, true); }
 
-		iterator root() { return iterator(this,_racine); }
+		iterator root() { return iterator(this,_root); }
 
 		int _dbg;
 
 	protected:
 
 		/* Operations on nodes */
-		void addToNode( Node<T>* node, const T& element );
-		int removeFromNode( Node<T>* node, const T& element );
+		
+		/**
+		*
+		* \brief Safe element insertion in a Node. Call automatically splitNode when necessary.
+		*
+		*/
+		void addToNode( Node<T,Cmp>* node, const T& element );
 
-		void mergeNodes( Node<T>* targetNode, Node<T>* sourceNode );
-		void splitNode( Node<T>* node );
+		/**
+		*
+		* \brief Safe element deletion in a Node. Call automatically balanceNode when necessary
+		*
+		*/
+		int removeFromNode( Node<T,Cmp>* node, const T& element );
 
-		void balanceNode( Node<T>* node );
+		/**
+		*
+		* \brief Merge a source Node in a target Node. SubNodes are also transferred
+		* \param targetNode Node which will contains all elements and son of sourceNode
+		* \param sourceNode Node which will transfert all sons/elements to bros-node or parent node
+		*
+		*/
+		void mergeNodes( Node<T,Cmp>* targetNode, Node<T,Cmp>* sourceNode );
+
+		/**
+		*
+		* \brief Split a node in two Nodes. Can be recursive.
+		* \param node Node to split.
+		*
+		*/
+		void splitNode( Node<T,Cmp>* node );
+
+		/**
+		*
+		* \brief Do a local rotation, in order to balance the entire Tree. Recursive.
+		* \param node Node to balance.
+		*
+		*/
+		void balanceNode( Node<T,Cmp>* node );
 
 
 	private:
+		/**
+		* \attribute _lower Minimum number of Elements per Node
+		*/
 		int _lower;
+
+		/**
+		* \attribute _upper Maximum number of Elements per Node. By default 2 * lower.
+		*/
 		int _upper;
+
+		/**
+		* \attribute _size Element counter
+		*/
 		int _size;
-		std::set<Node<T>*> _Nodes; // Essai
-		Node<T>* _racine; 
+
+		/**
+		* \attribute _Nodes Contains all Nodes of the Tree
+		*/
+		std::set<Node<T,Cmp>*> _Nodes;
+
+		/**
+		* \attribute _root Pointer to root Node
+		*/
+		Node<T,Cmp>* _root; 
 
 	};
 

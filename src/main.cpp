@@ -10,23 +10,6 @@
 
 int main( int argc, char** argv ) {
 	
-	// Here
-	Node<int> feuille;
-
-	feuille.addElement( 9 );
-	feuille.addElement( 7 );
-
-	std::cout << feuille.getElement(0) << std::endl;
-
-
-	Node<std::string> feuille2;
-
-	feuille2.addElement( "premier" );
-	feuille2.addElement( "second" );
-
-	std::cout << feuille2.getElement(0) << std::endl;
-
-
 	BTree<int> a(2);
 
 

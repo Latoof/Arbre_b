@@ -2,13 +2,13 @@
 	#define H_GENERIC_ITERATOR_H
 
 
-	template<typename T>
-	class BTree<T>::generic_iterator {
+	template<typename T, class Cmp = std::less<T> >
+	class BTree<T,Cmp>::generic_iterator {
 
 		public:
 
 			generic_iterator() : _a(NULL), _current_node(NULL) {}
-			generic_iterator( BTree<T>* a, bool ended = false ) 
+			generic_iterator( BTree<T,Cmp>* a, bool ended = false ) 
 				: 
 				_a(a), 
 				_ended(ended)
@@ -24,7 +24,7 @@
 				return _current_node->getElements().at(_current_index);
 			}
 
-			bool operator!=( const BTree<T>::generic_iterator& itCmp ) const {
+			bool operator!=( const BTree<T,Cmp>::generic_iterator& itCmp ) const {
 				
 				if ( itCmp.ended() ) {
 					
@@ -50,7 +50,7 @@
 				this->previous();
 			}
 
-			bool operator<( const BTree<T>::generic_iterator& itCmp ) {
+			bool operator<( const BTree<T,Cmp>::generic_iterator& itCmp ) {
 				return ( itCmp.ended() && !this->ended() );
 			}
 
@@ -61,11 +61,11 @@
 			virtual void toFirstElement() = 0;
 
 
-			BTree<T>::generic_iterator operator +( int inc ) const {
+			BTree<T,Cmp>::generic_iterator operator +( int inc ) const {
 				
 				std::cout << "Dbg iter : Inc " << inc << std::endl;
 
-				BTree<T>::generic_iterator ret = (*this);
+				BTree<T,Cmp>::generic_iterator ret = (*this);
 				for ( int i=0; i<inc && _current_node != NULL; i++ ) {
 				
 					ret.next();
@@ -82,7 +82,7 @@
 				
 				if ( _current_node != _a->getRootNode() ) {
 
-					Node<T>* parent = _current_node->getParent();
+					Node<T,Cmp>* parent = _current_node->getParent();
 					
 					if ( _current_node != parent->getSons().back() ) {
 						
@@ -97,7 +97,7 @@
 
 				}
 				else {
-					std::cout << "Dbg Iter Racine Fini ? \n";
+					std::cout << "Dbg Iter root Fini ? \n";
 					_ended = true;
 					_current_node = _current_node + sizeof(_current_node);
 				}
@@ -109,7 +109,7 @@
 				
 				if ( _current_node != _a->getRootNode() ) {
 
-					Node<T>* parent = _current_node->getParent();
+					Node<T,Cmp>* parent = _current_node->getParent();
 					
 					if ( _current_node != parent->getSons().front() ) {
 						
@@ -124,7 +124,7 @@
 
 				}
 				else {
-					std::cout << "Dbg Iter Racine Fini ? \n";
+					std::cout << "Dbg Iter root Fini ? \n";
 					_ended = true;
 					_current_node = _current_node - sizeof(_current_node);
 
@@ -135,8 +135,8 @@
 
 		protected:
 
-			BTree<T>* _a;
-			Node<T>* _current_node;
+			BTree<T,Cmp>* _a;
+			Node<T,Cmp>* _current_node;
 			int _current_index;
 
 			bool _ended;

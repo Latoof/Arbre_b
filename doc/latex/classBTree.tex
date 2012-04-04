@@ -1,5 +1,5 @@
 \hypertarget{classBTree}{
-\section{BTree$<$ T $>$ Class Template Reference}
+\section{BTree$<$ T, Cmp $>$ Class Template Reference}
 \label{classBTree}\index{BTree@{BTree}}
 }
 
@@ -19,81 +19,72 @@ class \hyperlink{classBTree_1_1reverse__iterator}{reverse\_\-iterator}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classBTree_a42fcaa07896d558b3f2e32af0a746eef}{BTree} (int lower=2, int upper=-\/1)
+\hyperlink{classBTree_a83e51e388096d95b5521e8058bad44ed}{BTree} (int lower=2, int upper=-\/1)
 \begin{DoxyCompactList}\small\item\em Make an new empty Tree. \item\end{DoxyCompactList}\item 
-\hypertarget{classBTree_a69a20ba2dab56eeb42689731dc9f8db6}{
-\hyperlink{classBTree_a69a20ba2dab56eeb42689731dc9f8db6}{$\sim$BTree} ()}
-\label{classBTree_a69a20ba2dab56eeb42689731dc9f8db6}
+\hypertarget{classBTree_a2de4cbb350239a4af75aa7013a6a4d81}{
+\hyperlink{classBTree_a2de4cbb350239a4af75aa7013a6a4d81}{$\sim$BTree} ()}
+\label{classBTree_a2de4cbb350239a4af75aa7013a6a4d81}
 
 \begin{DoxyCompactList}\small\item\em Destroy the entire Tree, and its Nodes. \item\end{DoxyCompactList}\item 
-void \hyperlink{classBTree_a1ed46066240cf460b3464300334c3ef4}{insertElement} (const T \&element)
+void \hyperlink{classBTree_aad8382a0461d68609f4a7ac6ff129b13}{insertElement} (const T \&element)
 \begin{DoxyCompactList}\small\item\em Insert and sort a new element in the Tree. \item\end{DoxyCompactList}\item 
-int \hyperlink{classBTree_a4db1d4b0380577d46eef1be1186aaf3f}{removeElement} (T element)
+int \hyperlink{classBTree_a4a16f1104c087b066c112fb3d9bd9d67}{removeElement} (T element)
 \begin{DoxyCompactList}\small\item\em Find and remove an element from the Tree. \item\end{DoxyCompactList}\item 
-\hyperlink{classNode}{Node}$<$ T $>$ $\ast$ \hyperlink{classBTree_a34bace4a05a8220358f06d1f4a001eb1}{findElementNode} (const T \&element)
+\hyperlink{classNode}{Node}$<$ T, Cmp $>$ $\ast$ \hyperlink{classBTree_af33992c6615d26590eec8c9c4f3a84de}{findElementNode} (const T \&element)
 \begin{DoxyCompactList}\small\item\em Find an element in the Tree. \item\end{DoxyCompactList}\item 
-\hyperlink{classNode}{Node}$<$ T $>$ $\ast$ \hyperlink{classBTree_a5f3aa12bc8ad8b1e5da1604afab8c8bd}{getRootNode} ()
+\hyperlink{classNode}{Node}$<$ T, Cmp $>$ $\ast$ \hyperlink{classBTree_a3d649eb521392e1a6172e08ddd965a1b}{getRootNode} ()
 \begin{DoxyCompactList}\small\item\em Access to root \hyperlink{classNode}{Node}. \item\end{DoxyCompactList}\item 
-\hypertarget{classBTree_a80d9f55937c820a6652760a1500413c0}{
+\hypertarget{classBTree_afd84bd36b0ac7b91c578b08cb5bf364c}{
 void {\bfseries draw} (std::ostream \&flux) const }
-\label{classBTree_a80d9f55937c820a6652760a1500413c0}
+\label{classBTree_afd84bd36b0ac7b91c578b08cb5bf364c}
 
 \item 
-int \hyperlink{classBTree_a3040e0a49ee348cae331deaf184bc5f2}{size} ()
+int \hyperlink{classBTree_a3bb7a75716764713beb317b80ff32238}{size} ()
 \begin{DoxyCompactList}\small\item\em Get number of elements in the Tree. \item\end{DoxyCompactList}\item 
-\hyperlink{classBTree_1_1iterator}{iterator} \hyperlink{classBTree_a5c6fa5221f301f0e565ccc936150d397}{begin} ()
+\hyperlink{classBTree_1_1iterator}{iterator} \hyperlink{classBTree_aeb805dd429fe16186845e66e67a7e498}{begin} ()
 \begin{DoxyCompactList}\small\item\em Create a new iterator refering to the first element. \item\end{DoxyCompactList}\item 
-\hyperlink{classBTree_1_1reverse__iterator}{reverse\_\-iterator} \hyperlink{classBTree_a33f3a4f328058f83894661d56c381df2}{rbegin} ()
+\hyperlink{classBTree_1_1reverse__iterator}{reverse\_\-iterator} \hyperlink{classBTree_a0fd7a5d6f77b6d55d1a6f12a6015159b}{rbegin} ()
 \begin{DoxyCompactList}\small\item\em Create a new \hyperlink{classBTree_1_1reverse__iterator}{reverse\_\-iterator} refering to the last element. \item\end{DoxyCompactList}\item 
-\hyperlink{classBTree_1_1iterator}{iterator} \hyperlink{classBTree_a62b3be0c47a00d87522a0d513518674d}{end} ()
+\hyperlink{classBTree_1_1iterator}{iterator} \hyperlink{classBTree_a84ac54a58e8fa886e6d3a61cef1ab8ad}{end} ()
 \begin{DoxyCompactList}\small\item\em Create a new iterator refering to end. \item\end{DoxyCompactList}\item 
-\hyperlink{classBTree_1_1reverse__iterator}{reverse\_\-iterator} \hyperlink{classBTree_adc0e82885f8ea8a14b5e9526ce85855c}{rend} ()
+\hyperlink{classBTree_1_1reverse__iterator}{reverse\_\-iterator} \hyperlink{classBTree_ad2d647f5b6335d9ea5b9d34f5cb707d4}{rend} ()
 \begin{DoxyCompactList}\small\item\em Create a new \hyperlink{classBTree_1_1reverse__iterator}{reverse\_\-iterator} refering to end. \item\end{DoxyCompactList}\item 
-\hypertarget{classBTree_a3d096d7af01fff2e3855acda2a44bd09}{
+\hypertarget{classBTree_a74c65eb308a4351ada51582cec3ae7ea}{
 \hyperlink{classBTree_1_1iterator}{iterator} {\bfseries root} ()}
-\label{classBTree_a3d096d7af01fff2e3855acda2a44bd09}
+\label{classBTree_a74c65eb308a4351ada51582cec3ae7ea}
 
 \end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classBTree_a499f5a2d32a678f7b1401176f14bbcdb}{
+\hypertarget{classBTree_a01ae7e4c943cf39a84c01e738cf54e30}{
 int {\bfseries \_\-dbg}}
-\label{classBTree_a499f5a2d32a678f7b1401176f14bbcdb}
+\label{classBTree_a01ae7e4c943cf39a84c01e738cf54e30}
 
 \end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classBTree_ae00c15f7c2e8ce15b96b638ca11d229b}{
-void {\bfseries addToNode} (\hyperlink{classNode}{Node}$<$ T $>$ $\ast$node, const T \&element)}
-\label{classBTree_ae00c15f7c2e8ce15b96b638ca11d229b}
+\hypertarget{classBTree_abfec9fc638844e35afc65644ac18efc4}{
+void \hyperlink{classBTree_abfec9fc638844e35afc65644ac18efc4}{addToNode} (\hyperlink{classNode}{Node}$<$ T, Cmp $>$ $\ast$node, const T \&element)}
+\label{classBTree_abfec9fc638844e35afc65644ac18efc4}
 
-\item 
-\hypertarget{classBTree_a15c88754591a5b67dcf26c6227a73b0e}{
-int {\bfseries removeFromNode} (\hyperlink{classNode}{Node}$<$ T $>$ $\ast$node, const T \&element)}
-\label{classBTree_a15c88754591a5b67dcf26c6227a73b0e}
+\begin{DoxyCompactList}\small\item\em Safe element insertion in a \hyperlink{classNode}{Node}. Call automatically splitNode when necessary. \item\end{DoxyCompactList}\item 
+\hypertarget{classBTree_a987f244ae4a949d2a8bfc37fbb3f6bd1}{
+int \hyperlink{classBTree_a987f244ae4a949d2a8bfc37fbb3f6bd1}{removeFromNode} (\hyperlink{classNode}{Node}$<$ T, Cmp $>$ $\ast$node, const T \&element)}
+\label{classBTree_a987f244ae4a949d2a8bfc37fbb3f6bd1}
 
-\item 
-\hypertarget{classBTree_aa3b3ba970b4cda4b1b34295355ca4ab6}{
-void {\bfseries mergeNodes} (\hyperlink{classNode}{Node}$<$ T $>$ $\ast$targetNode, \hyperlink{classNode}{Node}$<$ T $>$ $\ast$sourceNode)}
-\label{classBTree_aa3b3ba970b4cda4b1b34295355ca4ab6}
-
-\item 
-\hypertarget{classBTree_a7d02f5d149755d05c432f76feda25413}{
-void {\bfseries splitNode} (\hyperlink{classNode}{Node}$<$ T $>$ $\ast$node)}
-\label{classBTree_a7d02f5d149755d05c432f76feda25413}
-
-\item 
-\hypertarget{classBTree_a02675346b02d3510ac44922067e9bbf9}{
-void {\bfseries balanceNode} (\hyperlink{classNode}{Node}$<$ T $>$ $\ast$node)}
-\label{classBTree_a02675346b02d3510ac44922067e9bbf9}
-
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Safe element deletion in a \hyperlink{classNode}{Node}. Call automatically balanceNode when necessary. \item\end{DoxyCompactList}\item 
+void \hyperlink{classBTree_a17124d656659761322bf2a5d175225e0}{mergeNodes} (\hyperlink{classNode}{Node}$<$ T, Cmp $>$ $\ast$targetNode, \hyperlink{classNode}{Node}$<$ T, Cmp $>$ $\ast$sourceNode)
+\begin{DoxyCompactList}\small\item\em Merge a source \hyperlink{classNode}{Node} in a target \hyperlink{classNode}{Node}. SubNodes are also transferred. \item\end{DoxyCompactList}\item 
+void \hyperlink{classBTree_aa4d84b1d728a3d4b170821c14cb82d0d}{splitNode} (\hyperlink{classNode}{Node}$<$ T, Cmp $>$ $\ast$node)
+\begin{DoxyCompactList}\small\item\em Split a node in two Nodes. Can be recursive. \item\end{DoxyCompactList}\item 
+void \hyperlink{classBTree_ae570a4fc2d1bae09283bbe185a8269c6}{balanceNode} (\hyperlink{classNode}{Node}$<$ T, Cmp $>$ $\ast$node)
+\begin{DoxyCompactList}\small\item\em Do a local rotation, in order to balance the entire Tree. Recursive. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-\subsubsection*{template$<$typename T$>$ class BTree$<$ T $>$}
+\subsubsection*{template$<$typename T, class Cmp = std::less$<$T$>$$>$ class BTree$<$ T, Cmp $>$}
 
 Conainter class. Store Nodes in a Tree. \begin{DoxyAuthor}{Author}
 Maxime OUAIRY 
@@ -101,16 +92,16 @@ Maxime OUAIRY
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classBTree_a42fcaa07896d558b3f2e32af0a746eef}{
+\hypertarget{classBTree_a83e51e388096d95b5521e8058bad44ed}{
 \index{BTree@{BTree}!BTree@{BTree}}
 \index{BTree@{BTree}!BTree@{BTree}}
-\subsubsection[{BTree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ {\bf BTree}$<$ T $>$::{\bf BTree} (
+\subsubsection[{BTree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ {\bf BTree}$<$ T, Cmp $>$::{\bf BTree} (
 \begin{DoxyParamCaption}
 \item[{int}]{lower = {\ttfamily 2}, }
 \item[{int}]{upper = {\ttfamily -\/1}}
 \end{DoxyParamCaption}
 )}}
-\label{classBTree_a42fcaa07896d558b3f2e32af0a746eef}
+\label{classBTree_a83e51e388096d95b5521e8058bad44ed}
 
 
 Make an new empty Tree. 
@@ -125,15 +116,33 @@ Make an new empty Tree.
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classBTree_a5c6fa5221f301f0e565ccc936150d397}{
+\hypertarget{classBTree_ae570a4fc2d1bae09283bbe185a8269c6}{
+\index{BTree@{BTree}!balanceNode@{balanceNode}}
+\index{balanceNode@{balanceNode}!BTree@{BTree}}
+\subsubsection[{balanceNode}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ void {\bf BTree}$<$ T, Cmp $>$::balanceNode (
+\begin{DoxyParamCaption}
+\item[{{\bf Node}$<$ T, Cmp $>$ $\ast$}]{node}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classBTree_ae570a4fc2d1bae09283bbe185a8269c6}
+
+
+Do a local rotation, in order to balance the entire Tree. Recursive. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & \hyperlink{classNode}{Node} to balance. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classBTree_aeb805dd429fe16186845e66e67a7e498}{
 \index{BTree@{BTree}!begin@{begin}}
 \index{begin@{begin}!BTree@{BTree}}
-\subsubsection[{begin}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ {\bf iterator} {\bf BTree}$<$ T $>$::begin (
+\subsubsection[{begin}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ {\bf iterator} {\bf BTree}$<$ T, Cmp $>$::begin (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
-\label{classBTree_a5c6fa5221f301f0e565ccc936150d397}
+\label{classBTree_aeb805dd429fe16186845e66e67a7e498}
 
 
 Create a new iterator refering to the first element. 
@@ -141,15 +150,15 @@ Create a new iterator refering to the first element.
 \begin{DoxyReturn}{Returns}
 An iterator refering to the lower element in the Tree 
 \end{DoxyReturn}
-\hypertarget{classBTree_a62b3be0c47a00d87522a0d513518674d}{
+\hypertarget{classBTree_a84ac54a58e8fa886e6d3a61cef1ab8ad}{
 \index{BTree@{BTree}!end@{end}}
 \index{end@{end}!BTree@{BTree}}
-\subsubsection[{end}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ {\bf iterator} {\bf BTree}$<$ T $>$::end (
+\subsubsection[{end}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ {\bf iterator} {\bf BTree}$<$ T, Cmp $>$::end (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
-\label{classBTree_a62b3be0c47a00d87522a0d513518674d}
+\label{classBTree_a84ac54a58e8fa886e6d3a61cef1ab8ad}
 
 
 Create a new iterator refering to end. 
@@ -157,15 +166,15 @@ Create a new iterator refering to end.
 \begin{DoxyReturn}{Returns}
 An iterator refering to the past-\/the-\/end element 
 \end{DoxyReturn}
-\hypertarget{classBTree_a34bace4a05a8220358f06d1f4a001eb1}{
+\hypertarget{classBTree_af33992c6615d26590eec8c9c4f3a84de}{
 \index{BTree@{BTree}!findElementNode@{findElementNode}}
 \index{findElementNode@{findElementNode}!BTree@{BTree}}
-\subsubsection[{findElementNode}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ {\bf Node}$<$T$>$$\ast$ {\bf BTree}$<$ T $>$::findElementNode (
+\subsubsection[{findElementNode}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ {\bf Node}$<$T,Cmp$>$$\ast$ {\bf BTree}$<$ T, Cmp $>$::findElementNode (
 \begin{DoxyParamCaption}
 \item[{const T \&}]{element}
 \end{DoxyParamCaption}
 )}}
-\label{classBTree_a34bace4a05a8220358f06d1f4a001eb1}
+\label{classBTree_af33992c6615d26590eec8c9c4f3a84de}
 
 
 Find an element in the Tree. 
@@ -178,15 +187,15 @@ Find an element in the Tree.
 \begin{DoxyReturn}{Returns}
 The \hyperlink{classNode}{Node} containing element if found. NULL pointer otherwise 
 \end{DoxyReturn}
-\hypertarget{classBTree_a5f3aa12bc8ad8b1e5da1604afab8c8bd}{
+\hypertarget{classBTree_a3d649eb521392e1a6172e08ddd965a1b}{
 \index{BTree@{BTree}!getRootNode@{getRootNode}}
 \index{getRootNode@{getRootNode}!BTree@{BTree}}
-\subsubsection[{getRootNode}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ {\bf Node}$<$T$>$$\ast$ {\bf BTree}$<$ T $>$::getRootNode (
+\subsubsection[{getRootNode}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ {\bf Node}$<$T,Cmp$>$$\ast$ {\bf BTree}$<$ T, Cmp $>$::getRootNode (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )}}
-\label{classBTree_a5f3aa12bc8ad8b1e5da1604afab8c8bd}
+\label{classBTree_a3d649eb521392e1a6172e08ddd965a1b}
 
 
 Access to root \hyperlink{classNode}{Node}. 
@@ -199,15 +208,15 @@ Access to root \hyperlink{classNode}{Node}.
 \begin{DoxyReturn}{Returns}
 The root \hyperlink{classNode}{Node} in the Tree 
 \end{DoxyReturn}
-\hypertarget{classBTree_a1ed46066240cf460b3464300334c3ef4}{
+\hypertarget{classBTree_aad8382a0461d68609f4a7ac6ff129b13}{
 \index{BTree@{BTree}!insertElement@{insertElement}}
 \index{insertElement@{insertElement}!BTree@{BTree}}
-\subsubsection[{insertElement}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ void {\bf BTree}$<$ T $>$::insertElement (
+\subsubsection[{insertElement}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ void {\bf BTree}$<$ T, Cmp $>$::insertElement (
 \begin{DoxyParamCaption}
 \item[{const T \&}]{element}
 \end{DoxyParamCaption}
 )}}
-\label{classBTree_a1ed46066240cf460b3464300334c3ef4}
+\label{classBTree_aad8382a0461d68609f4a7ac6ff129b13}
 
 
 Insert and sort a new element in the Tree. 
@@ -217,15 +226,36 @@ Insert and sort a new element in the Tree.
 {\em element} & Element to be inserted \\
 \hline
 \end{DoxyParams}
-\hypertarget{classBTree_a33f3a4f328058f83894661d56c381df2}{
+\hypertarget{classBTree_a17124d656659761322bf2a5d175225e0}{
+\index{BTree@{BTree}!mergeNodes@{mergeNodes}}
+\index{mergeNodes@{mergeNodes}!BTree@{BTree}}
+\subsubsection[{mergeNodes}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ void {\bf BTree}$<$ T, Cmp $>$::mergeNodes (
+\begin{DoxyParamCaption}
+\item[{{\bf Node}$<$ T, Cmp $>$ $\ast$}]{targetNode, }
+\item[{{\bf Node}$<$ T, Cmp $>$ $\ast$}]{sourceNode}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classBTree_a17124d656659761322bf2a5d175225e0}
+
+
+Merge a source \hyperlink{classNode}{Node} in a target \hyperlink{classNode}{Node}. SubNodes are also transferred. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em targetNode} & \hyperlink{classNode}{Node} which will contains all elements and son of sourceNode \\
+\hline
+{\em sourceNode} & \hyperlink{classNode}{Node} which will transfert all sons/elements to bros-\/node or parent node \\
+\hline
+\end{DoxyParams}
+\hypertarget{classBTree_a0fd7a5d6f77b6d55d1a6f12a6015159b}{
 \index{BTree@{BTree}!rbegin@{rbegin}}
 \index{rbegin@{rbegin}!BTree@{BTree}}
-\subsubsection[{rbegin}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ {\bf reverse\_\-iterator} {\bf BTree}$<$ T $>$::rbegin (
+\subsubsection[{rbegin}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ {\bf reverse\_\-iterator} {\bf BTree}$<$ T, Cmp $>$::rbegin (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
-\label{classBTree_a33f3a4f328058f83894661d56c381df2}
+\label{classBTree_a0fd7a5d6f77b6d55d1a6f12a6015159b}
 
 
 Create a new \hyperlink{classBTree_1_1reverse__iterator}{reverse\_\-iterator} refering to the last element. 
@@ -233,15 +263,15 @@ Create a new \hyperlink{classBTree_1_1reverse__iterator}{reverse\_\-iterator} re
 \begin{DoxyReturn}{Returns}
 An iterator refering to the higher element in the Tree 
 \end{DoxyReturn}
-\hypertarget{classBTree_a4db1d4b0380577d46eef1be1186aaf3f}{
+\hypertarget{classBTree_a4a16f1104c087b066c112fb3d9bd9d67}{
 \index{BTree@{BTree}!removeElement@{removeElement}}
 \index{removeElement@{removeElement}!BTree@{BTree}}
-\subsubsection[{removeElement}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ int {\bf BTree}$<$ T $>$::removeElement (
+\subsubsection[{removeElement}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ int {\bf BTree}$<$ T, Cmp $>$::removeElement (
 \begin{DoxyParamCaption}
 \item[{T}]{element}
 \end{DoxyParamCaption}
 )}}
-\label{classBTree_a4db1d4b0380577d46eef1be1186aaf3f}
+\label{classBTree_a4a16f1104c087b066c112fb3d9bd9d67}
 
 
 Find and remove an element from the Tree. 
@@ -254,15 +284,15 @@ Find and remove an element from the Tree.
 \begin{DoxyReturn}{Returns}
 0 if element found and removed, 1 otherwise 
 \end{DoxyReturn}
-\hypertarget{classBTree_adc0e82885f8ea8a14b5e9526ce85855c}{
+\hypertarget{classBTree_ad2d647f5b6335d9ea5b9d34f5cb707d4}{
 \index{BTree@{BTree}!rend@{rend}}
 \index{rend@{rend}!BTree@{BTree}}
-\subsubsection[{rend}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ {\bf reverse\_\-iterator} {\bf BTree}$<$ T $>$::rend (
+\subsubsection[{rend}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ {\bf reverse\_\-iterator} {\bf BTree}$<$ T, Cmp $>$::rend (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
-\label{classBTree_adc0e82885f8ea8a14b5e9526ce85855c}
+\label{classBTree_ad2d647f5b6335d9ea5b9d34f5cb707d4}
 
 
 Create a new \hyperlink{classBTree_1_1reverse__iterator}{reverse\_\-iterator} refering to end. 
@@ -270,15 +300,15 @@ Create a new \hyperlink{classBTree_1_1reverse__iterator}{reverse\_\-iterator} re
 \begin{DoxyReturn}{Returns}
 An iterator refering to the right before first element 
 \end{DoxyReturn}
-\hypertarget{classBTree_a3040e0a49ee348cae331deaf184bc5f2}{
+\hypertarget{classBTree_a3bb7a75716764713beb317b80ff32238}{
 \index{BTree@{BTree}!size@{size}}
 \index{size@{size}!BTree@{BTree}}
-\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ int {\bf BTree}$<$ T $>$::size (
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ int {\bf BTree}$<$ T, Cmp $>$::size (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
-\label{classBTree_a3040e0a49ee348cae331deaf184bc5f2}
+\label{classBTree_a3bb7a75716764713beb317b80ff32238}
 
 
 Get number of elements in the Tree. 
@@ -286,6 +316,24 @@ Get number of elements in the Tree.
 \begin{DoxyReturn}{Returns}
 Current number of elements inserted 
 \end{DoxyReturn}
+\hypertarget{classBTree_aa4d84b1d728a3d4b170821c14cb82d0d}{
+\index{BTree@{BTree}!splitNode@{splitNode}}
+\index{splitNode@{splitNode}!BTree@{BTree}}
+\subsubsection[{splitNode}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T, class Cmp = std::less$<$T$>$$>$ void {\bf BTree}$<$ T, Cmp $>$::splitNode (
+\begin{DoxyParamCaption}
+\item[{{\bf Node}$<$ T, Cmp $>$ $\ast$}]{node}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classBTree_aa4d84b1d728a3d4b170821c14cb82d0d}
+
+
+Split a node in two Nodes. Can be recursive. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & \hyperlink{classNode}{Node} to split. \\
+\hline
+\end{DoxyParams}
 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}

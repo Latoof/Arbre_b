@@ -3,14 +3,14 @@
 
 	#include "BTree_generic_iterator.h"
 
-	template<typename T>
-	class BTree<T>::reverse_iterator : public BTree<T>::generic_iterator {
+	template< typename T, class Cmp = std::less<T> >
+	class BTree<T,Cmp>::reverse_iterator : public BTree<T,Cmp>::generic_iterator {
 
-		typedef BTree<T>::generic_iterator GIterator;
+		typedef BTree<T,Cmp>::generic_iterator GIterator;
 
 		public:
 			reverse_iterator() : generic_iterator() {}
-			reverse_iterator( BTree<T>* a , bool ended = false ) 
+			reverse_iterator( BTree<T,Cmp>* a , bool ended = false ) 
 				: generic_iterator(a,ended) {
 					
 					//this->toRightIndex();
