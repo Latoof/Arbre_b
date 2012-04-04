@@ -17,9 +17,30 @@
 					
 				}
 
+			/* to protect */
+			iterator( BTree<T,Cmp>* a, Node<T,Cmp>* n, int index ) : generic_iterator(a,false) {
+				
+				GIterator::_current_node = n;
+				GIterator::_current_index = index;
+
+			}
+
 
 			virtual ~iterator() {};
 
+
+			BTree<T,Cmp>::iterator operator +( int inc ) const {
+				
+				BTree<T,Cmp>::iterator ret = (*this);
+				for ( int i=0; i<inc && !this->ended(); i++ ) {
+				
+					ret.next();
+
+				}
+
+				return ret;
+
+			}
 
 			virtual void previous() {
 				this->toLeft();

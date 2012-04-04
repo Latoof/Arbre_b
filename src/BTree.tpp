@@ -22,7 +22,7 @@ BTree<T,Cmp>::~BTree() {
 }
 
 template<typename T, class Cmp>
-void BTree<T,Cmp>::insertElement( const T& element ) {
+void BTree<T,Cmp>::insert( const T& element ) {
 	
 	Node<T,Cmp>* node = this->findElementNode( element );
 
@@ -417,7 +417,7 @@ int BTree<T,Cmp>::removeFromNode( Node<T,Cmp>* node, const T& element ) {
 	
 
 template<typename T, class Cmp>
-int BTree<T,Cmp>::removeElement( T element ) {
+int BTree<T,Cmp>::erase( T element ) {
 		
 	Node<T,Cmp>* node = this->findElementNode( element );
 
@@ -465,12 +465,11 @@ Node<T,Cmp>* BTree<T,Cmp>::findElementNode( const T& element ) {
 
 
 			if ( (*iterElements) == element ) {
-				// Trouve
 				return Node_courant;
 			}
-			/// Je bloque la. Mais sur le princope, on parcours a la fois les pointeurs vers les fils et les elements contenus dans le Node courant
+
 			else if ( element < (*iterElements) ) { // Si l'element a inserer est plus petit, alors il sera situe dans le Node pointe "a gauche"
-				// On descend dans le Node a gauche de l'element en cours.
+
 				Node_courant = (*iterFils);
 
 				break;

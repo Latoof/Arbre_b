@@ -20,6 +20,19 @@
 
 			virtual ~reverse_iterator() {};
 
+			BTree<T,Cmp>::reverse_iterator operator +( int inc ) const {
+				
+				BTree<T,Cmp>::reverse_iterator ret = (*this);
+				for ( int i=0; i<inc && !this->ended(); i++ ) {
+				
+					ret.next();
+
+				}
+
+				return ret;
+
+			}
+
 			virtual void previous() {
 				this->toRight();
 			}	

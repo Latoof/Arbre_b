@@ -16,152 +16,152 @@ int main( int argc, char** argv ) {
 	std::cout << "Before adding 4" << std::endl << a << std::endl;
 
 
-	a.insertElement( 6	);
+	a.insert( 6	);
 	std::cout << "[[[[[[ After adding 6" << std::endl << a << std::endl;
 
 
-	a.insertElement( 7 );
+	a.insert( 7 );
 	std::cout << "[[[[[[ After adding 7" << std::endl << a << std::endl;
 
-	a.insertElement( 3 );
+	a.insert( 3 );
 	std::cout << "[[[[[[ After adding 3" << std::endl << a << std::endl;
 
 
 
-	a.insertElement( 11 );
+	a.insert( 11 );
 	std::cout << "[[[[[[ After adding 11" << std::endl << a << std::endl;
 
-	a.insertElement( 12 );
+	a.insert( 12 );
 	std::cout << "[[[[[[ After adding 12" << std::endl << a << std::endl;
 
 
-	a.removeElement( 7 );
+	a.erase( 7 );
 	std::cout << "[[[[[[ After deleting 7" << std::endl << a << std::endl;
 
 
-	a.insertElement( 7 );
+	a.insert( 7 );
 	std::cout << "[[[[[[ After adding 7" << std::endl << a << std::endl;
 
 
 
 
-	a.insertElement( 8 );
+	a.insert( 8 );
 	std::cout << "[[[[[[ After adding 8" << std::endl << a << std::endl;
 
-	a.insertElement( 10 );
+	a.insert( 10 );
 	std::cout << "[[[[[[ After adding 10" << std::endl << a << std::endl;
 
 
 
-	a.removeElement( 11 );
+	a.erase( 11 );
 	std::cout << "[[[[[[ After deleting 11" << std::endl << a << std::endl;
 
 
-		a.insertElement( 97 );
+		a.insert( 97 );
 	std::cout << "[[[[[[ After adding 97" << std::endl << a << std::endl;
 
 
-	a.insertElement( 98 );
+	a.insert( 98 );
 	std::cout << "[[[[[[ After adding 98" << std::endl << a << std::endl;
 
-	a.insertElement( 45 );
+	a.insert( 45 );
 	std::cout << "[[[[[[ After adding 45" << std::endl << a << std::endl;
 
 
-	a.insertElement( 26 );
+	a.insert( 26 );
 	std::cout << "[[[[[[ After adding 24" << std::endl << a << std::endl;
 
 
 
-	a.insertElement( 33 );
+	a.insert( 33 );
 	std::cout << "[[[[[[ After adding 33" << std::endl << a << std::endl;
 
-	a.insertElement( 41 );
+	a.insert( 41 );
 	std::cout << "[[[[[[ After adding 41" << std::endl << a << std::endl;
 
 
-	a.insertElement( 43 );
+	a.insert( 43 );
 	std::cout << "[[[[[[ After adding 43" << std::endl << a << std::endl;
 
-	a.insertElement( 19 );
+	a.insert( 19 );
 	std::cout << "[[[[[[ After adding 19" << std::endl << a << std::endl;
 
 
-	a.insertElement( 32 );
+	a.insert( 32 );
 	std::cout << "[[[[[[ After adding 32" << std::endl << a << std::endl;
 
 
-	a.insertElement( 38 );
+	a.insert( 38 );
 	std::cout << "[[[[[[ After adding 38" << std::endl << a << std::endl;
 
-	a.insertElement( 58 );
+	a.insert( 58 );
 	std::cout << "[[[[[[ After adding 58" << std::endl << a << std::endl;
 
-	a.insertElement( 54 );
+	a.insert( 54 );
 	std::cout << "[[[[[[ After adding 54" << std::endl << a << std::endl;
 
-	a.insertElement( 66 );
+	a.insert( 66 );
 	std::cout << "[[[[[[ After adding 66" << std::endl << a << std::endl;
 
 
-	a.insertElement( 63 );
+	a.insert( 63 );
 	std::cout << "[[[[[[ After adding 63" << std::endl << a << std::endl;
 
 
-			a.removeElement( 45 );
+			a.erase( 45 );
 	std::cout << "[[[[[[ After deleting 45" << std::endl << a << std::endl;
 
 
 
-			a.removeElement( 8 );
+			a.erase( 8 );
 	std::cout << "[[[[[[ After deleting 8" << std::endl << a << std::endl;
 
 
-				a.removeElement( 58 );
+				a.erase( 58 );
 	std::cout << "[[[[[[ After deleting 58" << std::endl << a << std::endl;
 
 
 
-		a.removeElement( 12 );
+		a.erase( 12 );
 	std::cout << "[[[[[[ After deleting 12" << std::endl << a << std::endl;
 
 
-		a.insertElement( 17 );
+		a.insert( 17 );
 	std::cout << "[[[[[[ After adding 17" << std::endl << a << std::endl;
 
-	a.insertElement( 13 );
+	a.insert( 13 );
 	std::cout << "[[[[[[ After adding 13" << std::endl << a << std::endl;
 
 
-		a.insertElement( 18 );
+		a.insert( 18 );
 	std::cout << "[[[[[[ After adding 18" << std::endl << a << std::endl;
 
 
-	a.insertElement( 15 );
+	a.insert( 15 );
 	std::cout << "[[[[[[ After adding 15" << std::endl << a << std::endl;
 
 
-		a.insertElement( 14 );
+		a.insert( 14 );
 	std::cout << "[[[[[[ After adding 14" << std::endl << a << std::endl;
 
-	a.insertElement( 20 );
+	a.insert( 20 );
 	std::cout << "[[[[[[ After adding 20" << std::endl << a << std::endl;
 
 
-	a.removeElement( 33 );
+	a.erase( 33 );
 		std::cout << "[[[[[[ After deleting 33" << std::endl << a << std::endl;
 
-	a.removeElement( 26 );
+	a.erase( 26 );
 		std::cout << "[[[[[[ After deleting 26" << std::endl << a << std::endl;
 
 
-		a.insertElement( 25 );
+		a.insert( 25 );
 	std::cout << "[[[[[[ After adding 25" << std::endl << a << std::endl;
 
-	a.insertElement( 21 );
+	a.insert( 21 );
 	std::cout << "[[[[[[ After adding 21" << std::endl << a << std::endl;
 
-	a.insertElement( 50 );
+	a.insert( 50 );
 	std::cout << "[[[[[[ After adding  50" << std::endl << a << std::endl;
 
 
@@ -226,6 +226,15 @@ int main( int argc, char** argv ) {
 
 	}
 
+	BTree<int>::iterator itF;
+	if ( (itF = a.find(46854) ) != a.end() ) {
+		std::cout << "---> FOUND : " << *(itF + 6) << std::endl;
+		std::cout << "---> FOUND : " << *(itF) << std::endl;
+
+	}
+	else {
+		std::cout << "NOT FOUND\n";
+	}
 
 	/** **/
 

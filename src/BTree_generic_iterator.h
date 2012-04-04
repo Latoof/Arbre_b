@@ -40,6 +40,11 @@
 
 			}
 
+/*
+			void operator=( BTree<T,Cmp>::generic_iterator& itTo ) {
+				itTo = *this;
+			}
+*/
 			void operator++( int ba ) {
 				
 				this->next();
@@ -59,23 +64,6 @@
 			virtual void next() = 0;
 			virtual void previous() = 0;
 			virtual void toFirstElement() = 0;
-
-
-			BTree<T,Cmp>::generic_iterator operator +( int inc ) const {
-				
-				std::cout << "Dbg iter : Inc " << inc << std::endl;
-
-				BTree<T,Cmp>::generic_iterator ret = (*this);
-				for ( int i=0; i<inc && _current_node != NULL; i++ ) {
-				
-					ret.next();
-
-				}
-
-				return ret;
-
-			}
-
 
 
 			void toParentR() {

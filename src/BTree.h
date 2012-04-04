@@ -41,7 +41,7 @@
 		* \param element Element to be inserted
 		*
 		*/
-		void insertElement( const T& element );
+		void insert( const T& element );
 
 		/**
 		*
@@ -50,25 +50,9 @@
 		* \return 0 if element found and removed, 1 otherwise
 		*
 		*/
-		int removeElement( T element );
+		int erase( T element );
 
-		/**
-		*
-		* \brief Find an element in the Tree
-		* \param element Element to find
-		* \return The Node containing element if found. NULL pointer otherwise
-		*
-		*/
-		Node<T,Cmp>* findElementNode( const T& element );
 
-		/**
-		*
-		* \brief Access to root Node
-		* \param element Element to be removed
-		* \return The root Node in the Tree
-		*
-		*/
-		Node<T,Cmp>* getRootNode();
 
 		void draw(std::ostream &flux) const;
 
@@ -119,13 +103,53 @@
 		*/
 		reverse_iterator rend() { return reverse_iterator( this, true); }
 
-		iterator root() { return iterator(this,_root); }
+		/**
+		*
+		* \brief Find and remove an element from the Tree
+		* \param element Element to be removed
+		* \return 0 if element found and removed, 1 otherwise
+		*
+		*/
+		iterator find( const T& element ) {
+
+			Node<T,Cmp>* found_node = this->findElementNode( element );
+
+			/* If found */
+			if ( found_node != NULL && found_node->contains(element) ) {
+				
+				return iterator( this, found_node, found_node->getElementPosition( element ) );
+
+			}
+			else {
+				return iterator( this, true );
+			}
+
+		}
+
 
 		int _dbg;
 
 	protected:
 
 		/* Operations on nodes */
+
+		/**
+		*
+		* \brief Find an element in the Tree
+		* \param element Element to find
+		* \return The Node containing element if found. NULL pointer otherwise
+		*
+		*/
+		Node<T,Cmp>* findElementNode( const T& element );
+
+		/**
+		*
+		* \brief Access to root Node
+		* \param element Element to be removed
+		* \return The root Node in the Tree
+		*
+		*/
+		Node<T,Cmp>* getRootNode();
 		
 		/**
 		*
