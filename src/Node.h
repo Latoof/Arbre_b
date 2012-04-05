@@ -21,7 +21,6 @@
 		
 		typedef typename nodes_ptr_vector::iterator nodes_ptr_iterator ;
 
-
 		public:
 			/**
 			*

@@ -4,47 +4,44 @@
 
 	template<typename T, class Cmp = std::less<T> >
 	class BTree<T,Cmp>::generic_iterator {
+		friend class BTree<T,Cmp>;
 
 		public:
 
 			generic_iterator() : _a(NULL), _current_node(NULL) {}
-			generic_iterator( BTree<T,Cmp>* a, bool ended = false ) 
-				: 
-				_a(a), 
-				_ended(ended)
-				 {
-				 	
-
-				 }
 
 			~generic_iterator() {};
 
-			
 			const T& operator *() const { 
 				return _current_node->getElements().at(_current_index);
 			}
 
-			bool operator!=( const BTree<T,Cmp>::generic_iterator& itCmp ) const {
-				
-				if ( itCmp.ended() ) {
-					
-					std::cout << "Ended ? --> " << this->ended() << "\n";
-					return ( !this->ended() );
+			bool operator==( const BTree<T,Cmp>::generic_iterator& itCmp ) const {
+
+				if ( _a == itCmp._a ) {
 						
+					std::cout << "Ended ? --> " << this->ended() << "\n";
+					if ( this->ended() ) {
+						return ( itCmp.ended() );
+					}
+
+					return ( _current_node == itCmp._current_node
+							&& _current_index == itCmp._current_index );
+
 				}
 				else {
-					
-					return ( *itCmp == this->operator*() );
-
+					return false;
 				}
 
+	
 			}
 
-/*
-			void operator=( BTree<T,Cmp>::generic_iterator& itTo ) {
-				itTo = *this;
+			bool operator!=( const BTree<T,Cmp>::generic_iterator& itCmp ) const {
+				
+				return ( ! this->operator==( itCmp ) );
+
 			}
-*/
+
 			void operator++( int ba ) {
 				
 				this->next();
@@ -60,10 +57,21 @@
 			}
 
 
+		protected:
+			generic_iterator( BTree<T,Cmp>* a, bool ended = false ) 
+				: 
+				_a(a), 
+				_ended(ended)
+				 {
+				 	
+				 	
+
+				 }
 
 			virtual void next() = 0;
 			virtual void previous() = 0;
 			virtual void toFirstElement() = 0;
+			virtual void toEnd() = 0;
 
 
 			void toParentR() {
@@ -87,7 +95,7 @@
 				else {
 					std::cout << "Dbg Iter root Fini ? \n";
 					_ended = true;
-					_current_node = _current_node + sizeof(_current_node);
+					_current_index++;
 				}
 
 
@@ -114,7 +122,7 @@
 				else {
 					std::cout << "Dbg Iter root Fini ? \n";
 					_ended = true;
-					_current_node = _current_node - sizeof(_current_node);
+					_current_index--;
 
 				}
 

@@ -1,4 +1,3 @@
-#include "Node.h"
 #include "BTree.h"
 
 //#include "BTree_generic_iterator.h"
@@ -10,8 +9,11 @@
 
 int main( int argc, char** argv ) {
 	
+	//Node<int> n1;
 	BTree<int> a(2);
 
+
+	//BTree<int>::iterator iter1(&a);
 
 	std::cout << "Before adding 4" << std::endl << a << std::endl;
 
@@ -237,6 +239,35 @@ int main( int argc, char** argv ) {
 	}
 
 	/** **/
+
+
+	BTree<int*> ap;
+
+	int* i3 = new int(3);
+	int* i6 = new int(6);
+
+	int* i78 = new int(78);
+	int* i66 = new int(66);
+	int* i2 = new int(2);
+	int* i40 = new int(40);
+
+	ap.insert(i6);
+	ap.insert(i3);
+		ap.insert(i78);
+	ap.insert(i66);
+		ap.insert(i2);
+	ap.insert(i40);
+
+	BTree<int*>::iterator itP;
+
+	for ( itP = ap.begin(); itP != ap.end(); itP++) {
+		std::cout << "Will print element " << std::endl;
+		std::cout << "--> PELT : " << **itP << std::endl;
+
+	}
+	
+	std::cout << "Finished\n";
+	
 
 	return 0;
 

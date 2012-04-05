@@ -70,7 +70,7 @@ void BTree<T,Cmp>::splitNode( Node<T,Cmp>* node ) {
 
 	int i;
 	/* Transfert elements from original Node to two new nodes */
-	int middle_elt;
+	T middle_elt;
 	int middle_index = (elts.size() - 1) / 2 ;
 
 	for ( iterElements = elts.begin(), i=0;

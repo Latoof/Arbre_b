@@ -7,17 +7,10 @@
 	class BTree<T,Cmp>::reverse_iterator : public BTree<T,Cmp>::generic_iterator {
 
 		typedef BTree<T,Cmp>::generic_iterator GIterator;
+		friend class BTree<T,Cmp>;
 
 		public:
 			reverse_iterator() : generic_iterator() {}
-			reverse_iterator( BTree<T,Cmp>* a , bool ended = false ) 
-				: generic_iterator(a,ended) {
-					
-					//this->toRightIndex();
-					//_current_index = _current_node.size() - 1;
-					this->toFirstElement();
-				}
-
 			virtual ~reverse_iterator() {};
 
 			BTree<T,Cmp>::reverse_iterator operator +( int inc ) const {
@@ -33,6 +26,21 @@
 
 			}
 
+		protected:
+
+			reverse_iterator( BTree<T,Cmp>* a , bool ended = false ) 
+				: generic_iterator(a,ended) {
+					
+					//this->toRightIndex();
+					//_current_index = _current_node.size() - 1;
+					if ( !ended ) {
+						this->toFirstElement();
+					}
+					else {
+						this->toEnd();
+					}
+				}
+
 			virtual void previous() {
 				this->toRight();
 			}	
@@ -46,6 +54,11 @@
 			virtual void toFirstElement() {
 				GIterator::_current_node = GIterator::_a->getRootNode()->rightmostLeaf();
 				GIterator::_current_index = GIterator::_current_node->size() - 1;
+			}
+
+			virtual void toEnd() {
+				GIterator::_current_node = GIterator::_a->getRootNode()->leftmostLeaf();
+				GIterator::_current_index = -1;
 			}
 
 
